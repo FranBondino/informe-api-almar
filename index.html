@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reporte Técnico Completo: API Kipintoch - Almar Rosario</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        :root {
+            --primary: #102FA8;
+            --primary-light: #2D65EB;
+            --accent: #64D2BC;
+            --accent-bg: #E8F8F5;
+            --dark-bg: #081433;
+            --card-bg: #FFFFFF;
+            --body-bg: #F4F6FB;
+            --text-main: #1A202C;
+            --text-muted: #64748B;
+            --border-color: #E2E8F0;
+            --code-bg: #0F172A;
+            --radius-lg: 12px;
+            --radius-md: 8px;
+            --shadow-sm: 0 2px 4px rgba(0,0,0,0.04);
+            --shadow-md: 0 10px 25px -5px rgba(16, 47, 168, 0.08);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--body-bg);
+            color: var(--text-main);
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Header Styling */
+        header {
+            background: linear-gradient(135deg, var(--dark-bg) 0%, var(--primary) 100%);
+            color: #FFFFFF;
+            padding: 40px 24px;
+            border-bottom: 4px solid var(--accent);
+            box-shadow: var(--shadow-md);
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header-title h1 {
+            font-size: 2rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            margin-bottom: 6px;
+            color: #FFFFFF;
+        }
+
+        .header-title p {
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.85);
+        }
+
+        /* Main Layout */
+        .main-container {
+            max-width: 1200px;
+            margin: 32px auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 28px;
+        }
+
+        @media (max-width: 900px) {
+            .main-container {
+                grid-template-columns: 1fr;
+                margin: 20px auto;
+            }
+        }
+
+        /* Navigation Sidebar */
+        .sidebar {
+            position: sticky;
+            top: 24px;
+            height: fit-content;
+            background: var(--card-bg);
+            border-radius: var(--radius-lg);
+            padding: 22px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border-color);
+        }
+
+        .sidebar h3 {
+            font-size: 0.82rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+            margin-bottom: 14px;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-main);
+            font-size: 0.88rem;
+            font-weight: 500;
+            padding: 10px 12px;
+            border-radius: var(--radius-md);
+            transition: all 0.2s ease;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            background: var(--accent-bg);
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        /* Content Sections */
+        .content {
+            display: flex;
+            flex-direction: column;
+            gap: 28px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: var(--radius-lg);
+            padding: 32px;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .card-header {
+            margin-bottom: 22px;
+            padding-bottom: 14px;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .card-title {
+            font-size: 1.35rem;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--primary-light);
+            margin: 24px 0 12px 0;
+        }
+
+        h4 {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--text-main);
+            margin: 16px 0 8px 0;
+        }
+
+        p, li {
+            font-size: 0.95rem;
+            color: var(--text-main);
+            margin-bottom: 10px;
+        }
+
+        ul, ol {
+            margin-left: 20px;
+            margin-bottom: 14px;
+        }
+
+        /* Callout Box */
+        .callout {
+            background: var(--accent-bg);
+            border-left: 4px solid var(--accent);
+            padding: 18px 22px;
+            border-radius: 0 var(--radius-md) var(--radius-md) 0;
+            margin: 18px 0;
+            font-size: 0.95rem;
+            color: #064E3B;
+        }
+
+        .callout strong {
+            color: #047857;
+        }
+
+        /* Mermaid Box */
+        .mermaid-container {
+            background: #FAFAFA;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 24px;
+            overflow-x: auto;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .mermaid-container svg {
+            max-width: 100% !important;
+            height: auto !important;
+            min-height: 260px;
+        }
+
+        /* Tables */
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+            margin: 18px 0;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 0.9rem;
+        }
+
+        th {
+            background: #F8FAFC;
+            color: var(--text-muted);
+            font-weight: 700;
+            padding: 14px 18px;
+            border-bottom: 2px solid var(--border-color);
+            text-transform: uppercase;
+            font-size: 0.78rem;
+            letter-spacing: 0.05em;
+        }
+
+        td {
+            padding: 14px 18px;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-main);
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:hover td {
+            background: #F8FAFC;
+        }
+
+        /* Method Tags */
+        .tag-get {
+            background: #DEF7EC;
+            color: #03543F;
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.78rem;
+            font-family: 'Fira Code', monospace;
+        }
+
+        /* Code Blocks */
+        pre {
+            background: var(--code-bg);
+            color: #E2E8F0;
+            padding: 20px;
+            border-radius: var(--radius-md);
+            font-family: 'Fira Code', monospace;
+            font-size: 0.88rem;
+            overflow-x: auto;
+            margin: 18px 0;
+        }
+
+        code {
+            font-family: 'Fira Code', monospace;
+            background: #F1F5F9;
+            color: var(--primary);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.88em;
+        }
+
+        pre code {
+            background: transparent;
+            color: inherit;
+            padding: 0;
+        }
+
+        /* Grid Cards */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 18px;
+            margin: 16px 0;
+        }
+
+        .sub-card {
+            background: #F8FAFC;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 20px;
+        }
+
+        .sub-card h4 {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 8px;
+        }
+
+        .sub-card p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 0;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 35px;
+            color: var(--text-muted);
+            font-size: 0.88rem;
+            border-top: 1px solid var(--border-color);
+            margin-top: 50px;
+            background: #FFFFFF;
+        }
+
+        /* Print Button */
+        .btn-print {
+            background: var(--primary);
+            color: #FFFFFF;
+            border: none;
+            padding: 12px 20px;
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            font-size: 0.88rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+        }
+
+        .btn-print:hover {
+            background: var(--primary-light);
+        }
+
+        @media print {
+            .sidebar, .btn-print { display: none; }
+            .main-container { grid-template-columns: 1fr; margin: 0; padding: 0; }
+            body { background: #FFF; }
+            .card { box-shadow: none; border: 1px solid #CCC; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-container">
+            <div class="header-title">
+                <h1>Reporte Técnico y Mapa de Datos: API Kipintoch</h1>
+                <p>Empresa: <strong>Almar Rosario</strong></p>
+            </div>
+        </div>
+    </header>
+
+    <div class="main-container">
+        <!-- Sidebar Navigation -->
+        <nav class="sidebar">
+            <h3>Contenido del Informe</h3>
+            <ul class="nav-links">
+                <li><a href="#iso" class="active">1. Auditoría ISO y Control</a></li>
+                <li><a href="#mapa">2. Mapa General de Procesos</a></li>
+                <li><a href="#operativo">3. Módulo Operativo (Forwarding)</a></li>
+                <li><a href="#comercial">4. Módulo Comercial</a></li>
+                <li><a href="#financiero">5. Finanzas, Facturación y Margen</a></li>
+                <li><a href="#maestros">6. Empresas y CUITs</a></li>
+                <li><a href="#gastos">7. Gastos y Auditoría</a></li>
+                <li><a href="#automatizacion">8. Plan de Automatización</a></li>
+            </ul>
+            <div style="margin-top: 24px;">
+                <button class="btn-print" onclick="window.print()">Imprimir / Guardar PDF</button>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="content">
+
+            <!-- Section 1: ISO Audit Context -->
+            <section id="iso" class="card">
+                <div class="card-header">
+                    <h2 class="card-title">1. Resumen Ejecutivo y Contexto de Auditoría ISO</h2>
+                </div>
+                <p>
+                    Este documento describe de manera exhaustiva la arquitectura de datos, procesos de negocio e información relevante accesible a través de la API oficial del sistema <strong>Kipintoch / KipinCARGO</strong> para <strong>Almar Rosario</strong>. Ha sido estructurado específicamente para servir de insumo técnico en los procesos de <strong>automatización de carga de facturas</strong> y en la <strong>implementación y auditoría de normas ISO</strong> (gestión de calidad, trazabilidad y control de procesos).
+                </p>
+                <p>
+                    El sistema Kipintoch cuenta con una API RESTful alojada en la infraestructura exclusiva de la empresa (<code>https://api.almarrosar.kipincargo.com</code>).
+                </p>
+
+                <div class="callout">
+                    <strong>Garantía de Calidad y Procesos (Normas ISO):</strong> Desde la perspectiva de Gestión de Calidad, la API garantiza cuatro pilares fundamentales:
+                </div>
+
+                <div class="grid-2">
+                    <div class="sub-card">
+                        <h4>1. Trazabilidad de Extremo a Extremo</h4>
+                        <p>Registro inmutable de creación, modificación, asignación de usuarios y estados de avance de cada operación logística.</p>
+                    </div>
+                    <div class="sub-card">
+                        <h4>2. Control Cero Error</h4>
+                        <p>Capacidad de homologación de datos maestros (Clientes, CUITs, Conceptos de Gastos, Monedas) sin entrada manual.</p>
+                    </div>
+                    <div class="sub-card">
+                        <h4>3. Consistencia Financiera</h4>
+                        <p>Vinculación directa entre el costo del proveedor, el precio de venta al cliente y el margen de ganancia calculado.</p>
+                    </div>
+                    <div class="sub-card">
+                        <h4>4. Respaldo Documental</h4>
+                        <p>Asociación directa de comprobantes y archivos PDF oficiales por carpeta para auditorías contables instantáneas.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 2: Diagram & Visual Process Map -->
+            <section id="mapa" class="card">
+                <div class="card-header">
+                    <h2 class="card-title">2. Mapa de Procesos de Negocio e Información Accesible</h2>
+                </div>
+                <p>Esquema integral de datos y capacidades de negocio conectadas mediante la API REST de Kipintoch:</p>
+                
+                <!-- Visual Process Map Cards -->
+                <div class="grid-2" style="margin-bottom: 24px;">
+                    <div class="sub-card" style="border-top: 4px solid #102FA8;">
+                        <h4 style="color: #102FA8; font-size: 1.05rem;">1. Módulo Operativo y Forwarding</h4>
+                        <ul style="margin-left: 18px; margin-top: 10px; font-size: 0.9rem;">
+                            <li>Carpetas HBL / Embarques individuales por cliente</li>
+                            <li>Carpetas Master MBL / AWB consolidadas</li>
+                            <li>Seguimiento de Contenedores, Buques y Trazabilidad</li>
+                        </ul>
+                    </div>
+                    <div class="sub-card" style="border-top: 4px solid #2D65EB;">
+                        <h4 style="color: #2D65EB; font-size: 1.05rem;">2. Gestión Comercial y Cotizaciones</h4>
+                        <ul style="margin-left: 18px; margin-top: 10px; font-size: 0.9rem;">
+                            <li>Histórico de Cotizaciones y Propuestas</li>
+                            <li>Métricas por Vendedor y Customer Service</li>
+                            <li>Control de Tarifarios y Fechas de Vigencia</li>
+                        </ul>
+                    </div>
+                    <div class="sub-card" style="border-top: 4px solid #64D2BC;">
+                        <h4 style="color: #064E3B; font-size: 1.05rem;">3. Rentabilidad y Control Contable</h4>
+                        <ul style="margin-left: 18px; margin-top: 10px; font-size: 0.9rem;">
+                            <li>Costos de Compra vs Precios de Venta</li>
+                            <li>Cálculo de Margen de Ganancia ($ y %)</li>
+                            <li>Matriz de Cierres Contables y Auditoría</li>
+                        </ul>
+                    </div>
+                    <div class="sub-card" style="border-top: 4px solid #F59E0B;">
+                        <h4 style="color: #B45309; font-size: 1.05rem;">4. Padrón de Empresas y Datos Maestros</h4>
+                        <ul style="margin-left: 18px; margin-top: 10px; font-size: 0.9rem;">
+                            <li>Clientes Locales y Proveedores del Exterior</li>
+                            <li>Validación de CUITs y Claves Tributarias</li>
+                            <li>Días de Crédito y Cuentas Webtracking</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="sub-card" style="border-top: 4px solid #081433; margin-bottom: 20px;">
+                    <h4 style="color: #081433; font-size: 1.05rem;">5. Configuración y Auditoría de Tareas</h4>
+                    <ul style="margin-left: 18px; margin-top: 10px; font-size: 0.9rem;">
+                        <li>Catálogo de Gastos y Cuentas Contables de Ingreso/Egreso</li>
+                        <li>Historial de Tareas, Eventos y Status por Empleado</li>
+                        <li>Archivos y Comprobantes Adjuntos</li>
+                    </ul>
+                </div>
+
+                <!-- Vertical Responsive Flowchart -->
+                <h4>Flujo de Conexión de Datos (API REST):</h4>
+                <div class="mermaid-container">
+                    <pre class="mermaid">
+                    graph TB
+                        API["API REST Kipintoch (api.almarrosar.kipincargo.com)"]
+                        
+                        API --> OP["Modulo Operativo (Forwarding)"]
+                        OP --> OP1["Carpetas House (HBL)"]
+                        OP --> OP2["Carpetas Master (MBL)"]
+                        
+                        API --> COM["Modulo Comercial"]
+                        COM --> COM1["Cotizaciones y Embudo"]
+                        COM --> COM2["Desempeño Vendedor / Customer"]
+                        
+                        API --> FIN["Rentabilidad y Contabilidad"]
+                        FIN --> FIN1["Factura Venta vs Costo Compra"]
+                        FIN --> FIN2["Margen de Ganancia ($ y %)"]
+                        FIN --> FIN3["Cierres Contables ISO"]
+
+                        API --> MAE["Datos Maestros y Empresas"]
+                        MAE --> MAE1["Clientes, Proveedores y CUITs"]
+                        MAE --> MAE2["Catalogo de Gastos y Cuentas"]
+                    </pre>
+                </div>
+            </section>
+
+            <!-- Section 3: Deep Dive Operativo -->
+            <section id="operativo" class="card">
+                <div class="card-header">
+                    <h2 class="card-title">3. Módulo Operativo (Forwarding y Embarques) - Detalle Profundo</h2>
+                </div>
+
+                <p>
+                    El módulo operativo es el corazón de Kipintoch y gestiona el ciclo de vida completo del transporte de carga internacional desde la solicitud hasta la llegada a destino final.
+                </p>
+
+                <h3>1. Arquitectura Jerárquica: Master vs. House (Contratos de Transporte)</h3>
+
+                <div class="mermaid-container">
+                    <pre class="mermaid">
+                    graph TD
+                        M["Master Carpeta (MBL / AWB Master / CRT Madre)"] --> H1["Carpeta House 1 (HBL / HAWB - Cliente A)"]
+                        M --> H2["Carpeta House 2 (HBL / HAWB - Cliente B)"]
+                        M --> H3["Carpeta House N (HBL / HAWB - Cliente C)"]
+                    </pre>
+                </div>
+
+                <ul>
+                    <li>
+                        <strong>Master Carpeta (<code>MasterCarpeta</code>):</strong> <span class="tag-get">GET /forwarding/mastercarpetas</span><br>
+                        Representa el consolidador o contrato principal con la línea marítima, aerolínea o empresa de transporte internacional (ej. Maersk, MSC, Lufthansa, Prontolog).<br>
+                        <em>Datos clave:</em> N° de Master/MBL, Agente en Origen, Armador/Transportista, Buque/Vuelo, Tipo de Servicio Marítimo (FCL/LCL), Contenedores consolidados y Usuario operativo asignado.
+                    </li>
+                    <li style="margin-top: 10px;">
+                        <strong>Carpeta House (<code>Carpeta</code>):</strong> <span class="tag-get">GET /forwarding/carpetas</span><br>
+                        Representa la operación individual y contrato específico emitido para el cliente de Almar Rosario.<br>
+                        <em>Identificadores:</em> <code>numeroInterno</code> (ej: <code>OR/C-202607IM-00001435</code>), N° de Guía/HBL (<code>numeroGuia</code>), N° Booking (<code>numeroBooking</code>), Referencia Interna (<code>referenciaInterna</code>), Referencia Externa (<code>referenciaExterna</code>) y Referencia del Cliente (<code>referenciaCliente</code>).
+                    </li>
+                </ul>
+
+                <h3>2. Clasificación de Operaciones y Modos Logísticos</h3>
+                <p>La API clasifica cada carpeta operativa mediante dos ejes obligatorios:</p>
+                <ul>
+                    <li><strong>Área (<code>area</code>):</strong> <code>M</code> = Marítimo, <code>A</code> = Aéreo, <code>T</code> = Terrestre, <code>D</code> = Despacho de Aduana, <code>V</code> = Vacío / Servicios Auxiliares.</li>
+                    <li><strong>Sector (<code>sector</code>):</strong> <code>I</code> = Importación, <code>E</code> = Exportación, <code>L</code> = Tráfico Local / Nacional, <code>V</code> = Vacío.</li>
+                    <li><strong>Modalidad de Carga (<code>tipoOperacion</code>):</strong> <code>FCL / FCL</code> (Contenedor Completo), <code>LCL / LCL</code> (Carga Consolidada), <code>FTL</code> (Camión Completo) / <code>LTL</code> (Camión Consolidado), <code>Paletizado</code>, <code>Carga Suelta</code>, <code>OOG</code> (Out of Gauge).</li>
+                </ul>
+
+                <h3>3. Matriz de Actores y Roles Asignados</h3>
+                <p>Por cada carpeta operativa, la API registra explícitamente a los responsables internos y externos:</p>
+                
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Rol en API</th>
+                                <th>Descripción / Función en la Operación</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>clienteLocal</code></td>
+                                <td>Empresa o cliente final en Argentina que contrata el servicio logístico.</td>
+                            </tr>
+                            <tr>
+                                <td><code>entidadExterior</code></td>
+                                <td>Exportador / Vendedor en origen (Shipper) o Consignatario en el exterior.</td>
+                            </tr>
+                            <tr>
+                                <td><code>transportista</code></td>
+                                <td>Empresa de transporte (Línea Marítima, Aerolínea o Camión) que mueve la carga.</td>
+                            </tr>
+                            <tr>
+                                <td><code>agente</code></td>
+                                <td>Agente de carga internacional en origen o destino.</td>
+                            </tr>
+                            <tr>
+                                <td><code>agenteAduanal</code></td>
+                                <td>Despachante de Aduana interviniente.</td>
+                            </tr>
+                            <tr>
+                                <td><code>vendedor</code></td>
+                                <td>Ejecutivo comercial de Almar Rosario asignado a la operación.</td>
+                            </tr>
+                            <tr>
+                                <td><code>customer</code></td>
+                                <td>Representante de atención al cliente / seguimiento asignado.</td>
+                            </tr>
+                            <tr>
+                                <td><code>operador</code> / <code>documentador</code></td>
+                                <td>Personal operativo a cargo del armado de documentación.</td>
+                            </tr>
+                            <tr>
+                                <td><code>usuarioCreador</code></td>
+                                <td>Usuario que dio de alta la carpeta en el sistema con timestamp.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3>4. Trazabilidad Temporal y Cronograma de Fechas (Control ISO)</h3>
+                <p>La API almacena una línea de tiempo completa para auditar desvíos y tiempos de tránsito:</p>
+                <ul>
+                    <li><strong>Fechas de Gestión:</strong> <code>fechaEmision</code> (Fecha de alta formal) y <code>fechaCreacion</code> (Timestamp exacto de registro).</li>
+                    <li><strong>Trazabilidad de Tránsito:</strong> <code>fechaSalida</code> (ETD) vs. <code>fechaRealSalida</code> (ATD - Actual Time of Departure); <code>fechaLlegada</code> (ETA) vs. <code>fechaRealLlegada</code> (ATA - Actual Time of Arrival).</li>
+                    <li><strong>Control de Plazos Críticos (Cut-off Dates):</strong> <code>cutOffDoc</code> (Límite documental), <code>cutOffFisico</code> (Límite ingreso puerto), <code>cutOffImo</code> (Límite cargas peligrosas IMO), <code>cutOffVgm</code> (Límite peso bruto VGM).</li>
+                    <li><strong>Transbordos y Escalas:</strong> Fechas estimadas y reales de llegada/salida en terminales de transbordo, buque de transbordo y viaje.</li>
+                </ul>
+
+                <h3>5. Datos Físicos de Carga, Equipamiento y Aduana</h3>
+                <ul>
+                    <li><strong>Métricas de Carga:</strong> Cantidad de Bultos (<code>bultos</code>), Peso Real (<code>peso</code> en Kg), Peso Aforado (<code>pesoAforado</code>), Volumen (<code>volumen</code> en m³) y Tonelada/M3.</li>
+                    <li><strong>Equipamiento y Mercadería:</strong> <code>listaCantidadContenedores</code> (Listado e identificación de contenedores), <code>nombresMercaderias</code> (Descripción de carga), e <code>incoterm</code> (FOB, CIF, CFR, EXW, DDP, etc.).</li>
+                    <li><strong>Vinculación Aduanera (<code>carpetaAduana</code>):</strong> Conexión directa con la declaración aduanera: N° de Registro María (<code>numeroMaria</code>) y N° de Despacho (<code>numeroDespacho</code>).</li>
+                </ul>
+            </section>
+
+            <!-- Section 4: Comercial -->
+            <section id="comercial" class="card">
+                <div class="card-header">
+                    <h2 class="card-title">4. Módulo Comercial y Cotizaciones</h2>
+                </div>
+                <p><strong>Endpoint Principal:</strong> <span class="tag-get">GET /estadisticaComercial</span></p>
+                <p>Permite analizar el rendimiento del área de ventas y embudo comercial:</p>
+                <ul>
+                    <li><strong>Asignación de Personal:</strong> Vendedor responsable, Customer Service asignado, Operador y Usuario Creador.</li>
+                    <li><strong>Embudo Comercial:</strong> Cotizaciones generadas, vigencias (desde/hasta), estados (<code>P</code> Pendiente, <code>T</code> Tramitada, <code>A</code> Aceptada).</li>
+                    <li><strong>Volúmenes Operados:</strong> Agregado de kilos, TEUs, bultos y tipo de operación (<code>FCL/FCL</code>, <code>LCL/LCL</code>, <code>FTL</code>, etc.).</li>
+                </ul>
+            </section>
+
+            <!-- Section 5: Financiero -->
+            <section id="financiero" class="card">
+                <div class="card-header">
+                    <h2 class="card-title">5. Módulo Financiero, Facturación y Rentabilidad</h2>
+                </div>
+                <p><strong>Endpoint Principal:</strong> <span class="tag-get">GET /rentabilidad</span></p>
+
+                <h3>Apertura de Margen por Carpeta y Gasto:</h3>
+                <ul>
+                    <li><strong>Venta:</strong> Monto facturado al cliente.</li>
+                    <li><strong>Costo:</strong> Monto real facturado por el proveedor o armador.</li>
+                    <li><strong>Margen de Ganancia ($):</strong> Resultado neto por concepto de gasto.</li>
+                    <li><strong>Porcentaje de Margen (%):</strong> Calculado como <code>(Margen / Venta) * 100</code>.</li>
+                    <li><strong>Multimoneda:</strong> Desglose en Moneda Origen, Moneda Local (ARS) y Segunda Moneda (USD).</li>
+                </ul>
+
+                <h3>Matriz de Cierres Contables (Control e Inspección ISO):</h3>
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Bandera de Cierre en API</th>
+                                <th>Estado / Significado en Proceso Contable</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>cierreEstimadoCosto</code></td>
+                                <td>Carga inicial de costos esperados aprobados.</td>
+                            </tr>
+                            <tr>
+                                <td><code>cierreFacturaCosto</code></td>
+                                <td>Factura de compra del proveedor auditada e ingresada.</td>
+                            </tr>
+                            <tr>
+                                <td><code>cierrePrefacturaVenta</code></td>
+                                <td>Borrador / prefactura de venta emitida.</td>
+                            </tr>
+                            <tr>
+                                <td><code>cierreFacturaVenta</code></td>
+                                <td>Factura definitiva emitida al cliente e impactada en AFIP.</td>
+                            </tr>
+                            <tr>
+                                <td><code>cierreCobranza</code> / <code>cierrePagos</code></td>
+                                <td>Control de cobro efectivo y pago a proveedor.</td>
+                            </tr>
+                            <tr>
+                                <td><code>cierreOperativo</code></td>
+                                <td>Cierre definitivo de la carpeta habilitado para auditoría.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Section 6: Maestros -->
+            <section id="maestros" class="card">
+                <div class="card-header">
+                    <h2 class="card-title">6. Módulo de Empresas y Datos Maestros</h2>
+                </div>
+                <p><strong>Endpoints Principales:</strong> <span class="tag-get">GET /empresas</span> & <span class="tag-get">GET /empresas/listadoClavesTributarias</span></p>
+                <ul>
+                    <li><strong>Ficha de Empresa:</strong> Razón Social, Nombre Comercial, CUIT/Clave Tributaria, Domicilio Fiscal, Ciudad, Provincia, País.</li>
+                    <li><strong>Categorización:</strong> Clasificación fiscal (Responsable Inscripto, Exento, etc.), Vendedor y Customer asignados.</li>
+                    <li><strong>Condiciones Comerciales:</strong> Días de crédito autorizados, vigencia de carta de garantía y usuarios habilitados en Webtracking.</li>
+                </ul>
+            </section>
+
+            <!-- Section 7: Gastos & Auditoria -->
+            <section id="gastos" class="card">
+                <div class="card-header">
+                    <h2 class="card-title">7. Módulo de Configuración, Gastos y Auditoría de Tareas</h2>
+                </div>
+                <p><strong>Endpoints Principales:</strong> <span class="tag-get">GET /configuracion/gastos</span>, <span class="tag-get">GET /status</span>, <span class="tag-get">GET /adjuntos/obtener</span></p>
+                <ul>
+                    <li><strong>Nomenclador de Gastos:</strong> Código de gasto (<code>FIA</code>, <code>FMA</code>, etc.), Nombre, Sector, Área y Cuentas Contables asociadas (Ingreso/Egreso).</li>
+                    <li><strong>Auditoría de Acciones/Status:</strong> Historial de eventos, notas internas y tareas pendientes registradas por usuario.</li>
+                    <li><strong>Archivos Adjuntos:</strong> Identificación y descarga de documentos de respaldo asociados a carpetas.</li>
+                </ul>
+            </section>
+
+            <!-- Section 8: Especificaciones Técnicas y Plan de Automatizacion -->
+            <section id="automatizacion" class="card">
+                <div class="card-header">
+                    <h2 class="card-title">8. Especificaciones Técnicas y Plan de Automatización</h2>
+                </div>
+                
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Parámetro Técnico</th>
+                                <th>Especificación del Servidor</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>URL Base Backend:</strong></td>
+                                <td><code>https://api.almarrosar.kipincargo.com</code></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Código Agencia:</strong></td>
+                                <td><code>ALMARROS</code></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Autenticación:</strong></td>
+                                <td>Header HTTP <code>token: &lt;API_TOKEN&gt;</code> o Query String <code>?token=&lt;API_TOKEN&gt;</code></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Formato de Datos:</strong></td>
+                                <td>JSON (UTF-8) / Arquitectura RESTful</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="callout" style="margin-top: 20px;">
+                    <strong>Propuesta de Arquitectura del Bot de Automatización:</strong>
+                    El bot escuchará correos entrantes de proveedores, procesará las facturas adjuntas en PDF/XML mediante extractor inteligente (OCR/IA), calculará el margen de ganancia según las reglas de negocio de Almar Rosario, e inyectará automáticamente los montos y comprobantes a Kipintoch vía <code>POST /forwarding/carpetas/guardar</code>.
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <footer>
+        <p>Reporte Técnico de Arquitectura de Datos API Kipintoch - Generado para <strong>Almar Rosario</strong></p>
+    </footer>
+
+    <script>
+        mermaid.initialize({ startOnLoad: true, theme: 'neutral' });
+    </script>
+</body>
+</html>
