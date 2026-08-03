@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instructivo Técnico para el Administrador de IT — ALMAR Rosario</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0F172A;
+            --primary-accent: #2D65EB;
+            --secondary-accent: #10B981;
+            --bg-light: #F8FAFC;
+            --card-bg: #FFFFFF;
+            --text-main: #1E293B;
+            --border-color: #E2E8F0;
+            --radius-md: 12px;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        .top-navbar {
+            background-color: var(--primary);
+            color: #FFF;
+            padding: 14px 24px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-brand { font-weight: 700; font-size: 1.1rem; }
+        .nav-brand span { color: #60A5FA; font-weight: 400; }
+
+        .container {
+            max-width: 1000px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .header-card {
+            background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
+            color: #FFF;
+            padding: 30px;
+            border-radius: var(--radius-md);
+            margin-bottom: 30px;
+        }
+
+        .header-card h1 { font-size: 1.7rem; font-weight: 800; margin-bottom: 8px; }
+        .header-card p { color: #94A3B8; font-size: 0.95rem; }
+
+        .guide-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .guide-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .step-list {
+            padding-left: 20px;
+            margin: 14px 0;
+        }
+
+        .step-list li {
+            margin-bottom: 10px;
+            font-size: 0.95rem;
+            color: #334155;
+        }
+
+        code {
+            background: #F1F5F9;
+            color: #0F172A;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.88rem;
+        }
+
+        .code-box {
+            background: #0F172A;
+            color: #F8FAFC;
+            padding: 16px;
+            border-radius: 8px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            margin-top: 12px;
+            overflow-x: auto;
+        }
+
+        .callout-info {
+            background: #EFF6FF;
+            border-left: 4px solid #2D65EB;
+            padding: 14px 18px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            color: #1E3A8A;
+            margin-top: 16px;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="top-navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                🚢 ALMAR ROSARIO <span>| Guía de Configuración IT</span>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        
+        <div class="header-card">
+            <h1>🛠️ Instructivo Técnico para Administrador de IT</h1>
+            <p>Habilitación de permisos de lectura de correos para el Bot de Ingesta Automática de Facturas (ALMAR Rosario).</p>
+        </div>
+
+        <!-- OPCIÓN A: MICROSOFT 365 -->
+        <div class="guide-card">
+            <h2 class="guide-title">🔵 Opción A: Microsoft 365 / Azure Active Directory (Recomendado)</h2>
+            <p style="font-size: 0.95rem; color: #475569;">Paso a paso para el administrador con rol <strong>Global Admin</strong> en Microsoft 365:</p>
+
+            <ol class="step-list">
+                <li>Ingresar al portal de administración de Azure: <a href="https://portal.azure.com" target="_blank">portal.azure.com</a>.</li>
+                <li>Ir a <strong>Microsoft Entra ID (Azure AD)</strong> ➔ <strong>App Registrations (Registro de aplicaciones)</strong> ➔ <strong>Nuevo registro</strong>.</li>
+                <li>Nombrar la aplicación: <code>ALMAR-Bot-Facturas</code> y seleccionar <em>"Solo cuentas de este directorio organizativo"</em>.</li>
+                <li>En el menú lateral, ir a <strong>API Permissions (Permisos de API)</strong> ➔ <strong>Agregar un permiso</strong> ➔ <strong>Microsoft Graph</strong> ➔ <strong>Application Permissions (Permisos de aplicación)</strong>.</li>
+                <li>Buscar y marcar el permiso: <code>Mail.Read</code> (Lectura de correos).</li>
+                <li>Hacer clic en el botón <strong>"Conceder consentimiento de administrador para ALMAR"</strong> (Grant Admin Consent).</li>
+                <li>Ir a <strong>Certificates & Secrets (Certificados y secretos)</strong> ➔ <strong>Nuevo secreto de cliente</strong>. Copiar el valor generado (<code>Client Secret</code>).</li>
+            </ol>
+
+            <div class="callout-info">
+                <strong>📋 Datos a entregar al equipo de desarrollo:</strong>
+                <div class="code-box">
+Tenant ID:      [Copiar del panel General/Overview de la App]
+Client ID:      [Copiar del panel General/Overview de la App]
+Client Secret:  [Valor generado en la pestaña Certificados y Secretos]
+Casillas:       [Lista de mails corporativos a monitorear]
+                </div>
+            </div>
+        </div>
+
+        <!-- OPCIÓN B: GOOGLE WORKSPACE -->
+        <div class="guide-card">
+            <h2 class="guide-title">🟡 Opción B: Google Workspace (Cuenta de Servicio)</h2>
+            <p style="font-size: 0.95rem; color: #475569;">Paso a paso para el administrador de Google Workspace:</p>
+
+            <ol class="step-list">
+                <li>Ingresar a la consola de Google Cloud: <a href="https://console.cloud.google.com" target="_blank">console.cloud.google.com</a>.</li>
+                <li>Crear un proyecto denominado <code>ALMAR-Bot-Facturas</code>.</li>
+                <li>Ir a <strong>IAM y Administración</strong> ➔ <strong>Cuentas de Servicio</strong> ➔ <strong>Crear Cuenta de Servicio</strong>.</li>
+                <li>Habilitar la <em>Delegación de autoridad en todo el dominio (Domain-Wide Delegation)</em>.</li>
+                <li>En la pestaña <strong>Claves</strong>, hacer clic en <strong>Agregar Clave</strong> ➔ <strong>Crear clave nueva (JSON)</strong>.</li>
+                <li>En la Consola de Administración de Google Workspace (<a href="https://admin.google.com" target="_blank">admin.google.com</a>), ir a <strong>Seguridad</strong> ➔ <strong>Controles de API</strong> ➔ <strong>Delegación en todo el dominio</strong> y agregar el Client ID con el Scope: <code>https://www.googleapis.com/auth/gmail.readonly</code>.</li>
+            </ol>
+
+            <div class="callout-info">
+                <strong>📋 Datos a entregar al equipo de desarrollo:</strong>
+                <div class="code-box">
+Archivo JSON:   [service-account-key.json descargado]
+Casillas:       [Lista de mails corporativos a monitorear]
+                </div>
+            </div>
+        </div>
+
+        <!-- OPCIÓN C: CONTRASEÑA DE APLICACIÓN -->
+        <div class="guide-card">
+            <h2 class="guide-title">🟢 Opción C: Contraseña de Aplicación / IMAP (Alternativa Rápida)</h2>
+            <p style="font-size: 0.95rem; color: #475569;">Ideal para pruebas rápidas o casillas dedicadas sin configuración de Azure/Google Cloud:</p>
+
+            <ol class="step-list">
+                <li>Definir la casilla de recepción (ej: <code>facturas@almarrosario.com</code>).</li>
+                <li>En la configuración de seguridad de la cuenta de mail, activar la <em>Verificación en 2 pasos</em>.</li>
+                <li>Generar una <strong>Contraseña de Aplicación</strong> (App Password) de 16 caracteres.</li>
+                <li>Entregar la dirección de mail y la Contraseña de Aplicación de 16 caracteres.</li>
+            </ol>
+        </div>
+
+    </div>
+
+</body>
+</html>
