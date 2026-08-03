@@ -896,6 +896,125 @@ flowchart TD
                         <strong>Recomendación Técnica:</strong> La <strong>Opción A</strong> o <strong>Opción B</strong> son las más recomendables porque son 100% transparentes para los empleados y no requieren cambiar los acuerdos comerciales ni los correos de contacto con proveedores.
                     </div>
                 </div>
+
+                <!-- Sub-sección 4.2 Módulo 3 Matching -->
+                <div style="margin-top: 32px; border-top: 1px dashed var(--border-color); padding-top: 24px;">
+                    <h3 style="font-size: 1.15rem; color: var(--dark-bg); margin-bottom: 12px;">🔗 Módulo 3: Matching y Validación contra Kipintoch (API)</h3>
+                    <p>Este módulo utiliza <strong>3 endpoints principales de la API de Kipintoch</strong> para validar de forma automática los datos extraídos del PDF antes de presentarlos al operador:</p>
+
+                    <div class="mermaid-wrapper">
+                        <pre class="mermaid">
+flowchart LR
+    JSON["JSON extraído del PDF"] --> API1["GET /forwarding/carpetas<br/>(Busca por HBL / Booking / Ref)"]
+    JSON --> API2["GET /empresas<br/>(Valida CUIT / Razón Social)"]
+    JSON --> API3["GET /configuracion/gastos<br/>(Clasifica código Nomenclador)"]
+
+    API1 --> R1["✅ Carpeta encontrada:<br/>OR/C-202607IM-00001435"]
+    API2 --> R2["✅ Proveedor validado:<br/>MAERSK LINE A/S (ID: 1247)"]
+    API3 --> R3["✅ Gasto mapeado:<br/>FMA (Flete Marítimo)"]
+
+    R1 & R2 & R3 --> SCORE["📊 Score de Confianza:<br/>95% (Match Alto)"]
+
+    style API1 fill:#EFF6FF,stroke:#2D65EB,color:#000
+    style API2 fill:#EFF6FF,stroke:#2D65EB,color:#000
+    style API3 fill:#EFF6FF,stroke:#2D65EB,color:#000
+    style SCORE fill:#ECFDF5,stroke:#10B981,color:#000
+                        </pre>
+                    </div>
+
+                    <h4 style="margin-top: 20px; margin-bottom: 10px; color: var(--dark-bg);">Lógica de Matcheo de Carpeta (Prioridad de Búsqueda)</h4>
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Prioridad</th>
+                                    <th>Campo de Búsqueda en API</th>
+                                    <th>Dato del PDF</th>
+                                    <th>Nivel de Confianza</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>1°</strong></td>
+                                    <td><code>numeroGuia</code></td>
+                                    <td>N° de HBL o Guía Aérea exacto</td>
+                                    <td><span style="color: #10B981; font-weight: 700;">🟢 99% Confianza</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>2°</strong></td>
+                                    <td><code>numeroBooking</code></td>
+                                    <td>N° de Booking del Armador</td>
+                                    <td><span style="color: #10B981; font-weight: 700;">🟢 95% Confianza</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>3°</strong></td>
+                                    <td><code>referenciaExterna</code> / <code>referenciaCliente</code></td>
+                                    <td>Referencia de ALMAR o cliente</td>
+                                    <td><span style="color: #F59E0B; font-weight: 700;">🟡 85% Confianza</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>4°</strong></td>
+                                    <td>Combinación <code>clienteLocal</code> + <code>transportista</code></td>
+                                    <td>Cliente + Proveedor + Fecha aproximada</td>
+                                    <td><span style="color: #D97706; font-weight: 700;">🟠 70% Confianza</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>5°</strong></td>
+                                    <td>Sin coincidencia exacta</td>
+                                    <td>Requiere selección manual en Dashboard</td>
+                                    <td><span style="color: #EF4444; font-weight: 700;">🔴 Revisión Manual</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="callout callout-important" style="margin-top: 16px;">
+                        <strong>Validación Cruzada de Costos:</strong> El bot ejecuta un <code>GET /rentabilidad?carpeta={id}&agrupamiento=CG&incluyeEstimados=true</code>. Si el monto facturado difiere en más de un 10% del costo estimado precargado, el bot marca la operación con una <strong>alerta de desvío de costo ⚠️</strong> para que el operador verifique el margen antes de registrar.
+                    </div>
+                </div>
+
+                <!-- Sub-sección 4.3 Módulo 4 & 5 -->
+                <div style="margin-top: 32px; border-top: 1px dashed var(--border-color); padding-top: 24px;">
+                    <h3 style="font-size: 1.15rem; color: var(--dark-bg); margin-bottom: 12px;">📊 Módulo 4: Dashboard de Revisión Humana (Human-in-the-Loop)</h3>
+                    <p>El sistema opera bajo la regla de diseño <strong>"Humano en el Loop"</strong>: el bot realiza la ingesta, extracción, clasificación y matcheo, pero la registración definitiva requiere el <strong>clic de confirmación del operador</strong>.</p>
+
+                    <div class="table-responsive" style="margin-top: 16px;">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Funcionalidad</th>
+                                    <th>Descripción en la Interfaz</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Cola de Pendientes</strong></td>
+                                    <td>Bandeja de entrada con comprobantes extraídos ordenados por prioridad y fecha.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Vista Comparativa Lado a Lado</strong></td>
+                                    <td>Columna izquierda: Visor PDF interactivo. Columna derecha: Datos mapeados para Kipintoch.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Indicadores de Confianza</strong></td>
+                                    <td>Etiquetas 🟢 Match Alto, 🟡 Match Parcial, 🔴 Sin Match para atención prioritaria.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Log de Auditoría ISO 9001</strong></td>
+                                    <td>Registro inmutable con timestamp de recepción, datos extraídos, usuario aprobador y fecha/hora de carga en Kipintoch.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h3 style="font-size: 1.15rem; color: var(--dark-bg); margin-top: 24px; margin-bottom: 12px;">✅ Módulo 5: Carga Automática en Kipintoch</h3>
+                    <p>Al hacer clic en <strong>Aprobar</strong>, el bot ejecuta en secuencia:</p>
+                    <ol>
+                        <li><code>POST /forwarding/carpetas/guardar</code> ➔ Registra el costo de compra imputado a la carpeta.</li>
+                        <li><code>POST /adjuntos/obtener</code> ➔ Adjunta el PDF original de la factura como respaldo documental.</li>
+                        <li>Actualización de Estado ➔ Marca el flag contable <code>cierreFacturaCosto = ✅</code>.</li>
+                    </ol>
+                </div>
             </section>
 
             <!-- 5. Diagrama de Secuencia E2E -->
