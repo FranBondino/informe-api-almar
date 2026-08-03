@@ -1,0 +1,1078 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Propuesta de Automatización de Carga de Facturas — ALMAR Rosario</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        :root {
+            --primary: #102FA8;
+            --primary-light: #2D65EB;
+            --dark-bg: #081433;
+            --accent: #64D2BC;
+            --accent-bg: #E8F8F5;
+            --card-bg: #FFFFFF;
+            --body-bg: #F4F6FB;
+            --text-main: #1A202C;
+            --text-muted: #64748B;
+            --border-color: #E2E8F0;
+            --code-bg: #0F172A;
+            --radius-lg: 12px;
+            --radius-md: 8px;
+            --shadow-sm: 0 2px 4px rgba(0,0,0,0.04);
+            --shadow-md: 0 10px 25px -5px rgba(16, 47, 168, 0.08);
+            
+            --danger-bg: #FEF2F2;
+            --danger-border: #FCA5A5;
+            --danger-text: #991B1B;
+            
+            --warning-bg: #FFFBEB;
+            --warning-border: #FDE68A;
+            --warning-text: #92400E;
+            
+            --success-bg: #ECFDF5;
+            --success-border: #6EE7B7;
+            --success-text: #065F46;
+        }
+
+        html, body {
+            max-width: 100%;
+            overflow-x: hidden;
+            width: 100%;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--body-bg);
+            color: var(--text-main);
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Top Navbar */
+        .top-navbar {
+            background: #050D24;
+            padding: 12px 24px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .nav-brand {
+            font-weight: 700;
+            color: #FFFFFF;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-brand span {
+            color: var(--accent);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 8px;
+        }
+
+        .nav-tab {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: var(--radius-md);
+            font-size: 0.88rem;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+
+        .nav-tab:hover {
+            color: #FFFFFF;
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .nav-tab.active {
+            color: #FFFFFF;
+            background: var(--primary-light);
+            font-weight: 600;
+        }
+
+        /* Header Styling */
+        header {
+            background: linear-gradient(135deg, var(--dark-bg) 0%, var(--primary) 100%);
+            color: #FFFFFF;
+            padding: 40px 24px;
+            border-bottom: 4px solid var(--accent);
+            box-shadow: var(--shadow-md);
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .badge-iso {
+            display: inline-block;
+            background: rgba(100, 210, 188, 0.15);
+            color: var(--accent);
+            border: 1px solid var(--accent);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+
+        .header-title h1 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            margin-bottom: 8px;
+            color: #FFFFFF;
+        }
+
+        .header-title p {
+            font-size: 1.05rem;
+            color: rgba(255, 255, 255, 0.85);
+            max-width: 800px;
+        }
+
+        .header-meta {
+            display: flex;
+            gap: 20px;
+            margin-top: 18px;
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.65);
+            flex-wrap: wrap;
+        }
+
+        /* Main Layout */
+        .main-container {
+            max-width: 1200px;
+            margin: 32px auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 28px;
+            width: 100%;
+        }
+
+        /* Sidebar Nav */
+        .sidebar {
+            position: sticky;
+            top: 24px;
+            height: fit-content;
+            background: var(--card-bg);
+            border-radius: var(--radius-lg);
+            padding: 22px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border-color);
+        }
+
+        .sidebar h3 {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+            margin-bottom: 14px;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 8px;
+        }
+
+        .sidebar ul {
+            list-style: none;
+        }
+
+        .sidebar li {
+            margin-bottom: 8px;
+        }
+
+        .sidebar a {
+            color: var(--text-main);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            display: block;
+            padding: 6px 10px;
+            border-radius: var(--radius-md);
+            transition: all 0.2s;
+        }
+
+        .sidebar a:hover {
+            background-color: var(--body-bg);
+            color: var(--primary-light);
+            transform: translateX(2px);
+        }
+
+        /* Content Cards */
+        .content {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            min-width: 0;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: var(--radius-lg);
+            padding: 32px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border-color);
+        }
+
+        .card-header {
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 14px;
+        }
+
+        .card-title {
+            font-size: 1.35rem;
+            font-weight: 700;
+            color: var(--dark-bg);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card-subtitle {
+            font-size: 0.92rem;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        p {
+            margin-bottom: 14px;
+        }
+
+        ul, ol {
+            margin-left: 20px;
+            margin-bottom: 16px;
+        }
+
+        li {
+            margin-bottom: 6px;
+        }
+
+        /* Mermaid Wrapper */
+        .mermaid-wrapper {
+            background: #FAFCFF;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 24px;
+            margin: 20px 0;
+            overflow-x: auto;
+            display: flex;
+            justify-content: center;
+        }
+
+        .mermaid {
+            width: 100%;
+        }
+
+        /* Callout Cards */
+        .callout {
+            padding: 18px 22px;
+            border-radius: var(--radius-md);
+            margin: 20px 0;
+            font-size: 0.95rem;
+            border-left: 4px solid;
+        }
+
+        .callout-important {
+            background-color: #EFF6FF;
+            border-left-color: var(--primary-light);
+            color: #1E40AF;
+        }
+
+        .callout-warning {
+            background-color: var(--warning-bg);
+            border-left-color: #F59E0B;
+            color: var(--warning-text);
+        }
+
+        .callout-danger {
+            background-color: var(--danger-bg);
+            border-left-color: #EF4444;
+            color: var(--danger-text);
+        }
+
+        .callout-success {
+            background-color: var(--success-bg);
+            border-left-color: #10B981;
+            color: var(--success-text);
+        }
+
+        /* Tables */
+        .table-responsive {
+            overflow-x: auto;
+            margin: 20px 0;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 0.92rem;
+        }
+
+        th {
+            background: #F8FAFC;
+            color: var(--dark-bg);
+            font-weight: 600;
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        td {
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--border-color);
+            vertical-align: top;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:hover td {
+            background-color: #F8FAFC;
+        }
+
+        /* Code snippets */
+        pre {
+            background: var(--code-bg);
+            color: #F8FAFC;
+            padding: 20px;
+            border-radius: var(--radius-md);
+            overflow-x: auto;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.88rem;
+            margin: 16px 0;
+            line-height: 1.5;
+        }
+
+        code {
+            font-family: 'Fira Code', monospace;
+            background: #EDF2F7;
+            color: #2D3748;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.85em;
+        }
+
+        pre code {
+            background: transparent;
+            color: inherit;
+            padding: 0;
+        }
+
+        /* Priority Badges */
+        .badge {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 6px;
+            font-size: 0.78rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .badge-bloqueante {
+            background: #FEE2E2;
+            color: #991B1B;
+            border: 1px solid #FCA5A5;
+        }
+
+        .badge-alta {
+            background: #FEF3C7;
+            color: #92400E;
+            border: 1px solid #FDE68A;
+        }
+
+        .badge-media {
+            background: #D1FAE5;
+            color: #065F46;
+            border: 1px solid #6EE7B7;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--text-muted);
+            font-size: 0.88rem;
+            border-top: 1px solid var(--border-color);
+            margin-top: 60px;
+            background: #FFFFFF;
+        }
+
+        /* Responsive Mobile */
+        @media (max-width: 900px) {
+            .main-container {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                position: static;
+            }
+
+            .header-title h1 {
+                font-size: 1.6rem;
+            }
+
+            .card {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Top Navigation Bar -->
+    <nav class="top-navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                🚢 ALMAR ROSARIO <span>| Sistema de Gestión de Calidad ISO 9001</span>
+            </div>
+            <div class="nav-links">
+                <a href="index.html" class="nav-tab">🗺️ Mapa API Kipintoch</a>
+                <a href="propuesta-automatizacion.html" class="nav-tab active">🤖 Propuesta Automatización Facturas</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header Header -->
+    <header>
+        <div class="header-container">
+            <span class="badge-iso">ISO 9001:2015 — Proceso de Apoyo: Administración y Finanzas</span>
+            <div class="header-title">
+                <h1>Automatización de Carga de Facturas de Proveedores</h1>
+                <p>Propuesta de Arquitectura, Flujo Operativo y Matriz de Validación para ALMAR Rosario</p>
+            </div>
+            <div class="header-meta">
+                <span>📅 <strong>Fecha de Presentación:</strong> 4 de Agosto, 2026</span>
+                <span>📋 <strong>Estado:</strong> Borrador para Validación en Reunión</span>
+                <span>⚙️ <strong>Sistema Destino:</strong> Kipintoch / KipinCARGO API</span>
+            </div>
+        </div>
+    </header>
+
+    <div class="main-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <h3>Índice del Documento</h3>
+            <ul>
+                <li><a href="#objetivo">1. Objetivo de la Reunión</a></li>
+                <li><a href="#proceso-asis">2. Proceso Actual (AS-IS)</a></li>
+                <li><a href="#mapa-dolor">3. Mapa de Dolor</a></li>
+                <li><a href="#arquitectura-tobe">4. Arquitectura Propuesta (TO-BE)</a></li>
+                <li><a href="#diagrama-secuencia">5. Diagrama de Secuencia E2E</a></li>
+                <li><a href="#stack-tecnologico">6. Stack Tecnológico</a></li>
+                <li><a href="#preguntas-validacion">7. Preguntas de Validación</a></li>
+                <li><a href="#beneficios-roi">8. Beneficios & ROI</a></li>
+                <li><a href="#roadmap">9. Roadmap de Desarrollo</a></li>
+                <li><a href="#iso9001">10. Alineación ISO 9001</a></li>
+            </ul>
+        </aside>
+
+        <!-- Content Area -->
+        <main class="content">
+
+            <!-- 1. Objetivo -->
+            <section id="objetivo" class="card">
+                <div class="card-header">
+                    <h2 class="card-title">🎯 1. Objetivo de la Reunión</h2>
+                    <p class="card-subtitle">Alineación estratégica y técnica con los referentes operativos y directivos de ALMAR Rosario</p>
+                </div>
+                <p>El propósito fundamental de esta presentación es validar con el equipo de ALMAR el <strong>proceso real actual</strong> de recepción, verificación y registro de facturas de compra (costos de proveedores) para:</p>
+                <ul>
+                    <li><strong>Confirmar o corregir la hipótesis del flujo AS-IS</strong> (cómo se gestionan los comprobantes hoy).</li>
+                    <li><strong>Definir los puntos de dolor exactos</strong> en la cadena de correos electrónicos y aprobaciones manuales.</li>
+                    <li><strong>Acordar la arquitectura técnica final (TO-BE)</strong> para iniciar el desarrollo con requerimientos cerrados.</li>
+                </ul>
+
+                <div class="callout callout-important">
+                    <strong>Foco Clave:</strong> El mayor valor del desarrollo está en todo lo que ocurre <strong>ANTES</strong> de que los datos ingresen a Kipintoch. Una vez que la información está estructurada en el sistema, la registración contable es predecible. El desafío y la oportunidad de automatización residen en la recepción, extracción y matcheo inicial con la carpeta logística.
+                </div>
+            </section>
+
+            <!-- 2. Proceso Actual (AS-IS) -->
+            <section id="proceso-asis" class="card">
+                <div class="card-header">
+                    <h2 class="card-title">🔍 2. Hipótesis del Proceso Actual (AS-IS) — A Validar</h2>
+                    <p class="card-subtitle">Flujo estimado desde la recepción de la factura hasta su carga en Kipintoch</p>
+                </div>
+
+                <div class="mermaid-wrapper">
+                    <pre class="mermaid">
+flowchart TD
+    subgraph PROVEEDORES["🏢 PROVEEDORES / ARMADORES / AGENTES"]
+        P1["Línea Marítima (Maersk, MSC, etc.)"]
+        P2["Agente Internacional en Origen"]
+        P3["Despachante de Aduana"]
+        P4["Transportista Local (Camión/Flete)"]
+        P5["Terminal Portuaria"]
+    end
+
+    subgraph MAIL["📧 CADENA DE EMAILS (Zona Gris / Sin Trazabilidad)"]
+        M1["Emails llegan a casillas individuales o genéricas"]
+        M2["Emails con PDFs adjuntos (facturas, debit notes)"]
+        M3["Reenvíos internos / CC a Administración"]
+    end
+
+    subgraph MANUAL["👤 PROCESAMIENTO MANUAL (Cuello de Botella)"]
+        H1["Identificar a qué CARPETA pertenece la factura"]
+        H2["Verificar proveedor (Razón Social / CUIT)"]
+        H3["Clasificar el tipo de gasto (FIA, FMA, etc.)"]
+        H4["Validar montos contra cotización / estimado"]
+        H5["Convertir moneda (USD -> ARS si aplica)"]
+    end
+
+    subgraph KIPIN["💻 CARGA EN KIPINTOCH (Proceso Conocido)"]
+        K1["Ingresar factura de compra en la carpeta"]
+        K2["Asociar gasto + proveedor + monto"]
+        K3["Adjuntar PDF de respaldo"]
+        K4["Cierre contable: cierreFacturaCosto ✅"]
+    end
+
+    P1 & P2 & P3 & P4 & P5 --> M1
+    M1 --> M2
+    M2 --> M3
+    M3 --> H1
+    H1 --> H2
+    H2 --> H3
+    H3 --> H4
+    H4 --> H5
+    H5 --> K1
+    K1 --> K2
+    K2 --> K3
+    K3 --> K4
+
+    style MAIL fill:#FFFBEB,stroke:#F59E0B,color:#000
+    style MANUAL fill:#FEF2F2,stroke:#EF4444,color:#000
+    style KIPIN fill:#ECFDF5,stroke:#10B981,color:#000
+                    </pre>
+                </div>
+
+                <h3 style="margin-top: 24px; margin-bottom: 12px; font-size: 1.1rem; color: var(--dark-bg);">Desglose de Pasos y Matriz de Validación con ALMAR</h3>
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Etapa del Proceso</th>
+                                <th>Nuestra Hipótesis AS-IS</th>
+                                <th>❓ Pregunta Específica para la Reunión</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>1</strong></td>
+                                <td><strong>Recepción de Factura</strong></td>
+                                <td>Los proveedores envían comprobantes por correo en formato PDF.</td>
+                                <td>¿A qué casilla(s) ingresan? ¿Existe una casilla centralizada o llegan a correos personales de cada operador?</td>
+                            </tr>
+                            <tr>
+                                <td><strong>2</strong></td>
+                                <td><strong>Asignación Interna</strong></td>
+                                <td>El correo es reenviado o derivado al responsable de la carpeta.</td>
+                                <td>¿Quién determina quién procesa la factura? ¿Hay reenvíos manuales entre Operaciones y Administración?</td>
+                            </tr>
+                            <tr>
+                                <td><strong>3</strong></td>
+                                <td><strong>Matcheo con Carpeta</strong></td>
+                                <td>Se busca en Kipintoch la carpeta asociada según HBL, Booking o Referencia.</td>
+                                <td>¿Qué dato es la clave primaria de búsqueda habitual? ¿El proveedor siempre incluye la referencia de ALMAR?</td>
+                            </tr>
+                            <tr>
+                                <td><strong>4</strong></td>
+                                <td><strong>Validación de Proveedor</strong></td>
+                                <td>Se confirma que la Razón Social y CUIT existan en el padrón de Kipintoch.</td>
+                                <td>¿Qué ocurre si la factura proviene de un proveedor nuevo no registrado en el sistema?</td>
+                            </tr>
+                            <tr>
+                                <td><strong>5</strong></td>
+                                <td><strong>Clasificación de Gasto</strong></td>
+                                <td>Se mapea el ítem de la factura al código de gasto oficial (<code>FIA</code>, <code>FMA</code>, etc.).</td>
+                                <td>¿Es una relación 1 a 1 o un mismo comprobante puede incluir varios códigos de gastos distintos?</td>
+                            </tr>
+                            <tr>
+                                <td><strong>6</strong></td>
+                                <td><strong>Control de Montos</strong></td>
+                                <td>Se compara el costo facturado contra el estimado precargado.</td>
+                                <td>¿Existe un rango de tolerancia para diferencias en montos antes de requerir autorización especial?</td>
+                            </tr>
+                            <tr>
+                                <td><strong>7</strong></td>
+                                <td><strong>Carga en Kipintoch</strong></td>
+                                <td>El operador digita los valores en la carpeta y adjunta el archivo.</td>
+                                <td>¿Cuánto tiempo promedio insume registrar manualmente una factura completa con sus adjuntos?</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- 3. Mapa de Dolor -->
+            <section id="mapa-dolor" class="card">
+                <div class="card-header">
+                    <h2 class="card-title">⚠️ 3. Mapa de Dolor — Diagnóstico del Flujo Actual</h2>
+                    <p class="card-subtitle">Puntos críticos que impactan en la eficiencia, la trazabilidad y la certificación ISO</p>
+                </div>
+
+                <div class="mermaid-wrapper">
+                    <pre class="mermaid">
+flowchart LR
+    subgraph DOLORES["🔴 PUNTOS DE DOLOR ENCONTRADOS"]
+        D1["📧 Facturas dispersas en múltiples correos"]
+        D2["⏳ Carga manual lenta y repetitiva"]
+        D3["❌ Riesgo de error tipeando CUIT / montos"]
+        D4["🔍 Búsqueda manual carpeta por carpeta"]
+        D5["📋 Falta de trazabilidad en la recepción"]
+        D6["💱 Criterios variables en conversión de divisas"]
+    end
+
+    subgraph IMPACTOS["💥 IMPACTO EN OPERACIÓN E ISO"]
+        I1["Demora en el cierre contable de carpetas"]
+        I2["Riesgo de pagar importes incorrectos"]
+        I3["Dificultad para auditar el cumplimiento (ISO 7.5)"]
+        I4["Cuello de botella en períodos de alto volumen"]
+    end
+
+    D1 & D5 --> I3
+    D2 & D4 --> I1
+    D3 & D6 --> I2
+    D2 & D3 --> I4
+
+    style DOLORES fill:#FEF2F2,stroke:#EF4444,color:#000
+    style IMPACTOS fill:#FFFBEB,stroke:#F59E0B,color:#000
+                    </pre>
+                </div>
+            </section>
+
+            <!-- 4. Arquitectura Propuesta (TO-BE) -->
+            <section id="arquitectura-tobe" class="card">
+                <div class="card-header">
+                    <h2 class="card-title">🚀 4. Proceso Propuesto (TO-BE) — Arquitectura de Automatización</h2>
+                    <p class="card-subtitle">Sistema inteligente de ingesta, OCR/IA, validación y carga asistida</p>
+                </div>
+
+                <div class="mermaid-wrapper">
+                    <pre class="mermaid">
+flowchart TD
+    subgraph PROVEEDORES["🏢 PROVEEDORES"]
+        P["Envío de facturas por email"]
+    end
+
+    subgraph INGESTA["📥 MÓDULO 1: INGESTA DE EMAILS"]
+        I1["Casilla centralizada: facturas@almarrosario.com"]
+        I2["Listener automático (Graph API / IMAP)"]
+        I3["Descarga y registro de adjuntos PDF/XML"]
+    end
+
+    subgraph EXTRACCION["🤖 MÓDULO 2: EXTRACCIÓN CON IA / OCR"]
+        E1["Lectura de PDF mediante OCR + LLM"]
+        E2["Extracción de: CUIT, Razón Social, Monto,<br/>Moneda, Fecha, HBL, Booking, Ítems"]
+    end
+
+    subgraph MATCHING["🔗 MÓDULO 3: MATCHING Y VALIDACIÓN (API KIPINTOCH)"]
+        M1["GET /forwarding/carpetas -> Busca Carpeta"]
+        M2["GET /empresas -> Valida CUIT Proveedor"]
+        M3["GET /configuracion/gastos -> Mapea Nomenclador"]
+        M4["GET /rentabilidad -> Compara vs Estimado"]
+    end
+
+    subgraph DASHBOARD["📊 MÓDULO 4: DASHBOARD DE REVISIÓN (HUMAN-IN-THE-LOOP)"]
+        D1["Cola de facturas con score de confianza"]
+        D2["Vista comparativa lado a lado: PDF vs Datos Extraídos"]
+        D3["Aprobación o corrección por operador con 1 clic"]
+        D4["Registro inmutable de auditoría (ISO 9001)"]
+    end
+
+    subgraph CARGA["✅ MÓDULO 5: CARGA AUTOMÁTICA"]
+        C1["POST Costo de compra en carpeta (API)"]
+        C2["POST Adjunto PDF de respaldo"]
+        C3["Actualización de cierreContable"]
+    end
+
+    P --> I1
+    I1 --> I2 --> I3 --> E1 --> E2
+    E2 --> M1 & M2 & M3 & M4
+    M1 & M2 & M3 & M4 --> D1
+    D1 --> D2 --> D3
+    D3 --> C1 & C2 & C3
+    D3 --> D4
+
+    style INGESTA fill:#EFF6FF,stroke:#2D65EB,color:#000
+    style EXTRACCION fill:#F3E8FF,stroke:#9333EA,color:#000
+    style MATCHING fill:#FFFBEB,stroke:#F59E0B,color:#000
+    style DASHBOARD fill:#ECFDF5,stroke:#10B981,color:#000
+    style CARGA fill:#ECFDF5,stroke:#10B981,color:#000
+                    </pre>
+                </div>
+
+                <h3 style="margin-top: 24px; margin-bottom: 12px; font-size: 1.1rem; color: var(--dark-bg);">Ejemplo de Estructura de Datos Extraída (Módulo 2)</h3>
+                <pre><code>{
+  "numero_factura": "FC-0001-00045210",
+  "proveedor": {
+    "cuit": "30-70891234-9",
+    "razon_social": "MAERSK LINE ARGENTINA S.A."
+  },
+  "fecha_emision": "2026-07-28",
+  "moneda": "USD",
+  "monto_total": 3450.00,
+  "items": [
+    { "concepto": "Ocean Freight 40HC", "monto": 3100.00, "codigo_gasto_sugerido": "FMA" },
+    { "concepto": "Terminal Handling Charge", "monto": 350.00, "codigo_gasto_sugerido": "THC" }
+  ],
+  "referencias_detectadas": {
+    "hbl": "MAE1298456",
+    "booking": "BK-90451"
+  },
+  "confianza_ocr": 0.96
+}</code></pre>
+            </section>
+
+            <!-- 5. Diagrama de Secuencia E2E -->
+            <section id="diagrama-secuencia" class="card">
+                <div class="card-header">
+                    <h2 class="card-title">🔄 5. Diagrama de Secuencia Completo (End-to-End)</h2>
+                    <p class="card-subtitle">Interacción temporal entre Proveedores, Bot de Ingesta, IA, API Kipintoch y Operadores</p>
+                </div>
+
+                <div class="mermaid-wrapper">
+                    <pre class="mermaid">
+sequenceDiagram
+    autonumber
+    actor P as 🏢 Proveedor
+    participant E as 📧 Email (Listener)
+    participant IA as 🤖 Motor OCR / IA
+    participant BOT as ⚙️ Orquestador Backend
+    participant API as 🌐 API Kipintoch
+    actor OP as 👤 Operador ALMAR
+    participant KIP as 💻 Kipintoch (DB)
+
+    P->>E: Envía email con factura PDF adjunta
+    E->>BOT: Evento: Nuevo email recibido
+    BOT->>IA: Envía PDF para extracción de datos
+    IA-->>BOT: Devuelve JSON estructurado + Confianza
+    BOT->>API: GET /forwarding/carpetas (Busca HBL/Booking)
+    API-->>BOT: Devuelve ID Carpeta (ej: 1435)
+    BOT->>API: GET /empresas (Valida CUIT Proveedor)
+    API-->>BOT: Devuelve ID Empresa Proveedor
+    BOT->>API: GET /configuracion/gastos
+    API-->>BOT: Devuelve Código de Gasto Homologado
+    BOT->>OP: Notifica comprobante listo en Dashboard
+    OP->>OP: Revisa vista comparativa (PDF vs Extraído)
+    OP->>BOT: Hace clic en "Aprobar y Registrar"
+    BOT->>API: POST Carga costo de compra en carpeta
+    BOT->>API: POST Sube PDF a /adjuntos/obtener
+    API->>KIP: Impacta registro y actualiza Cierre Contable
+    KIP-->>OP: Operación completada con trazabilidad ISO ✅
+                    </pre>
+                </div>
+            </section>
+
+            <!-- 6. Stack Tecnológico -->
+            <section id="stack-tecnologico" class="card">
+                <div class="card-header">
+                    <h2 class="card-title">💻 6. Stack Tecnológico Propuesto</h2>
+                    <p class="card-subtitle">Arquitectura modular, escalable y segura</p>
+                </div>
+
+                <div class="mermaid-wrapper">
+                    <pre class="mermaid">
+flowchart TD
+    subgraph FRONT["🖥️ FRONTEND (DASHBOARD)"]
+        F1["React / Next.js"]
+        F2["Visor PDF interactivo"]
+        F3["Interfaz de revisión comparativa"]
+    end
+
+    subgraph BACK["⚙️ BACKEND (ORQUESTADOR)"]
+        B1["Node.js / Python FastAPI"]
+        B2["PostgreSQL (Queue & Audit Logs)"]
+        B3["Microsoft Graph API (Email Ingest)"]
+    end
+
+    subgraph IA_SERVICES["🧠 SERVICIOS DE IA & OCR"]
+        I1["Google Document AI / Azure OCR"]
+        I2["Modelos LLM para parseo no estructurado"]
+    end
+
+    subgraph API_KIP["🌐 API EXTERNA"]
+        K1["API Kipintoch RESTful (https://api.almarrosar.kipincargo.com)"]
+    end
+
+    FRONT <--> BACK
+    BACK <--> IA_SERVICES
+    BACK <--> API_KIP
+
+    style FRONT fill:#EFF6FF,stroke:#2D65EB,color:#000
+    style BACK fill:#F3E8FF,stroke:#9333EA,color:#000
+    style IA_SERVICES fill:#FFFBEB,stroke:#F59E0B,color:#000
+    style API_KIP fill:#ECFDF5,stroke:#10B981,color:#000
+                    </pre>
+                </div>
+            </section>
+
+            <!-- 7. Preguntas de Validación -->
+            <section id="preguntas-validacion" class="card">
+                <div class="card-header">
+                    <h2 class="card-title">❓ 7. Preguntas Clave para Responder en la Reunión</h2>
+                    <p class="card-subtitle">Cuestionario priorizado para definir requerimientos finales</p>
+                </div>
+
+                <h3 style="color: var(--danger-text); margin-bottom: 12px;">🔴 Prioridad Máxima (Bloqueantes)</h3>
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Pregunta</th>
+                                <th>Impacto en el Desarrollo</th>
+                                <th>Estado</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td><strong>¿Qué servicio de email corporativo utilizan?</strong> (Microsoft 365 / Google Workspace / Servidor propio)</td>
+                                <td>Define el conector de ingesta (Microsoft Graph API vs. IMAP/OAuth).</td>
+                                <td><span class="badge badge-bloqueante">A Validar</span></td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td><strong>¿A qué casillas llegan hoy las facturas de compras?</strong></td>
+                                <td>Define si creamos una casilla única centralizada o reglas de reenvío.</td>
+                                <td><span class="badge badge-bloqueante">A Validar</span></td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td><strong>¿Cuál es el dato clave principal con el que el operador identifica la carpeta?</strong> (HBL, Booking, Referencia Cliente)</td>
+                                <td>Configura la lógica de prioridad en el algoritmo de matcheo.</td>
+                                <td><span class="badge badge-bloqueante">A Validar</span></td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td><strong>¿Qué porcentaje de facturas proviene de proveedores del exterior (Invoices en inglés / sin formato AFIP)?</strong></td>
+                                <td>Define el nivel de entrenamiento necesario en el OCR/IA.</td>
+                                <td><span class="badge badge-bloqueante">A Validar</span></td>
+                            </tr>
+                            <tr>
+                                <td>5</td>
+                                <td><strong>¿Cuál es el volumen aproximado mensual de facturas de proveedores a procesar?</strong></td>
+                                <td>Permite dimensionar la infraestructura del servidor y colas de tareas.</td>
+                                <td><span class="badge badge-bloqueante">A Validar</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3 style="color: var(--warning-text); margin-top: 24px; margin-bottom: 12px;">🟡 Prioridad Alta (Diseño de Procesos)</h3>
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Pregunta</th>
+                                <th>Impacto en el Diseño</th>
+                                <th>Estado</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>6</td>
+                                <td><strong>¿Una misma factura puede contener ítems correspondientes a distintos códigos de gastos?</strong></td>
+                                <td>Determina si se requiere interfaz de desglose multitabla por comprobante.</td>
+                                <td><span class="badge badge-alta">A Validar</span></td>
+                            </tr>
+                            <tr>
+                                <td>7</td>
+                                <td><strong>¿Existen facturas consolidadas que apliquen a varias carpetas distintas al mismo tiempo?</strong></td>
+                                <td>Define la necesidad de un módulo de prorrateo entre carpetas.</td>
+                                <td><span class="badge badge-alta">A Validar</span></td>
+                            </tr>
+                            <tr>
+                                <td>8</td>
+                                <td><strong>¿Quiénes serán los usuarios autorizados para validar y aprobar en el Dashboard?</strong> (Operadores / Tesorería / Administración)</td>
+                                <td>Define roles, permisos y matriz de accesos.</td>
+                                <td><span class="badge badge-alta">A Validar</span></td>
+                            </tr>
+                            <tr>
+                                <td>9</td>
+                                <td><strong>¿Cuál es el margen de tolerancia aceptado entre el estimado de costo y la factura real?</strong></td>
+                                <td>Configura los umbrales de alerta verde/amarilla/roja en el sistema.</td>
+                                <td><span class="badge badge-alta">A Validar</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- 8. Beneficios & ROI -->
+            <section id="beneficios-roi" class="card">
+                <div class="card-header">
+                    <h2 class="card-title">📈 8. Beneficios Esperados & ROI</h2>
+                    <p class="card-subtitle">Comparativa entre la operación actual y la solución automatizada</p>
+                </div>
+
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Métrica / Indicador</th>
+                                <th>Operación Actual (Manual)</th>
+                                <th>Con Automatización Integrada</th>
+                                <th>Impacto Estimado</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Tiempo por comprobante</strong></td>
+                                <td>10 a 15 minutos por factura.</td>
+                                <td>Menos de 1 minuto (solo revisión).</td>
+                                <td><span style="color: #10B981; font-weight: 700;">⚡ ~90% de reducción</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Trazabilidad y Auditoría ISO</strong></td>
+                                <td>Cadena informal de emails y reenvíos.</td>
+                                <td>Log inmutable con usuario, fecha y estado.</td>
+                                <td><span style="color: #10B981; font-weight: 700;">✅ Cumplimiento ISO 9001 Total</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Errores de digitalización</strong></td>
+                                <td>Riesgo constante de tipeo en CUITs/Montos.</td>
+                                <td>Validación cruzada automática con API.</td>
+                                <td><span style="color: #10B981; font-weight: 700;">🛡️ Reducción cercana a 0%</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Agilidad en cierres contables</strong></td>
+                                <td>Demora supeditada a carga individual.</td>
+                                <td>Cierre inmediato de <code>cierreFacturaCosto</code>.</td>
+                                <td><span style="color: #10B981; font-weight: 700;">⏱️ Cierres en el día</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- 9. Roadmap de Desarrollo -->
+            <section id="roadmap" class="card">
+                <div class="card-header">
+                    <h2 class="card-title">🗓️ 9. Roadmap de Desarrollo Propuesto</h2>
+                    <p class="card-subtitle">Cronograma tentativo por fases e hitos de entrega</p>
+                </div>
+
+                <div class="mermaid-wrapper">
+                    <pre class="mermaid">
+gantt
+    title Plan de Desarrollo - Automatización de Carga de Facturas ALMAR
+    dateFormat  YYYY-MM-DD
+    axisFormat  %W/%M
+
+    section Fase 0: Validación
+    Reunión de Validación & Requerimientos  :active, m1, 2026-08-04, 3d
+    Cierre de Especificación Técnica         :m2, after m1, 4d
+
+    section Fase 1: Ingesta & OCR
+    Conector de Email & Ingesta             :f1_1, 2026-08-11, 7d
+    Entrenamiento OCR e IA de Extracción     :f1_2, after f1_1, 10d
+
+    section Fase 2: Integration API
+    Conexión API Kipintoch (Carpetas/Empresas):f2_1, after f1_1, 10d
+    Motor de Matching & Mapeo de Gastos     :f2_2, after f2_1, 7d
+
+    section Fase 3: UI & Piloto
+    Dashboard de Revisión Human-in-the-Loop :f3_1, after f2_2, 10d
+    Pruebas Piloto con Facturas Reales      :f3_2, after f3_1, 7d
+    Despliegue a Producción & Capacitación  :milestone, f3_3, after f3_2, 0d
+                    </pre>
+                </div>
+            </section>
+
+            <!-- 10. Alineación ISO 9001 -->
+            <section id="iso9001" class="card">
+                <div class="card-header">
+                    <h2 class="card-title">📜 10. Alineación con Norma ISO 9001:2015</h2>
+                    <p class="card-subtitle">Cobertura de requisitos normativos para la certificación operativa</p>
+                </div>
+
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Requisito ISO 9001:2015</th>
+                                <th>Cláusula</th>
+                                <th>Cómo lo Resuelve la Automatización propuesta</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Control de la Información Documentada</strong></td>
+                                <td>Capítulo 7.5</td>
+                                <td>Almacenamiento automático y seguro del PDF original vinculado a la carpeta con log de cambios.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Control de los Procesos Operativos</strong></td>
+                                <td>Capítulo 8.1</td>
+                                <td>Estandarización del flujo de carga de costos de compra eliminando discrepancias informales.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Control de Proveedores Externos</strong></td>
+                                <td>Capítulo 8.4</td>
+                                <td>Validación obligatoria del CUIT y Razón Social contra el padrón de empresas homologadas.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Trazabilidad del Servicio</strong></td>
+                                <td>Capítulo 8.5.2</td>
+                                <td>Cada comprobante registrado queda vinculado de forma inmutable a la carpeta House/Master.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <footer>
+        <p>Propuesta Técnica de Automatización de Facturas & Sistema de Gestión de Calidad ISO 9001 — Desarrollado para <strong>ALMAR Rosario</strong></p>
+    </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            mermaid.initialize({
+                startOnLoad: true,
+                theme: 'neutral',
+                securityLevel: 'loose',
+                flowchart: {
+                    useMaxWidth: true,
+                    htmlLabels: true
+                }
+            });
+        });
+    </script>
+</body>
+</html>

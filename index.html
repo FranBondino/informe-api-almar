@@ -440,8 +440,64 @@
             }
         }
 
+        /* Top Navbar */
+        .top-navbar {
+            background: #050D24;
+            padding: 12px 24px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .nav-brand {
+            font-weight: 700;
+            color: #FFFFFF;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-brand span {
+            color: var(--accent);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 8px;
+        }
+
+        .nav-tab {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: var(--radius-md);
+            font-size: 0.88rem;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+
+        .nav-tab:hover {
+            color: #FFFFFF;
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .nav-tab.active {
+            color: #FFFFFF;
+            background: var(--primary-light);
+            font-weight: 600;
+        }
+
         @media print {
-            .sidebar, .btn-print { display: none; }
+            .sidebar, .btn-print, .top-navbar { display: none; }
             .main-container { grid-template-columns: 1fr; margin: 0; padding: 0; }
             body { background: #FFF; }
             .card { box-shadow: none; border: 1px solid #CCC; }
@@ -449,6 +505,19 @@
     </style>
 </head>
 <body>
+
+    <!-- Top Navigation Bar -->
+    <nav class="top-navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                🚢 ALMAR ROSARIO <span>| Sistema de Gestión de Calidad ISO 9001</span>
+            </div>
+            <div class="nav-links">
+                <a href="index.html" class="nav-tab active">🗺️ Mapa API Kipintoch</a>
+                <a href="propuesta-automatizacion.html" class="nav-tab">🤖 Propuesta Automatización Facturas</a>
+            </div>
+        </div>
+    </nav>
 
     <header>
         <div class="header-container">
