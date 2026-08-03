@@ -229,19 +229,40 @@
 
         <div class="item-card">
             <div class="item-header">
-                <span class="item-title">1.2 Conector de Email corporativo (Microsoft 365 / Gmail / IMAP)</span>
+                <span class="item-title">1.2 Conector de Email Corporativo (Matriz de Accesos según Proveedor)</span>
                 <span class="badge badge-red">🔴 BLOQUEANTE</span>
             </div>
-            <p style="font-size: 0.95rem; color: #475569;">Permisos de lectura en el servidor de correo para la captura automática de comprobantes entrantes.</p>
-            <div class="grid-2">
-                <div class="box-why">
-                    <strong>¿Por qué lo pedimos?</strong>
-                    Para programar la ingesta automática de adjuntos PDF sin requerir que los empleados reenvíen manualmente los correos.
+            <p style="font-size: 0.95rem; color: #475569;">Permisos de lectura en el servidor de correo para la captura automática de comprobantes entrantes. <strong>Depende de qué servicio use ALMAR:</strong></p>
+            
+            <div style="margin-top: 14px; display: flex; flex-direction: column; gap: 12px;">
+                
+                <!-- Opción M365 -->
+                <div style="background: #EFF6FF; border: 1px solid #BFDBFE; padding: 14px; border-radius: 8px;">
+                    <strong style="color: #1E3A8A; font-size: 0.95rem;">🔵 CASO 1: Si usan Microsoft 365 / Outlook</strong>
+                    <ul style="font-size: 0.88rem; color: #1E293B; margin-top: 6px; padding-left: 20px;">
+                        <li><strong>Qué pedirle a IT:</strong> "Den de alta una App en Azure AD con permiso <code>Mail.Read</code>."</li>
+                        <li><strong>Lo que te tienen que dar:</strong> <code>Tenant ID</code>, <code>Client ID</code> y <code>Client Secret</code>.</li>
+                    </ul>
                 </div>
-                <div class="box-ask">
-                    <strong>Cómo pedirlo en la reunión</strong>
-                    "¿Nos autorizan la app en Microsoft 365 con permiso <code>Mail.Read</code> o nos configuran una casilla de ingesta <code>facturas@almarrosario.com</code>?"
+
+                <!-- Opción Google -->
+                <div style="background: #FEF3C7; border: 1px solid #FDE68A; padding: 14px; border-radius: 8px;">
+                    <strong style="color: #78350F; font-size: 0.95rem;">🟡 CASO 2: Si usan Google Workspace / Gmail Corporativo</strong>
+                    <ul style="font-size: 0.88rem; color: #1E293B; margin-top: 6px; padding-left: 20px;">
+                        <li><strong>Qué pedirle a IT:</strong> "Creen una Cuenta de Servicio en Google Cloud Console con delegación de dominio para <code>gmail.readonly</code>."</li>
+                        <li><strong>Lo que te tienen que dar:</strong> El archivo de credenciales JSON (<code>service-account-key.json</code>).</li>
+                    </ul>
                 </div>
+
+                <!-- Opción IMAP -->
+                <div style="background: #ECFDF5; border: 1px solid #A7F3D0; padding: 14px; border-radius: 8px;">
+                    <strong style="color: #065F46; font-size: 0.95rem;">🟢 CASO 3: Si usan Servidor Propio / cPanel / Webmail (IMAP)</strong>
+                    <ul style="font-size: 0.88rem; color: #1E293B; margin-top: 6px; padding-left: 20px;">
+                        <li><strong>Qué pedirle a IT:</strong> "Habiliten acceso de lectura IMAP seguro SSL (Puerto 993)."</li>
+                        <li><strong>Lo que te tienen que dar:</strong> Servidor IMAP (ej: <code>mail.almar.com</code>), Usuario y Contraseña/App Password.</li>
+                    </ul>
+                </div>
+
             </div>
         </div>
 
