@@ -273,13 +273,19 @@ sequenceDiagram
 
 Para iniciar el desarrollo del backend y el dashboard de inmediato, se solicita:
 
-1. ✅ **API Token Kipintoch:** *(Ya disponible y validado en la API).*
-2. 🔑 **Acceso de Lectura a Emails:** Permisos de lectura en Microsoft 365 (`Mail.Read`) o credenciales para el conector de ingesta.
-3. 📄 **Lote de Facturas Reales de Prueba (Dataset):** 10 a 20 PDFs de facturas reales recientes (Maersk, MSC, despachantes, fletes locales, Invoices en USD) para entrenar el motor OCR/IA.
+1. ✅ **API Token Kipintoch:** *(🟢 YA DISPONIBLE y validado en vivo contra la API de ALMAR Rosario).*
+2. 🔑 **Acceso de Lectura a Emails:** Permisos de lectura en Microsoft 365 (`Mail.Read`) o acceso a la casilla de ingesta.
+3. 📄 **Lote de Facturas Reales de Prueba (Dataset):** 10 a 20 PDFs de facturas reales recientes para entrenar el motor OCR/IA.
 4. ❓ **Respuestas Operativas Clave:**
    - Confirmar el dato prioritario de búsqueda (`HBL`, `Booking`, `Ref Interna`).
    - Definir quién aprueba en el Dashboard (Operador asignado o Administración).
    - Definir el umbral de desvío aceptado en el costo estimado vs factura real.
+
+> [!TIP]
+> **💬 Plan de Acción si dicen "No sabemos / No tenemos equipo de IT":**
+> - **Si tienen técnico externo:** Pedir el WhatsApp/email del contacto de IT para enviarle la [Guía Técnica de 1 Página](guia-tecnica-it-email.html). Él nos genera los accesos en 5 minutos.
+> - **Si usan M365/Outlook y no tienen técnico:** El dueño o usuario Admin comparte pantalla 2 minutos y configuramos la App en `portal.azure.com`.
+> - **Si usan Gmail y no tienen técnico:** Generamos una *Contraseña de Aplicación* de 16 letras en 1 minuto desde `myaccount.google.com/apppasswords`.
 
 ---
 
