@@ -487,12 +487,14 @@
                 <li><a href="#proceso-asis">2. Proceso Actual (AS-IS)</a></li>
                 <li><a href="#mapa-dolor">3. Mapa de Dolor</a></li>
                 <li><a href="#arquitectura-tobe">4. Arquitectura Propuesta (TO-BE)</a></li>
+                <li><a href="#casillas-descentralizadas">4.1 Casillas Descentralizadas</a></li>
                 <li><a href="#diagrama-secuencia">5. Diagrama de Secuencia E2E</a></li>
                 <li><a href="#stack-tecnologico">6. Stack Tecnológico</a></li>
                 <li><a href="#preguntas-validacion">7. Preguntas de Validación</a></li>
                 <li><a href="#beneficios-roi">8. Beneficios & ROI</a></li>
                 <li><a href="#roadmap">9. Roadmap de Desarrollo</a></li>
                 <li><a href="#iso9001">10. Alineación ISO 9001</a></li>
+                <li><a href="#guia-pizarra">11. Guía de Dibujo en Pizarra</a></li>
             </ul>
         </aside>
 
@@ -752,6 +754,36 @@ flowchart TD
   },
   "confianza_ocr": 0.96
 }</code></pre>
+
+                <!-- Sub-sección 4.1 -->
+                <div id="casillas-descentralizadas" style="margin-top: 32px; border-top: 1px dashed var(--border-color); padding-top: 24px;">
+                    <h3 style="font-size: 1.15rem; color: var(--dark-bg); margin-bottom: 12px;">🛠️ 4.1 Solución a la Dispersión de Casillas de Correo (Sin Cambiar la Rutina del Personal)</h3>
+                    <p>Hoy en ALMAR <strong>no existe una casilla única centralizada</strong>; cada operador recibe facturas directamente en su correo personal. Para evitar resistencia del personal, la arquitectura contempla <strong>3 alternativas flexibles</strong>:</p>
+
+                    <div class="mermaid-wrapper">
+                        <pre class="mermaid">
+flowchart TD
+    subgraph OPCION_A["Opción A: Reglas de Reenvío (Cero Cambio)"]
+        A1["Proveedor manda mail a operador@almar.com"] --> A2["Regla M365 reenvía copia con PDF al Bot"]
+        A2 --> A3["El empleado no cambia nada de su rutina"]
+    end
+
+    subgraph OPCION_B["Opción B: Listener M365 Multi-Casilla (Transparente)"]
+        B1["Bot monitorea casillas del equipo via MS Graph API"] --> B2["Filtra automáticamente mails con facturas de proveedores"]
+        B2 --> B3["Sin reenvíos ni casillas adicionales"]
+    end
+
+    subgraph OPCION_C["Opción C: Reenvío Asistido de 1 Clic"]
+        C1["Operador recibe factura en su correo habitual"] --> C2["Le da 'Reenviar' a facturas@almar.com"]
+        C3["El Bot procesa y devuelve la orden lista en el Dashboard"]
+    end
+                        </pre>
+                    </div>
+
+                    <div class="callout callout-success">
+                        <strong>Recomendación Técnica:</strong> La <strong>Opción A</strong> o <strong>Opción B</strong> son las más recomendables porque son 100% transparentes para los empleados y no requieren cambiar los acuerdos comerciales ni los correos de contacto con proveedores.
+                    </div>
+                </div>
             </section>
 
             <!-- 5. Diagrama de Secuencia E2E -->
@@ -1048,6 +1080,88 @@ gantt
                                 <td><strong>Trazabilidad del Servicio</strong></td>
                                 <td>Capítulo 8.5.2</td>
                                 <td>Cada comprobante registrado queda vinculado de forma inmutable a la carpeta House/Master.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- 11. Guía de Dibujo en Pizarra -->
+            <section id="guia-pizarra" class="card">
+                <div class="card-header">
+                    <h2 class="card-title">🎨 11. Guía Práctica para Dibujar en Pizarra durante la Reunión</h2>
+                    <p class="card-subtitle">Estrategia dinámica de 3 pasos para presentar el proyecto en vivo a los encargados de ALMAR</p>
+                </div>
+
+                <div class="mermaid-wrapper">
+                    <pre class="mermaid">
+flowchart LR
+    subgraph PASO1["PASO 1: Dibujar el 'Antes' (AS-IS)"]
+        P1["📧 Mails / PDFs ➔ 👤 Tipeo Manual ➔ 💻 Kipintoch"]
+    end
+
+    subgraph PASO2["PASO 2: Dibujar el 'Puente' (TO-BE)"]
+        P2["📥 Ingesta ➔ 🤖 IA/OCR ➔ 🖥️ Pantalla 1-Clic ➔ 💻 Kipintoch"]
+    end
+
+    subgraph PASO3["PASO 3: Matriz Viva de Trabajo"]
+        P3["Completar tabla en la pizarra con el equipo de ALMAR"]
+    end
+
+    PASO1 --> PASO2 --> PASO3
+
+    style PASO1 fill:#FEF2F2,stroke:#EF4444,color:#000
+    style PASO2 fill:#ECFDF5,stroke:#10B981,color:#000
+    style PASO3 fill:#EFF6FF,stroke:#2D65EB,color:#000
+                    </pre>
+                </div>
+
+                <div class="grid-2" style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 20px;">
+                    <div style="background: #F8FAFC; border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 16px;">
+                        <h4 style="color: var(--primary); margin-bottom: 8px;">1️⃣ El "Antes" (Generar Empatía con el Dolor)</h4>
+                        <p style="font-size: 0.9rem;">Esquematizar el flujo actual de emails dispersos y tipeo manual. Preguntar en la mesa: <em>"¿Qué pasa si un mail se traspapela? ¿Cuánto tardan tipeando facturas de armadores?"</em></p>
+                    </div>
+                    <div style="background: #F8FAFC; border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 16px;">
+                        <h4 style="color: var(--primary); margin-bottom: 8px;">2️⃣ El "Puente" (Solución Asistida)</h4>
+                        <p style="font-size: 0.9rem;">Explicar el concepto Human-in-the-loop: <em>"El bot hace el 90% del trabajo pesado. El operador solo mira la pantalla, confirma con 1 clic y Kipintoch se carga solo."</em></p>
+                    </div>
+                </div>
+
+                <h4 style="margin-top: 20px; margin-bottom: 10px; color: var(--dark-bg);">3️⃣ Tabla viva para dibujar y completar en la pizarra con ALMAR:</h4>
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Tipo de Proveedor</th>
+                                <th>¿Cómo envían la factura hoy?</th>
+                                <th>¿Qué dato clave usan para buscar la carpeta?</th>
+                                <th>¿Tiene costo estimado precargado?</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Armadores</strong> (Maersk, MSC)</td>
+                                <td>Email con PDF adjunto</td>
+                                <td>N° Booking / HBL</td>
+                                <td>Sí (en la cotización)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Despachantes de Aduana</strong></td>
+                                <td>Email con PDF adjunto</td>
+                                <td>N° Registro María / Despacho</td>
+                                <td>Sí / En revisión</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Fletes Locales</strong> (Camión)</td>
+                                <td>Email / WhatsApp</td>
+                                <td>Nombre de Cliente / CUIT</td>
+                                <td>Variables</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Agentes del Exterior</strong></td>
+                                <td>Invoices en USD (PDF)</td>
+                                <td>HBL / Referencia Interna</td>
+                                <td>Sí</td>
                             </tr>
                         </tbody>
                     </table>
