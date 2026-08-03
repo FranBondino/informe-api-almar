@@ -259,6 +259,33 @@
             </div>
         </div>
 
+        <!-- DIAGRAMA 4 DE PIZARRA (SECUENCIA) -->
+        <div class="board-card">
+            <div class="board-header">
+                <span class="board-title">⏱️ DIAGRAMA 4 EN PIZARRA: Diagrama de Secuencia Simplificado (Línea de Tiempo)</span>
+                <span style="background: #F3E8FF; color: #9333EA; padding: 4px 10px; border-radius: 20px; font-size: 0.8rem; font-weight: 700;">OPCIONAL / EXPLICATIVO</span>
+            </div>
+
+            <div class="board-sketch">
+🏢 Proveedor       📧 Email           🤖 Bot IA        🌐 API Kipintoch     👤 Operador (Natali/Victoria)
+    │                  │                  │                  │                         │
+    ├─ 1. Manda PDF ──►│                  │                  │                         │
+    │                  ├─ 2. Detecta ────►│                  │                         │
+    │                  │                  ├─ 3. Lee PDF ────►│                         │
+    │                  │                  │                  ├─ 4. Valida Carpeta ────►│
+    │                  │                  │                  │ (HBL / CUIT / Margen)   │
+    │                  │                  │                  ├─ 5. Muestra en Dashboard│
+    │                  │                  │                  │                         ├─ 6. Revisa y Clic "Aprobar"
+    │                  │                  │                  │◄────────────────────────┤
+    │                  │                  │                  ├─ 7. POST Costo + PDF ✅
+            </div>
+
+            <div class="speech-box">
+                <strong>💬 Guión de Voz mientras explicás el flujo temporal:</strong>
+                "Acá ven la secuencia paso a paso: el proveedor manda el mail, el bot capta el PDF, extrae los datos y valida con la API de Kipintoch. Les avisa a Natali o Victoria en el Dashboard, ellas revisan los datos lado a lado con el PDF y cuando hacen clic en Aprobar, Kipintoch registra la factura y el PDF de respaldo automáticamente."
+            </div>
+        </div>
+
     </div>
 
 </body>
