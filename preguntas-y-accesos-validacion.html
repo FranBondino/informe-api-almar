@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Preguntas de Validación y Accesos — ALMAR Rosario</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0F172A;
+            --primary-accent: #2D65EB;
+            --secondary-accent: #10B981;
+            --bg-light: #F8FAFC;
+            --card-bg: #FFFFFF;
+            --text-main: #1E293B;
+            --text-muted: #64748B;
+            --border-color: #E2E8F0;
+            --radius-md: 12px;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        .top-navbar {
+            background-color: var(--primary);
+            color: #FFF;
+            padding: 14px 24px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-brand {
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        .nav-brand span { color: #60A5FA; font-weight: 400; }
+
+        .nav-links { display: flex; gap: 10px; flex-wrap: wrap; }
+
+        .nav-tab {
+            color: #94A3B8;
+            text-decoration: none;
+            padding: 6px 14px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: all 0.2s;
+            border: 1px solid #334155;
+        }
+
+        .nav-tab:hover, .nav-tab.active {
+            background: #1E293B;
+            color: #FFF;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .header-card {
+            background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
+            color: #FFF;
+            padding: 30px;
+            border-radius: var(--radius-md);
+            margin-bottom: 30px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .header-card h1 { font-size: 1.8rem; font-weight: 800; margin-bottom: 8px; }
+        .header-card p { color: #94A3B8; font-size: 1rem; }
+
+        .section-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin: 30px 0 16px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-title span {
+            background: #EFF6FF;
+            color: var(--primary-accent);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+        }
+
+        .item-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 20px;
+            margin-bottom: 16px;
+            box-shadow: var(--shadow-sm);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .item-card:hover {
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+        }
+
+        .item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 12px;
+            gap: 15px;
+        }
+
+        .item-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .badge-red { background: #FEF2F2; color: #DC2626; border: 1px solid #FCA5A5; }
+        .badge-amber { background: #FFFBEB; color: #D97706; border: 1px solid #FCD34D; }
+        .badge-green { background: #ECFDF5; color: #059669; border: 1px solid #6EE7B7; }
+
+        .badge {
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-top: 12px;
+        }
+
+        .box-why {
+            background: #F8FAFC;
+            border-left: 4px solid var(--primary-accent);
+            padding: 12px 16px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+
+        .box-ask {
+            background: #EFF6FF;
+            border-left: 4px solid #3B82F6;
+            padding: 12px 16px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+
+        .box-why strong, .box-ask strong {
+            display: block;
+            margin-bottom: 4px;
+            color: #0F172A;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="top-navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                🚢 ALMAR ROSARIO <span>| Lista de Validación & Accesos</span>
+            </div>
+            <div class="nav-links">
+                <a href="index.html" class="nav-tab">🗺️ Mapa API</a>
+                <a href="propuesta-automatizacion.html" class="nav-tab">🤖 Propuesta HTML</a>
+                <a href="presentacion-slides.html" class="nav-tab">🖥️ Diapositivas</a>
+                <a href="preguntas-y-accesos-validacion.html" class="nav-tab active">📋 Requerimientos y Preguntas</a>
+                <a href="galeria-diagramas.html" class="nav-tab">📊 Galería de Diagramas</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        
+        <div class="header-card">
+            <h1>📋 Guía Completa de Requerimientos, Accesos y Validación</h1>
+            <p>Lista estructurada de preguntas con su fundamentación técnica y los accesos concretos necesarios para comenzar el desarrollo inmediatamente sin bloqueos.</p>
+        </div>
+
+        <!-- SECCIÓN 1: ACCESOS TÉCNICOS -->
+        <h2 class="section-title">🔑 1. Accesos y Entregables Técnicos <span>Requeridos para Iniciar</span></h2>
+
+        <div class="item-card">
+            <div class="item-header">
+                <span class="item-title">1.1 API Token de Producción / Staging de Kipintoch</span>
+                <span class="badge badge-green">✅ YA DISPONIBLE</span>
+            </div>
+            <p style="font-size: 0.95rem; color: #475569;">Token de autenticación HTTP Header <code>token: &lt;API_TOKEN&gt;</code> para interactuar con los endpoints de carpetas, empresas, gastos y rentabilidad.</p>
+            <div class="grid-2">
+                <div class="box-why">
+                    <strong>¿Qué destraba?</strong>
+                    Permite la conexión directa del backend con la base de datos de Kipintoch para consultar y registrar costos.
+                </div>
+                <div class="box-ask">
+                    <strong>Estado Actual</strong>
+                    Validado y mapeado correctamente en la documentación oficial.
+                </div>
+            </div>
+        </div>
+
+        <div class="item-card">
+            <div class="item-header">
+                <span class="item-title">1.2 Conector de Email corporativo (Microsoft 365 / Gmail / IMAP)</span>
+                <span class="badge badge-red">🔴 BLOQUEANTE</span>
+            </div>
+            <p style="font-size: 0.95rem; color: #475569;">Permisos de lectura en el servidor de correo para la captura automática de comprobantes entrantes.</p>
+            <div class="grid-2">
+                <div class="box-why">
+                    <strong>¿Por qué lo pedimos?</strong>
+                    Para programar la ingesta automática de adjuntos PDF sin requerir que los empleados reenvíen manualmente los correos.
+                </div>
+                <div class="box-ask">
+                    <strong>Cómo pedirlo en la reunión</strong>
+                    "¿Nos autorizan la app en Microsoft 365 con permiso <code>Mail.Read</code> o nos configuran una casilla de ingesta <code>facturas@almarrosario.com</code>?"
+                </div>
+            </div>
+        </div>
+
+        <div class="item-card">
+            <div class="item-header">
+                <span class="item-title">1.3 Dataset de Prueba (10 a 20 Facturas Reales en PDF)</span>
+                <span class="badge badge-red">🔴 BLOQUEANTE</span>
+            </div>
+            <p style="font-size: 0.95rem; color: #475569;">Mapeo de comprobantes heterogéneos recibidos recientemente (Maersk, MSC, despachantes, fletes locales e Invoices en USD).</p>
+            <div class="grid-2">
+                <div class="box-why">
+                    <strong>¿Por qué lo pedimos?</strong>
+                    Para calibrar los prompts del modelo de Inteligencia Artificial / OCR y garantizar una tasa de extracción de datos >95%.
+                </div>
+                <div class="box-ask">
+                    <strong>Cómo pedirlo en la reunión</strong>
+                    "¿Nos pueden enviar un paquete comprimido con 15 facturas reales variadas que hayan recibido este mes para entrenar el bot?"
+                </div>
+            </div>
+        </div>
+
+        <!-- SECCIÓN 2: PREGUNTAS BLOQUEANTES -->
+        <h2 class="section-title">🔴 2. Preguntas de Prioridad Máxima <span>Definición de Arquitectura</span></h2>
+
+        <div class="item-card">
+            <div class="item-header">
+                <span class="item-title">2.1 Sistema de Email Corporativo en Uso</span>
+                <span class="badge badge-red">Prioridad 1</span>
+            </div>
+            <div class="grid-2">
+                <div class="box-why">
+                    <strong>Fundamentación Técnica</strong>
+                    Determina qué SDK o protocolo de integración utilizamos en el Módulo 1 (Microsoft Graph API, Google Cloud Pub/Sub o IMAP IDLE universal).
+                </div>
+                <div class="box-ask">
+                    <strong>Pregunta Formulada</strong>
+                    "¿Su correo corporativo corre bajo Microsoft 365, Google Workspace o tienen servidor propio con webmail?"
+                </div>
+            </div>
+        </div>
+
+        <div class="item-card">
+            <div class="item-header">
+                <span class="item-title">2.2 Mapeo de Casillas de Entrada Operativas</span>
+                <span class="badge badge-red">Prioridad 2</span>
+            </div>
+            <div class="grid-2">
+                <div class="box-why">
+                    <strong>Fundamentación Técnica</strong>
+                    Permite configurar los listeners multicasilla si las facturas ingresan a cuentas individuales (`operador1@almar.com`, `operador2@almar.com`).
+                </div>
+                <div class="box-ask">
+                    <strong>Pregunta Formulada</strong>
+                    "¿A cuántas casillas diferentes llegan facturas hoy y cómo se distribuyen entre los empleados?"
+                </div>
+            </div>
+        </div>
+
+        <div class="item-card">
+            <div class="item-header">
+                <span class="item-title">2.3 Clave Primaria de Matcheo con Carpeta</span>
+                <span class="badge badge-red">Prioridad 3</span>
+            </div>
+            <div class="grid-2">
+                <div class="box-why">
+                    <strong>Fundamentación Técnica</strong>
+                    Establece el algoritmo de búsqueda de coincidencia exacta en Kipintoch (`numeroGuia`, `numeroBooking`, o `referenciaExterna`).
+                </div>
+                <div class="box-ask">
+                    <strong>Pregunta Formulada</strong>
+                    "¿Cuál es el dato clave que usan hoy de memoria para encontrar la carpeta asociada a una factura recibida?"
+                </div>
+            </div>
+        </div>
+
+        <!-- SECCIÓN 3: PREGUNTAS OPERATIVAS Y EDGE CASES -->
+        <h2 class="section-title">🟡 3. Preguntas de Lógica de Negocio y Edge Cases <span>Reglas del Bot</span></h2>
+
+        <div class="item-card">
+            <div class="item-header">
+                <span class="item-title">3.1 Rol y Responsabilidad del Aprobador en Dashboard</span>
+                <span class="badge badge-amber">Prioridad Alta</span>
+            </div>
+            <div class="grid-2">
+                <div class="box-why">
+                    <strong>Fundamentación Técnica</strong>
+                    Define los roles, permisos y flujo de trabajo en la interfaz (Operadores de Carpeta vs Administración/Finanzas).
+                </div>
+                <div class="box-ask">
+                    <strong>Pregunta Formulada</strong>
+                    "En la pantalla de 1-Clic, ¿quién debe revisar y dar la aprobación final: el operador asignado o el área de Administración?"
+                </div>
+            </div>
+        </div>
+
+        <div class="item-card">
+            <div class="item-header">
+                <span class="item-title">3.2 Umbral de Tolerancia para Alertas de Desvío de Costo</span>
+                <span class="badge badge-amber">Prioridad Alta</span>
+            </div>
+            <div class="grid-2">
+                <div class="box-why">
+                    <strong>Fundamentación Técnica</strong>
+                    Permite parametrizar la consulta a `GET /rentabilidad` para activar banderas amarillas o rojas si el costo supera el valor estimado.
+                </div>
+                <div class="box-ask">
+                    <strong>Pregunta Formulada</strong>
+                    "¿Con qué porcentaje de diferencia entre el costo facturado y el costo estimado cotizado deben encenderse las alertas de margen?"
+                </div>
+            </div>
+        </div>
+
+        <div class="item-card">
+            <div class="item-header">
+                <span class="item-title">3.3 Gestión de Comprobantes Multi-Ítem (Split de Gastos)</span>
+                <span class="badge badge-amber">Prioridad Alta</span>
+            </div>
+            <div class="grid-2">
+                <div class="box-why">
+                    <strong>Fundamentación Técnica</strong>
+                    Define si el bot debe realizar el split automático de ítems (ej: separar Flete `FMA` de gastos locales `THC` y `DOC`).
+                </div>
+                <div class="box-ask">
+                    <strong>Pregunta Formulada</strong>
+                    "¿Un mismo comprobante de Maersk o MSC suele contener varios conceptos de gastos que deban imputarse por separado?"
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>
