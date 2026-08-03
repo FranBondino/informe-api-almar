@@ -922,6 +922,36 @@ flowchart LR
                         </pre>
                     </div>
 
+                    <!-- Edge Cases Section -->
+                    <div style="background: #FFFBEB; border: 1px solid #FDE68A; border-radius: var(--radius-md); padding: 20px; margin: 24px 0;">
+                        <h4 style="color: #92400E; font-size: 1.1rem; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+                            ⚠️ Tratamiento de Casos de Borde y Excepciones (Edge Cases)
+                        </h4>
+                        
+                        <div style="display: grid; grid-template-columns: 1fr; gap: 16px;">
+                            <div style="background: #FFFFFF; padding: 14px 18px; border-radius: 8px; border-left: 4px solid #F59E0B;">
+                                <strong style="color: #0F172A;">📌 Edge Case 1: Matcheo con Carpeta (Facturas sin HBL/Booking directo)</strong>
+                                <p style="font-size: 0.88rem; color: #475569; margin-top: 4px; margin-bottom: 0;">
+                                    Si el proveedor no incluye el HBL ni el Booking de ALMAR, el bot aplica <strong>Búsqueda Heurística Multinivel</strong>: busca por <code>CUIT Proveedor</code> + <code>N° de Contenedor</code> + <code>Ventana de Fechas (±5 días)</code>. Si hay 2 carpetas posibles, las presenta en el Dashboard para selección en 1 clic.
+                                </p>
+                            </div>
+
+                            <div style="background: #FFFFFF; padding: 14px 18px; border-radius: 8px; border-left: 4px solid #EF4444;">
+                                <strong style="color: #0F172A;">📌 Edge Case 2: Proveedor Nuevo (No Registrado en Kipintoch)</strong>
+                                <p style="font-size: 0.88rem; color: #475569; margin-top: 4px; margin-bottom: 0;">
+                                    Si la API <code>GET /empresas/validarCuit</code> devuelve inexistente, el bot extrae los datos fiscales del PDF (CUIT, Razón Social, Domicilio, Condición IVA) y muestra el botón <strong>"Dar de Alta Proveedor y Aprobar Factura"</strong>, ejecutando un <code>POST /empresas/guardar</code> transparente en segundo plano.
+                                </p>
+                            </div>
+
+                            <div style="background: #FFFFFF; padding: 14px 18px; border-radius: 8px; border-left: 4px solid #2D65EB;">
+                                <strong style="color: #0F172A;">📌 Edge Case 3: Facturas Multi-Concepto y Nomencladores Nuevos (Item Split)</strong>
+                                <p style="font-size: 0.88rem; color: #475569; margin-top: 4px; margin-bottom: 0;">
+                                    El bot desglosa cada renglón del PDF (ej: Flete, THC, BL Fee) y asigna su código de gasto oficial (<code>FMA</code>, <code>THC</code>, <code>DOC</code>). Si aparece una descripción inédita (ej: <em>Environmental Surcharge</em>), el operador confirma la sugerencia y el bot <strong>memoriza la homologación</strong> para siempre.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
                     <h4 style="margin-top: 20px; margin-bottom: 10px; color: var(--dark-bg);">Lógica de Matcheo de Carpeta (Prioridad de Búsqueda)</h4>
                     <div class="table-responsive">
                         <table>
