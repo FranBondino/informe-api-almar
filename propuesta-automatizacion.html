@@ -897,28 +897,45 @@ flowchart TD
                     </div>
                 </div>
 
-                <!-- Sub-sección 4.2 Módulo 3 Matching -->
+                <!-- Sub-sección 4.2 Módulo 3 Matching & Carga -->
                 <div style="margin-top: 32px; border-top: 1px dashed var(--border-color); padding-top: 24px;">
-                    <h3 style="font-size: 1.15rem; color: var(--dark-bg); margin-bottom: 12px;">🔗 Módulo 3: Matching y Validación contra Kipintoch (API)</h3>
-                    <p>Este módulo utiliza <strong>3 endpoints principales de la API de Kipintoch</strong> para validar de forma automática los datos extraídos del PDF antes de presentarlos al operador:</p>
+                    <h3 style="font-size: 1.15rem; color: var(--dark-bg); margin-bottom: 12px;">🔗 Módulo 3: Ciclo de Vida Integrado en API Kipintoch (Validaciones GET & Escritura POST)</h3>
+                    <p>Este mapa integra el <strong>ciclo de vida extremo a extremo (End-to-End)</strong>: desde la ingesta y consultas de validación (GETs) hasta la aprobación en el Dashboard y la registración contable automática (POSTs):</p>
 
                     <div class="mermaid-wrapper">
                         <pre class="mermaid">
-flowchart LR
-    JSON["JSON extraído del PDF"] --> API1["GET /forwarding/carpetas<br/>(Busca por HBL / Booking / Ref)"]
-    JSON --> API2["GET /empresas<br/>(Valida CUIT / Razón Social)"]
-    JSON --> API3["GET /configuracion/gastos<br/>(Clasifica código Nomenclador)"]
+flowchart TD
+    subgraph ENTRADA["📄 1. ENTRADA DE DATOS"]
+        PDF["Factura PDF / Email"] --> OCR["🤖 Extracción OCR + IA"]
+        OCR --> JSON["JSON estructurado"]
+    end
 
-    API1 --> R1["✅ Carpeta encontrada:<br/>OR/C-202607IM-00001435"]
-    API2 --> R2["✅ Proveedor validado:<br/>MAERSK LINE A/S (ID: 1247)"]
-    API3 --> R3["✅ Gasto mapeado:<br/>FMA (Flete Marítimo)"]
+    subgraph LECTURA["🔍 2. FASE DE LECTURA Y VALIDACIONES (GETs)"]
+        JSON --> G1["GET /forwarding/carpetas<br/>(Busca HBL / Booking / Ref)"]
+        JSON --> G2["GET /empresas<br/>(Valida CUIT de Proveedor)"]
+        JSON --> G3["GET /configuracion/gastos<br/>(Clasifica Código Nomenclador)"]
+        JSON --> G4["GET /rentabilidad<br/>(Verifica Desvío vs Estimado)"]
+        
+        G1 & G2 & G3 & G4 --> SCORE["📊 Score de Confianza (Match Alto)"]
+    end
 
-    R1 & R2 & R3 --> SCORE["📊 Score de Confianza:<br/>95% (Match Alto)"]
+    subgraph APROBACION["👤 3. FASE DE AUDITORÍA (DASHBOARD)"]
+        SCORE --> DASH["🖥️ Dashboard Human-in-the-Loop<br/>(Revisión Comparativa Lado a Lado)"]
+        DASH -->|✅ Operador Aprueba| WRITE["⚡ Orden de Escritura Backend"]
+    end
 
-    style API1 fill:#EFF6FF,stroke:#2D65EB,color:#000
-    style API2 fill:#EFF6FF,stroke:#2D65EB,color:#000
-    style API3 fill:#EFF6FF,stroke:#2D65EB,color:#000
-    style SCORE fill:#ECFDF5,stroke:#10B981,color:#000
+    subgraph ESCRITURA["⚡ 4. FASE DE ESCRITURA E IMPACTO (POSTs)"]
+        WRITE --> P1["POST /forwarding/carpetas/guardar<br/>(Imputa Costo de Compra en Carpeta)"]
+        WRITE --> P2["POST /empresas/guardar<br/>(Alta de Proveedor Nuevo si aplica)"]
+        WRITE --> P3["POST /adjuntos/obtener<br/>(Adjunta PDF de Respaldo a Carpeta)"]
+        
+        P1 & P2 & P3 --> CIERRE["✅ Impacto Contable Final:<br/>cierreFacturaCosto = TRUE<br/>Log de Auditoría ISO 9001 Registrado"]
+    end
+
+    style ENTRADA fill:#F8FAFC,stroke:#64748B,color:#000
+    style LECTURA fill:#EFF6FF,stroke:#2D65EB,color:#000
+    style APROBACION fill:#FFFBEB,stroke:#F59E0B,color:#000
+    style ESCRITURA fill:#ECFDF5,stroke:#10B981,color:#000
                         </pre>
                     </div>
 
