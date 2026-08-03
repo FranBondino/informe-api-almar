@@ -445,6 +445,58 @@
                 padding: 20px;
             }
         }
+
+        /* High contrast styles for Mermaid diagrams */
+        .mermaid text, .mermaid tspan {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+        }
+
+        /* Sequence diagram contrast fixes */
+        .mermaid .actor {
+            fill: #102FA8 !important;
+            stroke: #081433 !important;
+        }
+        .mermaid text.actor-text, .mermaid text.actor-text > tspan {
+            fill: #FFFFFF !important;
+            font-weight: 700 !important;
+        }
+        .mermaid .messageText {
+            fill: #0F172A !important;
+            font-weight: 600 !important;
+        }
+        .mermaid .note {
+            fill: #FFFBEB !important;
+            stroke: #FDE68A !important;
+        }
+        .mermaid .noteText, .mermaid .noteText > tspan {
+            fill: #92400E !important;
+            font-weight: 600 !important;
+        }
+
+        /* Gantt Chart contrast fixes */
+        .mermaid .sectionTitle {
+            fill: #081433 !important;
+            font-weight: 800 !important;
+            font-size: 14px !important;
+        }
+        .mermaid .taskText, .mermaid .taskTextOutsideRight, .mermaid .taskTextOutsideLeft {
+            fill: #0F172A !important;
+            font-weight: 700 !important;
+        }
+        .mermaid .taskTextOutsideRight, .mermaid .taskTextOutsideLeft {
+            fill: #0F172A !important;
+        }
+        .mermaid rect.task {
+            fill: #2D65EB !important;
+            stroke: #102FA8 !important;
+        }
+        .mermaid rect.task.active {
+            fill: #102FA8 !important;
+        }
+        .mermaid text.titleText {
+            fill: #081433 !important;
+            font-weight: 800 !important;
+        }
     </style>
 </head>
 <body>
@@ -1181,6 +1233,46 @@ flowchart LR
                 startOnLoad: true,
                 theme: 'neutral',
                 securityLevel: 'loose',
+                themeVariables: {
+                    fontFamily: 'Inter, sans-serif',
+                    fontSize: '14px',
+                    primaryColor: '#EFF6FF',
+                    primaryTextColor: '#0F172A',
+                    primaryBorderColor: '#2D65EB',
+                    lineColor: '#2D65EB',
+                    secondaryColor: '#F8FAFC',
+                    tertiaryColor: '#FFFFFF',
+                    
+                    /* Sequence Diagram Contrast Fixes */
+                    actorBkg: '#102FA8',
+                    actorTextColor: '#FFFFFF',
+                    actorLineColor: '#2D65EB',
+                    signalColor: '#102FA8',
+                    signalTextColor: '#0F172A',
+                    labelBoxBkgColor: '#FFFFFF',
+                    labelBoxBorderColor: '#2D65EB',
+                    labelTextColor: '#0F172A',
+                    loopTextColor: '#0F172A',
+                    noteBkgColor: '#FEF3C7',
+                    noteTextColor: '#92400E',
+                    noteBorderColor: '#FDE68A',
+
+                    /* Gantt Chart Contrast Fixes */
+                    ganttSectionBkgColor: '#F8FAFC',
+                    ganttSectionBkgColor2: '#FFFFFF',
+                    section0Color: '#EFF6FF',
+                    section1Color: '#ECFDF5',
+                    taskColor: '#2D65EB',
+                    taskTextColor: '#0F172A',
+                    taskTextDarkColor: '#0F172A',
+                    taskTextOutsideColor: '#0F172A',
+                    taskTextClickableColor: '#102FA8',
+                    activeTaskColor: '#102FA8',
+                    activeTaskTextColor: '#FFFFFF',
+                    gridColor: '#CBD5E1',
+                    doneTaskBkgColor: '#10B981',
+                    doneTaskTextColor: '#FFFFFF'
+                },
                 flowchart: {
                     useMaxWidth: true,
                     htmlLabels: true
