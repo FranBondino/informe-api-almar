@@ -88,30 +88,48 @@ La tabla siguiente describe cada paso del proceso previo a Kipintoch tal como lo
 
 ---
 
-## 3. Mapa de Dolor — Dónde Duele Hoy
+## 3. Mapa de Dolor — Dónde Duele Hoy en la Organización ALMAR
+
+El relevamiento interno de ALMAR revela una clara **división de roles y fricciones interdepartamentales** que el sistema automatizado viene a resolver de forma integral:
 
 ```mermaid
 flowchart LR
-    subgraph DOLORES["🔴 Puntos de Dolor Identificados"]
-        D1["📧 Facturas dispersas<br/>en múltiples casillas"]
-        D2["⏳ Tiempo excesivo de<br/>carga manual"]
-        D3["❌ Riesgo de error<br/>humano en datos"]
-        D4["🔍 Matcheo manual<br/>factura ↔ carpeta"]
-        D5["📋 Sin trazabilidad<br/>del proceso previo"]
-        D6["⚠️ Facturas que se<br/>pierden o demoran"]
-        D7["💱 Conversión manual<br/>de monedas"]
+    subgraph COMERCIAL["1. COMERCIAL (Alejandro Noacco / Martín Fusco)"]
+        C1["Cotizan operaciones y negocian con clientes"]
     end
 
-    D1 --> IMPACTO1["No hay un solo punto<br/>de entrada controlled"]
-    D2 --> IMPACTO2["Costo operativo alto,<br/>demora en cierres"]
-    D3 --> IMPACTO3["Errores en CUIT, montos<br/>o clasificación de gastos"]
-    D4 --> IMPACTO4["Requiere conocimiento<br/>del operador individual"]
-    D5 --> IMPACTO5["Imposible auditar ISO:<br/>¿Cuándo llegó? ¿Quién la procesó?"]
-    D6 --> IMPACTO6["Carpetas abiertas más<br/>tiempo del necesario"]
-    D7 --> IMPACTO7["Errores de tipo de cambio<br/>o moneda equivocada"]
+    subgraph OPERACIONES["2. OPERACIONES (Natali Hermoso / Victoria Moyano)"]
+        O1["Coordinan logística y urgencias diarias"]
+        O2["⚠️ Relegada la carga manual de facturas"]
+        O3["Sufren la brecha entre lo cotizado y lo facturado"]
+    end
 
-    style DOLORES fill:#f8d7da,stroke:#dc3545,color:#000
+    subgraph ADMIN["3. ADMINISTRACIÓN (Estefanía Rossi / Vanesa Maggiolaro)"]
+        A1["Esperan las facturas cargadas para conciliar y pagar"]
+        A2["⚠️ Demoras en pagos y visibilidad de flujo de caja"]
+    end
+
+    COMERCIAL -->|"Genera Cotización"| OPERACIONES
+    OPERACIONES -->|"Demora en Carga KipinTOCH"| ADMIN
+
+    style COMERCIAL fill:#EFF6FF,stroke:#2D65EB,color:#000
+    style OPERACIONES fill:#FEF2F2,stroke:#EF4444,color:#000
+    style ADMIN fill:#FFFBEB,stroke:#F59E0B,color:#000
 ```
+
+### 🔴 Los 3 Impactos Clave por Área:
+
+1. **Área Operativa (`Natali Hermoso`, `Victoria Moyano`):**
+   * **El Problema:** Priorizan la logística diaria y resolución de urgencias. La carga manual de facturas queda siempre al final de sus prioridades.
+   * **La Fricción:** Tienen que lidiar manualmente con la discrepancia entre lo cotizado por Comercial y lo que realmente factura el proveedor.
+   * **Beneficio del Bot:** Libera al 100% el tiempo operativo de carga manual. El bot sugiere el matcheo y la comparación vs cotizado de forma automática.
+
+2. **Área Comercial (`Alejandro Noacco`, `Martín Fusco`):**
+   * **Beneficio del Bot:** El bot compara `Factura Real vs Cotizado` (`GET /rentabilidad`), ofreciendo métricas exactas de margen sin alterar las cotizaciones comerciales.
+
+3. **Área de Administración y Finanzas (`Estefanía Rossi`, `Vanesa Maggiolaro`):**
+   * **El Problema:** La demora en la carga de Operaciones les impide conciliar bancos y emitir pagos a proveedores a tiempo.
+   * **Beneficio del Bot:** Disponibilidad inmediata de facturas registradas para conciliaciones rápidas, pagos en término y visibilidad completa del flujo de caja.
 
 ---
 

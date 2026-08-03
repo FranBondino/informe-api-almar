@@ -752,37 +752,52 @@ flowchart TD
             <!-- 3. Mapa de Dolor -->
             <section id="mapa-dolor" class="card">
                 <div class="card-header">
-                    <h2 class="card-title">⚠️ 3. Mapa de Dolor — Diagnóstico del Flujo Actual</h2>
-                    <p class="card-subtitle">Puntos críticos que impactan en la eficiencia, la trazabilidad y la certificación ISO</p>
+                    <h2 class="card-title">⚠️ 3. Mapa de Dolor y Roles Interdepartamentales en ALMAR</h2>
+                    <p class="card-subtitle">Diagnóstico de la fricción entre Comercial, Operaciones y Administración/Finanzas</p>
                 </div>
 
                 <div class="mermaid-wrapper">
                     <pre class="mermaid">
 flowchart LR
-    subgraph DOLORES["🔴 PUNTOS DE DOLOR ENCONTRADOS"]
-        D1["📧 Facturas dispersas en múltiples correos"]
-        D2["⏳ Carga manual lenta y repetitiva"]
-        D3["❌ Riesgo de error tipeando CUIT / montos"]
-        D4["🔍 Búsqueda manual carpeta por carpeta"]
-        D5["📋 Falta de trazabilidad en la recepción"]
-        D6["💱 Criterios variables en conversión de divisas"]
+    subgraph COMERCIAL["1. COMERCIAL (Alejandro Noacco / Martín Fusco)"]
+        C1["Cotizan operaciones y negocian con clientes"]
     end
 
-    subgraph IMPACTOS["💥 IMPACTO EN OPERACIÓN E ISO"]
-        I1["Demora en el cierre contable de carpetas"]
-        I2["Riesgo de pagar importes incorrectos"]
-        I3["Dificultad para auditar el cumplimiento (ISO 7.5)"]
-        I4["Cuello de botella en períodos de alto volumen"]
+    subgraph OPERACIONES["2. OPERACIONES (Natali Hermoso / Victoria Moyano)"]
+        O1["Coordinan logística y urgencias diarias"]
+        O2["⚠️ Relegada la carga manual de facturas"]
+        O3["Sufren la brecha entre lo cotizado y lo facturado"]
     end
 
-    D1 & D5 --> I3
-    D2 & D4 --> I1
-    D3 & D6 --> I2
-    D2 & D3 --> I4
+    subgraph ADMIN["3. ADMINISTRACIÓN (Estefanía Rossi / Vanesa Maggiolaro)"]
+        A1["Esperan las facturas cargadas para conciliar y pagar"]
+        A2["⚠️ Demoras en pagos y visibilidad de flujo de caja"]
+    end
 
-    style DOLORES fill:#FEF2F2,stroke:#EF4444,color:#000
-    style IMPACTOS fill:#FFFBEB,stroke:#F59E0B,color:#000
+    COMERCIAL -->|"Genera Cotización"| OPERACIONES
+    OPERACIONES -->|"Demora en Carga KipinTOCH"| ADMIN
+
+    style COMERCIAL fill:#EFF6FF,stroke:#2D65EB,color:#000
+    style OPERACIONES fill:#FEF2F2,stroke:#EF4444,color:#000
+    style ADMIN fill:#FFFBEB,stroke:#F59E0B,color:#000
                     </pre>
+                </div>
+
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 20px;">
+                    <div style="background: #FEF2F2; border: 1px solid #FCA5A5; border-radius: 8px; padding: 16px;">
+                        <h4 style="color: #991B1B; font-size: 1rem; margin-bottom: 8px;">👤 Operaciones (Natali Hermoso / Victoria Moyano)</h4>
+                        <p style="font-size: 0.85rem; color: #7F1D1D;">Priorizan resolver urgencias logísticas. La carga manual en Kipintoch queda relegada al final, sufriendo además la fricción de comparar lo cotizado vs facturado.</p>
+                    </div>
+
+                    <div style="background: #EFF6FF; border: 1px solid #BFDBFE; border-radius: 8px; padding: 16px;">
+                        <h4 style="color: #1E3A8A; font-size: 1rem; margin-bottom: 8px;">💼 Comercial (Alejandro Noacco / Martín Fusco)</h4>
+                        <p style="font-size: 0.85rem; color: #1E3A8A;">Generan cotizaciones y acuerdos comerciales. El bot ayuda a auditar en tiempo real (<code>GET /rentabilidad</code>) si la factura real respeta el margen previsto.</p>
+                    </div>
+
+                    <div style="background: #FFFBEB; border: 1px solid #FDE68A; border-radius: 8px; padding: 16px;">
+                        <h4 style="color: #92400E; font-size: 1rem; margin-bottom: 8px;">🏛️ Administración (Estefanía Rossi / Vanesa Maggiolaro)</h4>
+                        <p style="font-size: 0.85rem; color: #78350F;">Dependen de que Operaciones cargue las facturas para conciliar bancos y pagar. La automatización les garantiza facturas registradas en tiempo real.</p>
+                    </div>
                 </div>
             </section>
 
