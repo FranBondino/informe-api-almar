@@ -447,6 +447,27 @@
         }
 
         /* High contrast styles for Mermaid diagrams */
+        .mermaid-wrapper {
+            background: #FFFFFF !important;
+            border: 1px solid #E2E8F0 !important;
+            border-radius: var(--radius-md) !important;
+            padding: 24px !important;
+            margin: 20px 0 !important;
+            overflow-x: auto !important;
+        }
+
+        .mermaid {
+            background-color: #FFFFFF !important;
+            background: #FFFFFF !important;
+            width: 100% !important;
+        }
+
+        .mermaid svg {
+            background-color: #FFFFFF !important;
+            background: #FFFFFF !important;
+            max-width: 100% !important;
+        }
+
         .mermaid text, .mermaid tspan {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
         }
@@ -473,15 +494,40 @@
             font-weight: 600 !important;
         }
 
-        /* Gantt Chart contrast fixes */
+        /* Gantt Chart light background and text contrast fixes */
+        .mermaid .grid .tick text {
+            fill: #334155 !important;
+            font-size: 11px !important;
+            font-weight: 600 !important;
+        }
+        .mermaid .grid .tick line {
+            stroke: #CBD5E1 !important;
+        }
+        .mermaid .section {
+            stroke: none !important;
+        }
+        .mermaid .section0, .mermaid .section1, .mermaid .section2, .mermaid .section3 {
+            fill: #F8FAFC !important;
+            opacity: 1 !important;
+        }
+        .mermaid .section0Rect, .mermaid .section1Rect, .mermaid .section2Rect, .mermaid .section3Rect {
+            fill: #F1F5F9 !important;
+            opacity: 0.8 !important;
+        }
         .mermaid .sectionTitle {
+            fill: #0F172A !important;
+            font-weight: 800 !important;
+            font-size: 13px !important;
+        }
+        .mermaid text.titleText {
             fill: #081433 !important;
             font-weight: 800 !important;
-            font-size: 14px !important;
+            font-size: 16px !important;
         }
         .mermaid .taskText, .mermaid .taskTextOutsideRight, .mermaid .taskTextOutsideLeft {
             fill: #0F172A !important;
             font-weight: 700 !important;
+            font-size: 12px !important;
         }
         .mermaid .taskTextOutsideRight, .mermaid .taskTextOutsideLeft {
             fill: #0F172A !important;
@@ -489,13 +535,27 @@
         .mermaid rect.task {
             fill: #2D65EB !important;
             stroke: #102FA8 !important;
+            rx: 4px !important;
+            ry: 4px !important;
         }
         .mermaid rect.task.active {
             fill: #102FA8 !important;
+            stroke: #081433 !important;
         }
-        .mermaid text.titleText {
-            fill: #081433 !important;
-            font-weight: 800 !important;
+        .mermaid polygon.milestone {
+            fill: #10B981 !important;
+            stroke: #047857 !important;
+        }
+        .mermaid .today {
+            stroke: #EF4444 !important;
+            stroke-width: 2px !important;
+        }
+        .mermaid .gantt, .mermaid .ganttChart {
+            background-color: #FFFFFF !important;
+            background: #FFFFFF !important;
+        }
+        .mermaid rect.background, .mermaid .gantt rect.background {
+            fill: #FFFFFF !important;
         }
     </style>
 </head>
@@ -1231,22 +1291,27 @@ flowchart LR
         document.addEventListener("DOMContentLoaded", function() {
             mermaid.initialize({
                 startOnLoad: true,
-                theme: 'neutral',
+                theme: 'default',
+                darkMode: false,
                 securityLevel: 'loose',
                 themeVariables: {
                     fontFamily: 'Inter, sans-serif',
-                    fontSize: '14px',
+                    fontSize: '13px',
                     primaryColor: '#EFF6FF',
                     primaryTextColor: '#0F172A',
                     primaryBorderColor: '#2D65EB',
                     lineColor: '#2D65EB',
                     secondaryColor: '#F8FAFC',
                     tertiaryColor: '#FFFFFF',
+                    background: '#FFFFFF',
+                    mainBkg: '#FFFFFF',
+                    nodeBkg: '#EFF6FF',
+                    clusterBkg: '#F8FAFC',
                     
                     /* Sequence Diagram Contrast Fixes */
                     actorBkg: '#102FA8',
                     actorTextColor: '#FFFFFF',
-                    actorLineColor: '#2D65EB',
+                    actorLineColor: '#081433',
                     signalColor: '#102FA8',
                     signalTextColor: '#0F172A',
                     labelBoxBkgColor: '#FFFFFF',
@@ -1257,9 +1322,9 @@ flowchart LR
                     noteTextColor: '#92400E',
                     noteBorderColor: '#FDE68A',
 
-                    /* Gantt Chart Contrast Fixes */
-                    ganttSectionBkgColor: '#F8FAFC',
-                    ganttSectionBkgColor2: '#FFFFFF',
+                    /* Gantt Chart Light Contrast Fixes */
+                    ganttSectionBkgColor: '#FFFFFF',
+                    ganttSectionBkgColor2: '#F8FAFC',
                     section0Color: '#EFF6FF',
                     section1Color: '#ECFDF5',
                     taskColor: '#2D65EB',
@@ -1269,7 +1334,7 @@ flowchart LR
                     taskTextClickableColor: '#102FA8',
                     activeTaskColor: '#102FA8',
                     activeTaskTextColor: '#FFFFFF',
-                    gridColor: '#CBD5E1',
+                    gridColor: '#E2E8F0',
                     doneTaskBkgColor: '#10B981',
                     doneTaskTextColor: '#FFFFFF'
                 },
