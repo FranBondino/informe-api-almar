@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Presentación Ejecutiva — Automatización Facturas ALMAR</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        :root {
+            --primary: #0F172A;
+            --primary-accent: #2D65EB;
+            --secondary-accent: #10B981;
+            --bg-light: #F8FAFC;
+            --card-bg: #FFFFFF;
+            --text-main: #1E293B;
+            --text-muted: #64748B;
+            --border-color: #E2E8F0;
+            --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            --radius-lg: 16px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0F172A;
+            color: #F8FAFC;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* Top Navbar */
+        .top-navbar {
+            background-color: rgba(15, 23, 42, 0.9);
+            backdrop-filter: blur(8px);
+            border-bottom: 1px solid #1E293B;
+            padding: 12px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+        }
+
+        .brand-title {
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: #FFFFFF;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .badge-tag {
+            background: rgba(45, 101, 235, 0.2);
+            color: #60A5FA;
+            border: 1px solid rgba(96, 165, 250, 0.3);
+            padding: 2px 8px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 12px;
+        }
+
+        .nav-btn {
+            background: #1E293B;
+            color: #94A3B8;
+            border: 1px solid #334155;
+            padding: 6px 14px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .nav-btn:hover {
+            background: #334155;
+            color: #FFFFFF;
+        }
+
+        /* Slide Container */
+        .slides-viewport {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            position: relative;
+        }
+
+        .slide {
+            display: none;
+            width: 100%;
+            max-width: 1200px;
+            height: calc(100vh - 150px);
+            background: #FFFFFF;
+            color: #0F172A;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg);
+            padding: 40px;
+            flex-direction: column;
+            overflow-y: auto;
+            position: relative;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        .slide.active {
+            display: flex;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Slide Typography */
+        .slide-header {
+            border-bottom: 2px solid #E2E8F0;
+            padding-bottom: 16px;
+            margin-bottom: 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+
+        .slide-title {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #0F172A;
+            line-height: 1.2;
+        }
+
+        .slide-subtitle {
+            font-size: 0.95rem;
+            color: #64748B;
+            margin-top: 4px;
+        }
+
+        .slide-number {
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 700;
+            font-size: 1rem;
+            color: #2D65EB;
+            background: #EFF6FF;
+            padding: 4px 12px;
+            border-radius: 20px;
+        }
+
+        .slide-body {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        /* Grid Cards */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .card-box {
+            background: #F8FAFC;
+            border: 1px solid #E2E8F0;
+            border-radius: 12px;
+            padding: 20px;
+        }
+
+        .card-box h4 {
+            font-size: 1.1rem;
+            color: #0F172A;
+            margin-bottom: 10px;
+        }
+
+        .card-box p, .card-box li {
+            font-size: 0.95rem;
+            color: #334155;
+            line-height: 1.5;
+        }
+
+        .card-box ul {
+            padding-left: 20px;
+        }
+
+        /* Mermaid Wrapper in Slide */
+        .mermaid-wrapper {
+            background: #FFFFFF;
+            border: 1px solid #E2E8F0;
+            border-radius: 12px;
+            padding: 16px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-x: auto;
+        }
+
+        .mermaid {
+            width: 100%;
+        }
+
+        /* Callout Boxes */
+        .callout {
+            padding: 16px 20px;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .callout-blue { background: #EFF6FF; border-left: 4px solid #2D65EB; color: #1E3A8A; }
+        .callout-amber { background: #FFFBEB; border-left: 4px solid #F59E0B; color: #78350F; }
+        .callout-green { background: #ECFDF5; border-left: 4px solid #10B981; color: #065F46; }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+        }
+
+        th {
+            background: #F1F5F9;
+            color: #0F172A;
+            text-align: left;
+            padding: 10px 14px;
+            border-bottom: 2px solid #CBD5E1;
+            font-weight: 600;
+        }
+
+        td {
+            padding: 10px 14px;
+            border-bottom: 1px solid #E2E8F0;
+            color: #334155;
+        }
+
+        /* Bottom Controls Bar */
+        .controls-bar {
+            background: #0F172A;
+            border-top: 1px solid #1E293B;
+            padding: 14px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .progress-bar-container {
+            flex: 1;
+            max-width: 400px;
+            height: 6px;
+            background: #1E293B;
+            border-radius: 3px;
+            overflow: hidden;
+            margin: 0 20px;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background: #2D65EB;
+            width: 11%;
+            transition: width 0.3s ease;
+        }
+
+        .ctrl-btn {
+            background: #2D65EB;
+            color: #FFFFFF;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: background 0.2s;
+        }
+
+        .ctrl-btn:hover {
+            background: #1D4ED8;
+        }
+
+        .ctrl-btn:disabled {
+            background: #334155;
+            color: #64748B;
+            cursor: not-allowed;
+        }
+
+        .key-hint {
+            font-size: 0.8rem;
+            color: #64748B;
+            display: flex;
+            gap: 12px;
+        }
+
+        .key-kbd {
+            background: #1E293B;
+            border: 1px solid #334155;
+            padding: 2px 6px;
+            border-radius: 4px;
+            color: #94A3B8;
+            font-family: 'JetBrains Mono', monospace;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Top Navigation -->
+    <nav class="top-navbar">
+        <div class="brand-title">
+            <span>🚢 ALMAR Rosario</span>
+            <span class="badge-tag">Presentación Ejecutiva ISO 9001</span>
+        </div>
+        <div class="nav-links">
+            <a href="propuesta-automatizacion.html" class="nav-btn">📄 Ver Propuesta Completa (HTML)</a>
+            <a href="index.html" class="nav-btn">🗺️ Mapa de API Kipintoch</a>
+        </div>
+    </nav>
+
+    <!-- Viewport for Slides -->
+    <main class="slides-viewport">
+
+        <!-- SLIDE 1: Carátula y Objetivo -->
+        <article class="slide active" id="slide-1">
+            <div class="slide-header">
+                <div>
+                    <h1 class="slide-title">🚀 Automatización de Carga de Facturas</h1>
+                    <p class="slide-subtitle">Proyecto de Apoyo: Administración, Facturación y Finanzas — ALMAR Rosario</p>
+                </div>
+                <span class="slide-number">01 / 09</span>
+            </div>
+            <div class="slide-body">
+                <div class="callout callout-blue">
+                    <strong>Objetivo de esta Presentación:</strong> Validar el proceso real de recepción y carga de facturas de proveedores (costos de compra) para acordar la arquitectura final de automatización e iniciar el desarrollo sin bloqueos.
+                </div>
+                <div class="grid-2" style="margin-top: 10px;">
+                    <div class="card-box">
+                        <h4 style="color: #EF4444;">🔴 El Problema Actual</h4>
+                        <ul>
+                            <li>Recepción dispersa en correos personales de operadores.</li>
+                            <li>Tipeo manual repetitivo (10 a 15 minutos por comprobante).</li>
+                            <li>Matcheo manual de carpeta por carpeta.</li>
+                            <li>Sin trazabilidad previa para auditoría ISO 9001:2015.</li>
+                        </ul>
+                    </div>
+                    <div class="card-box">
+                        <h4 style="color: #10B981;">🟢 La Solución Propuesta</h4>
+                        <ul>
+                            <li><strong>Ingesta Automática:</strong> Captura de facturas desde correos.</li>
+                            <li><strong>Extracción Inteligente:</strong> OCR + IA para lectura de PDFs.</li>
+                            <li><strong>Dashboard 1-Clic:</strong> Revisión asistida con principio <em>Human-in-the-Loop</em>.</li>
+                            <li><strong>Carga en Kipintoch:</strong> Inyección directa via API con adjunto.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="callout callout-amber" style="margin-top: 10px;">
+                    <strong>Principio Rector:</strong> El bot realiza el 90% del trabajo pesado (lectura y matcheo), pero el operador conserva el control final de aprobación.
+                </div>
+            </div>
+        </article>
+
+        <!-- SLIDE 2: Flujo AS-IS y Mapa de Dolor -->
+        <article class="slide" id="slide-2">
+            <div class="slide-header">
+                <div>
+                    <h2 class="slide-title">🔄 Proceso Actual (AS-IS) y Diagnóstico de Dolores</h2>
+                    <p class="slide-subtitle">Identificación de cuellos de botella e impactos en la operación</p>
+                </div>
+                <span class="slide-number">02 / 09</span>
+            </div>
+            <div class="slide-body">
+                <div class="mermaid-wrapper" style="height: 320px;">
+                    <pre class="mermaid">
+flowchart LR
+    P["🏢 Proveedores<br/>(Maersk, MSC, Fletes)"] -->|Mails con PDFs| M["📧 Cadenas de Mails<br/>(Sin Trazabilidad)"]
+    M -->|Carga Manual| H["👤 Operador<br/>(Busca Carpeta + CUIT)"]
+    H -->|Tipeo Manual| K["💻 Kipintoch<br/>(Imputación Costo)"]
+
+    style M fill:#FFFBEB,stroke:#F59E0B,color:#000
+    style H fill:#FEF2F2,stroke:#EF4444,color:#000
+    style K fill:#ECFDF5,stroke:#10B981,color:#000
+                    </pre>
+                </div>
+                <div class="grid-3" style="margin-top: 10px;">
+                    <div class="card-box">
+                        <h4 style="font-size: 0.95rem;">⚠️ Tiempo Lento</h4>
+                        <p style="font-size: 0.85rem;">10 a 15 minutos por factura insumidos en buscar carpetas y digitar CUITs y montos.</p>
+                    </div>
+                    <div class="card-box">
+                        <h4 style="font-size: 0.95rem;">❌ Riesgo de Error</h4>
+                        <p style="font-size: 0.85rem;">Errores humanos de tipeo en montos, monedas o códigos de gastos (FMA, THC, FIA).</p>
+                    </div>
+                    <div class="card-box">
+                        <h4 style="font-size: 0.95rem;">📋 Brecha ISO 7.5</h4>
+                        <p style="font-size: 0.85rem;">Falta de registro auditable de cuándo llegó el mail, quién lo procesó y cuándo se aprobó.</p>
+                    </div>
+                </div>
+            </div>
+        </article>
+
+        <!-- SLIDE 3: Arquitectura Propuesta (TO-BE) -->
+        <article class="slide" id="slide-3">
+            <div class="slide-header">
+                <div>
+                    <h2 class="slide-title">🚀 Arquitectura Propuesta (TO-BE) en 5 Módulos</h2>
+                    <p class="slide-subtitle">Flujo automatizado con asistamiento inteligente y validación por API</p>
+                </div>
+                <span class="slide-number">03 / 09</span>
+            </div>
+            <div class="slide-body">
+                <div class="mermaid-wrapper" style="height: 360px;">
+                    <pre class="mermaid">
+flowchart TD
+    subgraph M1["📥 MÓDULO 1: INGESTA"]
+        I["Listener M365 / IMAP"]
+    end
+    subgraph M2["🤖 MÓDULO 2: EXTRAER"]
+        E["OCR + IA leen PDF"]
+    end
+    subgraph M3["🔗 MÓDULO 3: MATCHING"]
+        MA["Valida API Kipintoch"]
+    end
+    subgraph M4["📊 MÓDULO 4: REVISIÓN"]
+        D["Dashboard 1-Clic"]
+    end
+    subgraph M5["✅ MÓDULO 5: CARGA"]
+        C["POST Costo + PDF"]
+    end
+
+    I --> E --> MA --> D --> C
+
+    style M1 fill:#EFF6FF,stroke:#2D65EB,color:#000
+    style M2 fill:#F3E8FF,stroke:#9333EA,color:#000
+    style M3 fill:#FFFBEB,stroke:#F59E0B,color:#000
+    style M4 fill:#ECFDF5,stroke:#10B981,color:#000
+    style M5 fill:#ECFDF5,stroke:#10B981,color:#000
+                    </pre>
+                </div>
+            </div>
+        </article>
+
+        <!-- SLIDE 4: Manejo de Casillas Descentralizadas -->
+        <article class="slide" id="slide-4">
+            <div class="slide-header">
+                <div>
+                    <h2 class="slide-title">🛠️ Manejo de Correos Descentralizados</h2>
+                    <p class="slide-subtitle">3 alternativas para no alterar la rutina del personal de ALMAR</p>
+                </div>
+                <span class="slide-number">04 / 09</span>
+            </div>
+            <div class="slide-body">
+                <div class="grid-3">
+                    <div class="card-box" style="border-top: 4px solid #2D65EB;">
+                        <h4>Opción A: Regla M365</h4>
+                        <p><strong>Cero Cambio Operativo.</strong> Regla transparente en M365 reenvía una copia del PDF entrante al bot. El empleado no cambia nada.</p>
+                    </div>
+                    <div class="card-box" style="border-top: 4px solid #10B981;">
+                        <h4>Opción B: Graph API (Recomendada)</h4>
+                        <p><strong>Listener Transparente.</strong> El bot monitorea las casillas corporativas via MS Graph API en segundo plano. Filtrado automático sin reenvíos.</p>
+                    </div>
+                    <div class="card-box" style="border-top: 4px solid #F59E0B;">
+                        <h4>Opción C: Reenvío Asistido</h4>
+                        <p><strong>1 Clic Manual.</strong> El operador da 'Reenviar' a <code>facturas@almar.com</code> y el bot devuelve la orden lista en el Dashboard.</p>
+                    </div>
+                </div>
+                <div class="callout callout-green" style="margin-top: 20px;">
+                    <strong>Conclusión Técnica:</strong> Las Opciones A y B eliminan cualquier resistencia del personal ya que no exigen cambiar cuentas de correo ni acuerdos comerciales con proveedores.
+                </div>
+            </div>
+        </article>
+
+        <!-- SLIDE 5: Integración Integrada API Kipintoch (GETs + POSTs) -->
+        <article class="slide" id="slide-5">
+            <div class="slide-header">
+                <div>
+                    <h2 class="slide-title">🔗 Ciclo de Vida Completo en API Kipintoch</h2>
+                    <p class="slide-subtitle">Integración extremo a extremo: Consultas GET ➔ Dashboard ➔ Escritura POST</p>
+                </div>
+                <span class="slide-number">05 / 09</span>
+            </div>
+            <div class="slide-body">
+                <div class="mermaid-wrapper" style="height: 380px;">
+                    <pre class="mermaid">
+flowchart TD
+    subgraph LECTURA["🔍 1. FASE DE LECTURA Y VALIDACIONES (GETs)"]
+        G1["GET /forwarding/carpetas (Busca HBL/Booking)"]
+        G2["GET /empresas (Valida CUIT Proveedor)"]
+        G3["GET /configuracion/gastos (Nomenclador)"]
+        G4["GET /rentabilidad (Valida Desvío)"]
+    end
+    subgraph APROBACION["👤 2. AUDITORÍA"]
+        D["🖥️ Dashboard Human-in-the-Loop"]
+    end
+    subgraph ESCRITURA["⚡ 3. FASE DE ESCRITURA (POSTs)"]
+        P1["POST /forwarding/carpetas/guardar (Costo)"]
+        P2["POST /empresas/guardar (Proveedor Nuevo)"]
+        P3["POST /adjuntos/obtener (Subir PDF)"]
+    end
+
+    G1 & G2 & G3 & G4 --> D -->|Aprobar| P1 & P2 & P3
+
+    style LECTURA fill:#EFF6FF,stroke:#2D65EB,color:#000
+    style APROBACION fill:#FFFBEB,stroke:#F59E0B,color:#000
+    style ESCRITURA fill:#ECFDF5,stroke:#10B981,color:#000
+                    </pre>
+                </div>
+            </div>
+        </article>
+
+        <!-- SLIDE 6: Diagrama de Secuencia E2E -->
+        <article class="slide" id="slide-6">
+            <div class="slide-header">
+                <div>
+                    <h2 class="slide-title">⏱️ Diagrama de Secuencia Operativo (End-to-End)</h2>
+                    <p class="slide-subtitle">Línea de tiempo entre Proveedor, Bot, API Kipintoch y Operador</p>
+                </div>
+                <span class="slide-number">06 / 09</span>
+            </div>
+            <div class="slide-body">
+                <div class="mermaid-wrapper" style="height: 380px;">
+                    <pre class="mermaid">
+sequenceDiagram
+    actor P as 🏢 Proveedor
+    participant E as 📧 Email Listener
+    participant IA as 🤖 Motor IA / OCR
+    participant API as 🌐 API Kipintoch
+    actor OP as 👤 Operador ALMAR
+
+    P->>E: Envía mail con Factura PDF
+    E->>IA: Procesa PDF y extrae datos
+    IA->>API: GET Validaciones (Carpeta, Proveedor, Gastos)
+    API-->>OP: Notifica comprobante listo en Dashboard
+    OP->>API: Click en "Aprobar"
+    API->>API: POST Registra costo + sube PDF adjunto ✅
+                    </pre>
+                </div>
+            </div>
+        </article>
+
+        <!-- SLIDE 7: Tratamiento de Edge Cases -->
+        <article class="slide" id="slide-7">
+            <div class="slide-header">
+                <div>
+                    <h2 class="slide-title">⚠️ Resolución de Casos de Borde (Edge Cases)</h2>
+                    <p class="slide-subtitle">Mecanismos de contingencia para facturas complejas o atípicas</p>
+                </div>
+                <span class="slide-number">07 / 09</span>
+            </div>
+            <div class="slide-body">
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Caso de Borde</th>
+                                <th>Escenario Real</th>
+                                <th>Solución de la Arquitectura</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>1. Sin HBL / Booking</strong></td>
+                                <td>Fletes de camión local que no traen referencias de ALMAR.</td>
+                                <td><strong>Búsqueda Heurística:</strong> Busca por CUIT + Contenedor + Fechas (±5 días). Si hay dudas, sugiere 2 carpetas candidatas.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>2. Proveedor Nuevo</strong></td>
+                                <td>Factura de un proveedor inédito no cargado en Kipintoch.</td>
+                                <td><strong>Pre-alta Asistida:</strong> El OCR extrae datos fiscales y ofrece el botón <em>"Dar de Alta Proveedor y Aprobar"</em> (POST <code>/empresas/guardar</code>).</td>
+                            </tr>
+                            <tr>
+                                <td><strong>3. Multi-Ítem / Split</strong></td>
+                                <td>Facturas de Maersk/MSC con Flete + THC + BL Fee.</td>
+                                <td><strong>Desglose Inteligente:</strong> Separa renglón por renglón y memoriza homologaciones de conceptos nuevos.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </article>
+
+        <!-- SLIDE 8: Solicitud de Accesos y Requerimientos -->
+        <article class="slide" id="slide-8">
+            <div class="slide-header">
+                <div>
+                    <h2 class="slide-title">🔑 Requerimientos y Accesos a Pedir Hoy</h2>
+                    <p class="slide-subtitle">Elementos indispensables para iniciar el desarrollo sin bloqueos</p>
+                </div>
+                <span class="slide-number">08 / 09</span>
+            </div>
+            <div class="slide-body">
+                <div class="grid-2">
+                    <div class="card-box" style="border-left: 4px solid #10B981;">
+                        <h4>✅ Accesos Técnicos</h4>
+                        <ul>
+                            <li><strong>API Token Kipintoch:</strong> (Ya disponible).</li>
+                            <li><strong>Permiso de Lectura Email:</strong> Autorización M365 (<code>Mail.Read</code>) o credenciales de la casilla.</li>
+                            <li><strong>Dataset de Prueba:</strong> 10 a 20 PDFs de facturas reales de distintos proveedores (Maersk, MSC, despachantes, fletes).</li>
+                        </ul>
+                    </div>
+                    <div class="card-box" style="border-left: 4px solid #2D65EB;">
+                        <h4>❓ Confirmaciones Operativas</h4>
+                        <ul>
+                            <li>Dato primario de búsqueda de carpeta (HBL, Booking, Ref).</li>
+                            <li>Rol del aprobador en el Dashboard (Operador o Administración).</li>
+                            <li>Umbral de tolerancia para alertas de desvío de costo (ej: >10%).</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </article>
+
+        <!-- SLIDE 9: Roadmap y Handoff ISO -->
+        <article class="slide" id="slide-9">
+            <div class="slide-header">
+                <div>
+                    <h2 class="slide-title">📅 Roadmap de Ejecución & Pase de Mando</h2>
+                    <p class="slide-subtitle">Cronograma estimado y traspaso a la auditoría de Procesos ISO 9001</p>
+                </div>
+                <span class="slide-number">09 / 09</span>
+            </div>
+            <div class="slide-body">
+                <div class="mermaid-wrapper" style="height: 260px;">
+                    <pre class="mermaid">
+gantt
+    title Plan de Ejecución
+    dateFormat YYYY-MM-DD
+    section Desarrollo
+    Ingesta & OCR          :a1, 2026-08-05, 10d
+    Integración API        :a2, after a1, 10d
+    Dashboard UI & Piloto  :a3, after a2, 10d
+                    </pre>
+                </div>
+                <div class="callout callout-blue" style="margin-top: 16px;">
+                    <strong>🤝 Pase de Mando a ISO 9001:</strong> Con la arquitectura técnica definida y los accesos solicitados, le cedo la palabra a Juan E. Labanca (CLAVE Consultora) para la revisión del Mapa de Procesos y el Manual de Calidad SGC.
+                </div>
+            </div>
+        </article>
+
+    </main>
+
+    <!-- Bottom Controls -->
+    <footer class="controls-bar">
+        <button class="ctrl-btn" id="prev-btn" onclick="changeSlide(-1)" disabled>
+            ⬅️ Anterior
+        </button>
+
+        <div class="key-hint">
+            <span>Usá <span class="key-kbd">◀</span> <span class="key-kbd">▶</span> para navegar</span>
+        </div>
+
+        <div class="progress-bar-container">
+            <div class="progress-bar-fill" id="progress-fill"></div>
+        </div>
+
+        <button class="ctrl-btn" id="next-btn" onclick="changeSlide(1)">
+            Siguiente ➡️
+        </button>
+    </footer>
+
+    <script>
+        // Mermaid Init
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            securityLevel: 'loose',
+            themeVariables: {
+                fontFamily: 'Inter',
+                fontSize: '13px',
+                primaryColor: '#EFF6FF',
+                primaryBorderColor: '#2D65EB',
+                primaryTextColor: '#0F172A',
+                lineColor: '#64748B'
+            }
+        });
+
+        // Slides Logic
+        let currentSlide = 1;
+        const totalSlides = 9;
+
+        function showSlide(index) {
+            if (index < 1) index = 1;
+            if (index > totalSlides) index = totalSlides;
+
+            document.querySelectorAll('.slide').forEach(slide => {
+                slide.classList.remove('active');
+            });
+
+            const activeSlide = document.getElementById(`slide-${index}`);
+            if (activeSlide) {
+                activeSlide.classList.add('active');
+            }
+
+            currentSlide = index;
+
+            // Update Controls
+            document.getElementById('prev-btn').disabled = (currentSlide === 1);
+            document.getElementById('next-btn').disabled = (currentSlide === totalSlides);
+
+            // Update Progress Bar
+            const progressPercent = (currentSlide / totalSlides) * 100;
+            document.getElementById('progress-fill').style.width = `${progressPercent}%`;
+        }
+
+        function changeSlide(direction) {
+            showSlide(currentSlide + direction);
+        }
+
+        // Keyboard Navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === 'Space') {
+                changeSlide(1);
+            } else if (e.key === 'ArrowLeft') {
+                changeSlide(-1);
+            }
+        });
+    </script>
+</body>
+</html>
