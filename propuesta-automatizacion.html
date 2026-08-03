@@ -871,12 +871,12 @@ flowchart TD
                 <!-- Sub-sección 4.1 -->
                 <div id="casillas-descentralizadas" style="margin-top: 32px; border-top: 1px dashed var(--border-color); padding-top: 24px;">
                     <h3 style="font-size: 1.15rem; color: var(--dark-bg); margin-bottom: 12px;">🛠️ 4.1 Solución a la Dispersión de Casillas de Correo (Sin Cambiar la Rutina del Personal)</h3>
-                    <p>Hoy en ALMAR <strong>no existe una casilla única centralizada</strong>; cada operador recibe facturas directamente en su correo personal. Para evitar resistencia del personal, la arquitectura contempla <strong>3 alternativas flexibles</strong>:</p>
+                    <p>Hoy en ALMAR <strong>no existe una casilla única centralizada</strong>; cada operador recibe facturas directamente en su correo personal. Para evitar resistencia del personal, la arquitectura contempla <strong>2 alternativas transparentes</strong>:</p>
 
                     <div class="mermaid-wrapper">
                         <pre class="mermaid">
 flowchart TD
-    subgraph OPCION_A["Opción A: Reglas de Reenvío (Cero Cambio)"]
+    subgraph OPCION_A["Opción A: Reglas de Reenvío M365 (Cero Cambio)"]
         A1["Proveedor manda mail a operador@almar.com"] --> A2["Regla M365 reenvía copia con PDF al Bot"]
         A2 --> A3["El empleado no cambia nada de su rutina"]
     end
@@ -885,16 +885,11 @@ flowchart TD
         B1["Bot monitorea casillas del equipo via MS Graph API"] --> B2["Filtra automáticamente mails con facturas de proveedores"]
         B2 --> B3["Sin reenvíos ni casillas adicionales"]
     end
-
-    subgraph OPCION_C["Opción C: Reenvío Asistido de 1 Clic"]
-        C1["Operador recibe factura en su correo habitual"] --> C2["Le da 'Reenviar' a facturas@almar.com"]
-        C3["El Bot procesa y devuelve la orden lista en el Dashboard"]
-    end
                         </pre>
                     </div>
 
                     <div class="callout callout-success">
-                        <strong>Recomendación Técnica:</strong> La <strong>Opción A</strong> o <strong>Opción B</strong> son las más recomendables porque son 100% transparentes para los empleados y no requieren cambiar los acuerdos comerciales ni los correos de contacto con proveedores.
+                        <strong>Recomendación Técnica:</strong> La <strong>Opción A</strong> o <strong>Opción B</strong> son 100% transparentes para los empleados y no requieren cambiar los acuerdos comerciales ni los correos de contacto con proveedores.
                     </div>
                 </div>
 

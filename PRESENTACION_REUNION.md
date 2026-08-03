@@ -152,11 +152,11 @@ flowchart TD
 
 ## SLIDE 4: Manejo de Casillas Descentralizadas (Móduo 1)
 
-Sabemos que en ALMAR **no existe una casilla centralizada**, sino que cada operador recibe correos en su cuenta personal. Para evitar resistencia del personal, ofrecemos **3 opciones flexibles**:
+Sabemos que en ALMAR **no existe una casilla centralizada**, sino que cada operador recibe correos en su cuenta personal. Para evitar resistencia del personal, ofrecemos **2 opciones transparentes**:
 
 ```mermaid
 flowchart TD
-    subgraph OPCION_A["Opción A: Reglas de Reenvío (Cero Cambio)"]
+    subgraph OPCION_A["Opción A: Reglas de Reenvío M365 (Cero Cambio)"]
         A1["Proveedor manda mail a operador@almar.com"] --> A2["Regla M365 reenvía copia con PDF al Bot"]
         A2 --> A3["El empleado no cambia nada de su rutina"]
     end
@@ -165,15 +165,10 @@ flowchart TD
         B1["Bot monitorea casillas del equipo via MS Graph API"] --> B2["Filtra automáticamente mails con facturas de proveedores"]
         B2 --> B3["Sin reenvíos ni casillas adicionales"]
     end
-
-    subgraph OPCION_C["Opción C: Reenvío Asistido de 1 Clic"]
-        C1["Operador recibe factura en su correo habitual"] --> C2["Le da 'Reenviar' a facturas@almar.com"]
-        C3["El Bot procesa y devuelve la orden lista en el Dashboard"]
-    end
 ```
 
 > [!TIP]
-> **Recomendación:** La **Opción A** o **Opción B** son las mejores porque son 100% transparentes para los operadores y no requieren cambiar los correos de contacto con proveedores.
+> **Recomendación:** La **Opción A** o **Opción B** son 100% transparentes para los operadores y no requieren cambiar los correos de contacto con proveedores ni exigir acciones manuales.
 
 ---
 

@@ -295,11 +295,11 @@ flowchart TD
         <!-- DIAGRAMA 4: OPCIONES DE CASILLAS -->
         <div class="diagram-card">
             <h2 class="diagram-title">🛠️ 4. Opciones de Ingesta para Casillas Descentralizadas</h2>
-            <p class="diagram-desc">Estrategias alternativas para procesar correos sin forzar cambios inmediatos de hábito en el personal.</p>
+            <p class="diagram-desc">Estrategias transparentes para procesar correos sin forzar cambios inmediatos de hábito en el personal.</p>
             <div class="mermaid-wrapper">
                 <pre class="mermaid">
 flowchart TD
-    subgraph OPCION_A["Opción A: Reglas de Reenvío (Cero Cambio)"]
+    subgraph OPCION_A["Opción A: Reglas de Reenvío M365 (Cero Cambio)"]
         A1["Proveedor manda mail a operador@almar.com"] --> A2["Regla M365 reenvía copia con PDF al Bot"]
         A2 --> A3["El empleado no cambia nada de su rutina"]
     end
@@ -309,14 +309,8 @@ flowchart TD
         B2 --> B3["Sin reenvíos ni casillas adicionales"]
     end
 
-    subgraph OPCION_C["Opción C: Reenvío Asistido de 1 Clic"]
-        C1["Operador recibe factura en su correo habitual"] --> C2["Le da 'Reenviar' a facturas@almar.com"]
-        C3["El Bot procesa y devuelve la orden lista en el Dashboard"]
-    end
-
     style OPCION_A fill:#EFF6FF,stroke:#2D65EB,color:#000
     style OPCION_B fill:#ECFDF5,stroke:#10B981,color:#000
-    style OPCION_C fill:#FFFBEB,stroke:#F59E0B,color:#000
                 </pre>
             </div>
         </div>
