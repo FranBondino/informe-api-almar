@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guía de Dibujo en Pizarra — ALMAR Rosario</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0F172A;
+            --primary-accent: #2D65EB;
+            --secondary-accent: #10B981;
+            --bg-light: #F8FAFC;
+            --card-bg: #FFFFFF;
+            --text-main: #1E293B;
+            --border-color: #CBD5E1;
+            --radius-md: 12px;
+            --shadow-sm: 0 4px 6px -1px rgba(0,0,0,0.1);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        .top-navbar {
+            background-color: var(--primary);
+            color: #FFF;
+            padding: 14px 24px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-brand { font-weight: 700; font-size: 1.1rem; }
+        .nav-brand span { color: #60A5FA; font-weight: 400; }
+        .nav-links { display: flex; gap: 10px; flex-wrap: wrap; }
+
+        .nav-tab {
+            color: #94A3B8;
+            text-decoration: none;
+            padding: 6px 14px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            border: 1px solid #334155;
+        }
+
+        .nav-tab:hover, .nav-tab.active { background: #1E293B; color: #FFF; }
+
+        .container {
+            max-width: 1100px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .header-card {
+            background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
+            color: #FFF;
+            padding: 24px 30px;
+            border-radius: var(--radius-md);
+            margin-bottom: 24px;
+        }
+
+        .header-card h1 { font-size: 1.6rem; font-weight: 800; margin-bottom: 6px; }
+        .header-card p { color: #94A3B8; font-size: 0.95rem; }
+
+        .board-card {
+            background: #FFFFFF;
+            border: 2px solid #94A3B8;
+            border-radius: var(--radius-md);
+            padding: 24px;
+            margin-bottom: 28px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .board-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #E2E8F0;
+            padding-bottom: 12px;
+            margin-bottom: 16px;
+        }
+
+        .board-title { font-size: 1.2rem; font-weight: 800; color: #0F172A; }
+
+        .board-sketch {
+            background: #0F172A;
+            color: #38BDF8;
+            padding: 20px;
+            border-radius: 10px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.88rem;
+            line-height: 1.5;
+            overflow-x: auto;
+            white-space: pre;
+            margin-bottom: 16px;
+            border: 2px dashed #38BDF8;
+        }
+
+        .speech-box {
+            background: #EFF6FF;
+            border-left: 4px solid #2D65EB;
+            padding: 14px 18px;
+            border-radius: 6px;
+            font-size: 0.92rem;
+            color: #1E3A8A;
+        }
+
+        .speech-box strong { color: #0F172A; display: block; margin-bottom: 4px; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 0.05em; }
+
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+        table { width: 100%; border-collapse: collapse; font-size: 0.88rem; margin-top: 10px; }
+        th { background: #F1F5F9; color: #0F172A; text-align: left; padding: 8px 12px; border-bottom: 2px solid #CBD5E1; }
+        td { padding: 8px 12px; border-bottom: 1px solid #E2E8F0; }
+    </style>
+</head>
+<body>
+
+    <nav class="top-navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                🚢 ALMAR ROSARIO <span>| Guía de Dibujo en Pizarra</span>
+            </div>
+            <div class="nav-links">
+                <a href="index.html" class="nav-tab">🗺️ Mapa API</a>
+                <a href="propuesta-automatizacion.html" class="nav-tab">🤖 Propuesta HTML</a>
+                <a href="presentacion-slides.html" class="nav-tab">🖥️ Diapositivas</a>
+                <a href="preguntas-y-accesos-validacion.html" class="nav-tab">📋 Preguntas & Accesos</a>
+                <a href="galeria-diagramas.html" class="nav-tab">📊 Galería Diagramas</a>
+                <a href="guia-dibujo-pizarra.html" class="nav-tab active">🎨 Guía de Pizarra</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        
+        <div class="header-card">
+            <h1>🎨 Guía Práctica de Dibujo en Pizarra para la Reunión</h1>
+            <p>Machete visual de los 3 diagramas simples para dibujar en el pizarrón mientras explicás la automatización, hacés las preguntas y pedís los accesos.</p>
+        </div>
+
+        <!-- DIAGRAMA 1 DE PIZARRA -->
+        <div class="board-card">
+            <div class="board-header">
+                <span class="board-title">✏️ DIAGRAMA 1 EN PIZARRA: El "Antes y Después" (AS-IS vs TO-BE)</span>
+                <span style="background: #EFF6FF; color: #2D65EB; padding: 4px 10px; border-radius: 20px; font-size: 0.8rem; font-weight: 700;">TIEMPO: 2 MINUTOS</span>
+            </div>
+
+            <div class="board-sketch">
+[ ANTES (AS-IS) ]                                   [ DESPUÉS (TO-BE) ]
+
+🏢 Proveedores                                      🏢 Proveedores
+     │ (Mails dispersos)                                 │ (Mails entrantes)
+     ▼                                                   ▼
+👤 Natali / Victoria                                 🤖 Bot Ingesta + OCR / IA
+  (Carga manual 15 min + Fricción cotizado)              │ (Busca Carpeta + Valida CUIT)
+     ▼                                                   ▼
+💻 Kipintoch ➔ 🏛️ Estefanía / Vanesa               🖥️ Dashboard 1-Clic (Natali / Victoria)
+  (Retraso en cierres, conciliación y pagos)             │ (Aprueban en 2 segundos)
+                                                         ▼
+                                                    💻 Kipintoch ➔ 🏛️ Estefanía / Vanesa
+                                                      (Registración e Ingesta Inmediata)
+            </div>
+
+            <div class="speech-box">
+                <strong>💬 Guión de Voz mientras dibujás:</strong>
+                "Hoy Natali y Victoria reciben los mails dispersos, buscan la carpeta a mano en Kipintoch, tipean los montos y lidian con la brecha de lo cotizado por Comercial. Eso demora los cierres e impide a Estefanía y Vanesa conciliar bancos a tiempo. Lo que hacemos es poner un Bot inteligente en el medio: lee el PDF, busca la carpeta por API, valida el CUIT y les da a Natali y Victoria un Dashboard con botón de 1-Clic."
+            </div>
+        </div>
+
+        <!-- DIAGRAMA 2 DE PIZARRA -->
+        <div class="board-card">
+            <div class="board-header">
+                <span class="board-title">✏️ DIAGRAMA 2 EN PIZARRA: El Mapa de Integración por API (GETs & POSTs)</span>
+                <span style="background: #ECFDF5; color: #059669; padding: 4px 10px; border-radius: 20px; font-size: 0.8rem; font-weight: 700;">TIEMPO: 2 MINUTOS</span>
+            </div>
+
+            <div class="board-sketch">
+📄 Factura PDF Entrante
+      │
+      ▼
+🤖 Bot OCR / IA
+      │
+      ├────► 🔍 GET /forwarding/carpetas (Busca por HBL / Booking)
+      ├────► 🔍 GET /empresas (Valida CUIT Proveedor)
+      └────► 🔍 GET /rentabilidad (Compara vs Cotizado Alejandro/Martín)
+      │
+      ▼
+🖥️ Dashboard 1-Clic (Revisión)
+      │ (Aprobación)
+      ▼
+⚡ POST /carpetas/guardar + POST /adjuntos (Imputación Automática en Kipintoch)
+            </div>
+
+            <div class="speech-box">
+                <strong>💬 Guión de Voz mientras dibujás:</strong>
+                "El bot no inventa nada: se conecta directo a la API oficial de Kipintoch. Consulta la carpeta por HBL o Booking, valida el CUIT del proveedor y chequea el margen cotizado comercialmente. Cuando Natali o Victoria aprueban en el Dashboard, inyecta el costo y el PDF adjunto automáticamente."
+            </div>
+        </div>
+
+        <!-- DIAGRAMA 3 DE PIZARRA -->
+        <div class="board-card">
+            <div class="board-header">
+                <span class="board-title">✏️ DIAGRAMA 3 EN PIZARRA: Matriz Viva de Proveedores & Relevamiento de Accesos</span>
+                <span style="background: #FFFBEB; color: #D97706; padding: 4px 10px; border-radius: 20px; font-size: 0.8rem; font-weight: 700;">TIEMPO: 3 MINUTOS</span>
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Tipo Proveedor</th>
+                        <th>¿Cómo llega la factura?</th>
+                        <th>Dato Clave de Carpeta</th>
+                        <th>Accesos / IT Requeridos</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Maersk / MSC</strong></td>
+                        <td>Email con PDF</td>
+                        <td>N° Booking / HBL</td>
+                        <td>M365 App <code>Mail.Read</code> o contacto IT</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Despachantes</strong></td>
+                        <td>Email con PDF</td>
+                        <td>N° Despacho María</td>
+                        <td>Contacto IT / Usuario M365</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Fletes Locales</strong></td>
+                        <td>Email / WhatsApp</td>
+                        <td>N° Contenedor / Cliente</td>
+                        <td>Dataset: 15 Facturas Reales de Prueba</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="speech-box" style="margin-top: 14px;">
+                <strong>💬 Guión para cerrar y pedir los accesos:</strong>
+                "Para dejar las reglas configuradas hoy: 1) ¿El dato con el que buscan carpetas de Maersk es siempre el Booking? 2) ¿Quién es su contacto de IT para enviarle la Guía de 1 Página para el permiso del mail? 3) Necesitamos que nos envíen por mail 15 facturas reales de prueba para calibrar el motor de lectura."
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>
