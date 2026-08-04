@@ -120,18 +120,57 @@
             overflow-x: auto;
         }
 
-        .mermaid { width: 100%; }
+        .step-explanation {
+            background: #F8FAFC;
+            border-left: 4px solid var(--primary-accent);
+            border-radius: 6px;
+            padding: 18px;
+            margin-top: 20px;
+            font-size: 0.9rem;
+        }
 
-        /* Override Mermaid styles for light background */
+        .step-explanation h4 {
+            color: var(--primary);
+            font-size: 0.98rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .step-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .step-list li {
+            padding: 8px 0;
+            border-bottom: 1px dashed #E2E8F0;
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+        }
+
+        .step-list li:last-child {
+            border-bottom: none;
+        }
+
+        .step-num {
+            background: #2D65EB;
+            color: #FFF;
+            font-weight: 700;
+            font-size: 0.75rem;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
         .mermaid svg {
             background-color: #FFFFFF !important;
-        }
-        .mermaid .node rect, .mermaid .node circle, .mermaid .node polygon {
-            stroke-width: 1.5px !important;
-        }
-        .mermaid .edgeLabel {
-            background-color: #FFFFFF !important;
-            color: #0F172A !important;
         }
     </style>
 </head>
@@ -140,14 +179,15 @@
     <nav class="top-navbar">
         <div class="nav-container">
             <div class="nav-brand">
-                🚢 ALMAR ROSARIO <span>| Galería de Diagramas</span>
+                🚢 ALMAR ROSARIO <span>| Galería de Diagramas con Explicación Paso a Paso</span>
             </div>
             <div class="nav-links">
                 <a href="index.html" class="nav-tab">🗺️ Mapa API</a>
                 <a href="propuesta-automatizacion.html" class="nav-tab">🤖 Propuesta HTML</a>
                 <a href="presentacion-slides.html" class="nav-tab">🖥️ Diapositivas</a>
-                <a href="preguntas-y-accesos-validacion.html" class="nav-tab">📋 Requerimientos y Preguntas</a>
-                <a href="galeria-diagramas.html" class="nav-tab active">📊 Galería de Diagramas</a>
+                <a href="preguntas-y-accesos-validacion.html" class="nav-tab">📋 Preguntas & Accesos</a>
+                <a href="galeria-diagramas.html" class="nav-tab active">📊 Galería Diagramas</a>
+                <a href="guia-dibujo-pizarra.html" class="nav-tab">🎨 Guía Pizarra</a>
             </div>
         </div>
     </nav>
@@ -155,8 +195,8 @@
     <div class="container">
         
         <div class="header-card">
-            <h1>📊 Galería Completa de Diagramas de Arquitectura</h1>
-            <p>Compilación visual de todos los diagramas del proceso actual (AS-IS), la propuesta (TO-BE), integraciones por API, secuencias operativas y roadmaps.</p>
+            <h1>📊 Galería Completa de Diagramas Explicados Paso a Paso</h1>
+            <p>Compilación técnica y operativa con explicaciones detalladas para cada flujo: AS-IS, TO-BE, Integración API, Secuencia Operativa y Roadmap ISO 9001.</p>
         </div>
 
         <!-- DIAGRAMA 1: AS-IS -->
@@ -201,6 +241,28 @@ flowchart TD
     style KIPIN fill:#ECFDF5,stroke:#10B981,color:#000
                 </pre>
             </div>
+
+            <div class="step-explanation">
+                <h4>📌 Explicación Paso a Paso del Flujo Actual (AS-IS):</h4>
+                <ul class="step-list">
+                    <li>
+                        <span class="step-num">1</span>
+                        <div><strong>Recepción Descentralizada:</strong> Los proveedores (Maersk, MSC, camioneros, despachantes) envían facturas en PDF a casillas individuales de los operadores de forma desordenada.</div>
+                    </li>
+                    <li>
+                        <span class="step-num">2</span>
+                        <div><strong>Búsqueda Manual de Carpeta:</strong> El operador abre Kipintoch, busca la carpeta correspondiente tipeando el HBL o Booking a mano (insumiendo 10 a 15 minutos por comprobante).</div>
+                    </li>
+                    <li>
+                        <span class="step-num">3</span>
+                        <div><strong>Tipeo y Verificación de Datos:</strong> Compara manualmente el CUIT del proveedor, clasifica el gasto (FMA, THC, etc.) y tipea los importes en USD o ARS.</div>
+                    </li>
+                    <li>
+                        <span class="step-num">4</span>
+                        <div><strong>Cuello de Botella Operativo:</strong> Como el equipo operativo prioriza resolver urgencias logísticas, la carga manual se posterga, afectando los pagos de Administración y la conciliación contable.</div>
+                    </li>
+                </ul>
+            </div>
         </div>
 
         <!-- DIAGRAMA 2: MAPA DE DOLOR -->
@@ -234,6 +296,24 @@ flowchart LR
     style DOLORES fill:#FEF2F2,stroke:#EF4444,color:#000
     style IMPACTOS fill:#FFFBEB,stroke:#F59E0B,color:#000
                 </pre>
+            </div>
+
+            <div class="step-explanation">
+                <h4>📌 Explicación Paso a Paso del Mapa de Dolor:</h4>
+                <ul class="step-list">
+                    <li>
+                        <span class="step-num">1</span>
+                        <div><strong>Dispersión de Mails ➔ Incumplimiento ISO 7.5:</strong> Al llegar facturas a múltiples correos, se dificulta tener una trazabilidad auditable de cuando ingresó cada documento.</div>
+                    </li>
+                    <li>
+                        <span class="step-num">2</span>
+                        <div><strong>Tiempo Excesivo de Carga ➔ Demora Financiera:</strong> 15 min por factura generan demoras en los cierres contables y la liquidación a proveedores por parte de Administración.</div>
+                    </li>
+                    <li>
+                        <span class="step-num">3</span>
+                        <div><strong>Errores de Tipeo Manual ➔ Impacto en Margen:</strong> Tipear mal un monto o un tipo de cambio altera la rentabilidad real de la carpeta frente a la cotización comercial.</div>
+                    </li>
+                </ul>
             </div>
         </div>
 
@@ -290,6 +370,32 @@ flowchart TD
     style CARGA fill:#ECFDF5,stroke:#10B981,color:#000
                 </pre>
             </div>
+
+            <div class="step-explanation">
+                <h4>📌 Explicación Paso a Paso de la Solución (TO-BE en 5 Módulos):</h4>
+                <ul class="step-list">
+                    <li>
+                        <span class="step-num">1</span>
+                        <div><strong>Módulo 1 (Ingesta):</strong> El Listener de email monitorea en segundo plano y descarga automáticamente los adjuntos PDF apenas entran los correos.</div>
+                    </li>
+                    <li>
+                        <span class="step-num">2</span>
+                        <div><strong>Módulo 2 (Extracción OCR + IA):</strong> El motor de inteligencia artificial lee el PDF y extrae el CUIT del proveedor, el número de Booking/HBL, la moneda (USD/ARS) y los ítems.</div>
+                    </li>
+                    <li>
+                        <span class="step-num">3</span>
+                        <div><strong>Módulo 3 (Matching API Kipintoch):</strong> El bot consulta los endpoints oficiales de Kipintoch para buscar la carpeta, validar el CUIT y comparar el costo vs la cotización comercial.</div>
+                    </li>
+                    <li>
+                        <span class="step-num">4</span>
+                        <div><strong>Módulo 4 (Dashboard 1-Clic):</strong> El operador ve los datos extraídos al lado del PDF original y aprueba en 2 segundos con 1 solo clic.</div>
+                    </li>
+                    <li>
+                        <span class="step-num">5</span>
+                        <div><strong>Módulo 5 (Carga Automática):</strong> El sistema ejecuta los POSTs oficiales (`/carpetas/guardar` y `/adjuntos/obtener`) registrando la factura y el PDF en Kipintoch de forma inmutable.</div>
+                    </li>
+                </ul>
+            </div>
         </div>
 
         <!-- DIAGRAMA 4: OPCIONES DE CASILLAS -->
@@ -312,6 +418,20 @@ flowchart TD
     style OPCION_A fill:#EFF6FF,stroke:#2D65EB,color:#000
     style OPCION_B fill:#ECFDF5,stroke:#10B981,color:#000
                 </pre>
+            </div>
+
+            <div class="step-explanation">
+                <h4>📌 Explicación Paso a Paso de las Opciones de Ingesta de Correo:</h4>
+                <ul class="step-list">
+                    <li>
+                        <span class="step-num">1</span>
+                        <div><strong>Opción A (Reglas de Reenvío M365):</strong> Se configura una regla transparente en Outlook que reenvía una copia con PDF al Bot. El operador sigue trabajando exactamente como siempre.</div>
+                    </li>
+                    <li>
+                        <span class="step-num">2</span>
+                        <div><strong>Opción B (Listener Nativo MS Graph API):</strong> El Bot se conecta directamente a las casillas corporativas con permiso de lectura `Mail.Read`, capturando las facturas de fondo de forma totalmente automática.</div>
+                    </li>
+                </ul>
             </div>
         </div>
 
@@ -355,6 +475,28 @@ flowchart TD
     style ESCRITURA fill:#ECFDF5,stroke:#10B981,color:#000
                 </pre>
             </div>
+
+            <div class="step-explanation">
+                <h4>📌 Explicación Paso a Paso del Ciclo de Vida API:</h4>
+                <ul class="step-list">
+                    <li>
+                        <span class="step-num">1</span>
+                        <div><strong>Entrada de Datos:</strong> El PDF es convertido en JSON estructurado por el motor OCR + IA.</div>
+                    </li>
+                    <li>
+                        <span class="step-num">2</span>
+                        <div><strong>Fase de Lectura (GETs):</strong> Se realizan las consultas seguras a Kipintoch para validar la existencia de la carpeta, el CUIT del proveedor y comparar el margen comercial.</div>
+                    </li>
+                    <li>
+                        <span class="step-num">3</span>
+                        <div><strong>Auditoría Operativa:</strong> El operador confirma los datos en el Dashboard con un score de coincidencia del 95-100%.</div>
+                    </li>
+                    <li>
+                        <span class="step-num">4</span>
+                        <div><strong>Fase de Escritura (POSTs):</strong> Se inyecta la compra en Kipintoch, se adjunta el PDF de respaldo y se genera la entrada inmutable en el Log de Auditoría ISO 9001.</div>
+                    </li>
+                </ul>
+            </div>
         </div>
 
         <!-- DIAGRAMA 6: DIAGRAMA DE SECUENCIA E2E -->
@@ -391,6 +533,28 @@ sequenceDiagram
     API->>KIP: Actualiza Cierre Contable ✅
                 </pre>
             </div>
+
+            <div class="step-explanation">
+                <h4>📌 Explicación Paso a Paso de la Secuencia Temporal (Pasos 1 al 14):</h4>
+                <ul class="step-list">
+                    <li>
+                        <span class="step-num">1-3</span>
+                        <div><strong>Ingesta y Lectura (Pasos 1-3):</strong> El proveedor envía el PDF por mail. El Listener capta el correo y el motor de IA extrae el texto a formato JSON en milisegundos.</div>
+                    </li>
+                    <li>
+                        <span class="step-num">4-9</span>
+                        <div><strong>Validación por API (Pasos 4-9):</strong> El backend consulta a la API de Kipintoch para buscar la carpeta (por HBL), validar el CUIT y asociar el código de gasto correspondiente.</div>
+                    </li>
+                    <li>
+                        <span class="step-num">10-12</span>
+                        <div><strong>Aprobación Operativa (Pasos 10-12):</strong> El operador recibe la alerta en el Dashboard, contrasta los datos lado a lado con el PDF y da 1-Clic en Aprobar.</div>
+                    </li>
+                    <li>
+                        <span class="step-num">13-14</span>
+                        <div><strong>Impacto Final (Pasos 13-14):</strong> El bot ejecuta los POSTs de carga en Kipintoch, guarda el PDF de respaldo y cierra contablemente la orden.</div>
+                    </li>
+                </ul>
+            </div>
         </div>
 
         <!-- DIAGRAMA 7: ROADMAP GANTT -->
@@ -421,6 +585,28 @@ gantt
     Pruebas Piloto con Facturas Reales      :f3_2, after f3_1, 7d
     Despliegue a Producción & Capacitación  :milestone, f3_3, after f3_2, 0d
                 </pre>
+            </div>
+
+            <div class="step-explanation">
+                <h4>📌 Explicación Paso a Paso del Cronograma de Trabajo:</h4>
+                <ul class="step-list">
+                    <li>
+                        <span class="step-num">1</span>
+                        <div><strong>Fase 0 (Validación - Esta semana):** Cierre de requerimientos y pedido de accesos de mail y dataset de facturas reales.</div>
+                    </li>
+                    <li>
+                        <span class="step-num">2</span>
+                        <div><strong>Fase 1 (Ingesta & OCR - Semanas 2-3):** Desarrollo del Listener de correos y entrenamiento del motor de IA con los PDFs reales de ALMAR.</div>
+                    </li>
+                    <li>
+                        <span class="step-num">3</span>
+                        <div><strong>Fase 2 (Integración API - Semanas 3-4):** Conexión completa de los endpoints de lectura (GETs) y escritura (POSTs) en Kipintoch.</div>
+                    </li>
+                    <li>
+                        <span class="step-num">4</span>
+                        <div><strong>Fase 3 (Dashboard & Go-Live - Semanas 5-6):** Construcción de la interfaz de 1-Clic, pruebas piloto con facturas reales y despliegue a producción.</div>
+                    </li>
+                </ul>
             </div>
         </div>
 
