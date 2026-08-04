@@ -288,6 +288,35 @@
             </div>
         </div>
 
+        <!-- 1.5 MAPEO INTERFAZ Y ENDPOINTS -->
+        <div class="item-card">
+            <div class="item-header">
+                <span class="item-title">1.5 Mapeo Visual del Dashboard (Split View) y Endpoints API Kipintoch</span>
+                <span class="badge badge-green">Arquitectura UI & API</span>
+            </div>
+            <p style="font-size: 0.95rem; color: #475569;">Correspondencia entre los campos del PDF en pantalla y las llamadas API de Kipintoch.</p>
+            <div class="grid-2">
+                <div class="box-why">
+                    <strong>Pantalla Split View (Lado a Lado)</strong>
+                    • <strong>Panel Izquierdo:</strong> Visor del PDF original enviado por la naviera.<br/>
+                    • <strong>Panel Derecho:</strong> Campos extraídos (CUIT, N° Carpeta, Gasto FMA/THC, Monto USD/ARS, Margen).<br/>
+                    • <strong>Acción:</strong> Botón verde <code>[ ✅ Aprobar e Imputar en Kipintoch ]</code>.
+                </div>
+                <div class="box-ask">
+                    <strong>Endpoints Ejecutados por Detrás</strong>
+                    • <code>GET /forwarding/carpetas?numeroGuia=...</code> ➔ Busca carpeta.<br/>
+                    • <code>GET /empresas?cuit=...</code> ➔ Valida CUIT Proveedor.<br/>
+                    • <code>GET /rentabilidad</code> ➔ Contrasta Costo Real vs Cotizado.<br/>
+                    • <code>POST /forwarding/carpetas/guardar</code> ➔ Imputa Costo en 1-Clic.<br/>
+                    • <code>POST /adjuntos/obtener</code> ➔ Sube el PDF de respaldo ISO 9001.
+                </div>
+            </div>
+            <div class="box-example">
+                <strong>Ejemplo de Imputación</strong>
+                Operaciones abre el Dashboard, ve la factura de Maersk por USD 2.000 de un lado y la carpeta <code>OR/C-1458</code> del otro. Hace 1 clic en Aprobar y Kipintoch ejecuta la inyección contable automáticamente.
+            </div>
+        </div>
+
         <!-- SECCIÓN 2: PREGUNTAS CLAVE Y CASOS DE BORDE -->
         <h2 class="section-title">🔴 2. Preguntas Bloqueantes y Casos de Borde <span>Lógica del Bot</span></h2>
 
