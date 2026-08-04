@@ -220,19 +220,27 @@
          │ (Cotiza a Cliente)                   │ Factura de Compra (PDF)               │ Factura de Venta (AFIP)
          ▼                                      ▼                                       ▼
  💻 KIPINTOCH                            🤖 BOT INGESTA (OCR + LLM)              👤 CLIENTE FINAL (Juan F. Secco)
-  - Costo Estimado: USD 2.000                    │ (Lee CUIT, Monto, Booking)            │ (Cobro a término ✅)
-  - Venta Cotizada: USD 2.400                    ├──► GET /rentabilidad vs Cotizado     ▲
-                                                 │ (Alerta Roja si hay desvío)          │
-                                                 ▼                                      │
-                                         🖥️ DASHBOARD 1-CLIC (Operaciones)              │
-                                          - Revisa PDF vs Datos (2 seg)                 │
-                                                 │ (Clic "Aprobar")                     │
-                                                 ▼                                      │
-                                         ⚡ POST Kipintoch (Impacto Inmediato) ─────────┘
-                                                 │ (Facturas de compras cargadas a tiempo)
-                                                 ▼
-                                         🏛️ ADMINISTRACIÓN Y FINANZAS
-                                          (Conciliación, Pagos y Facturación al Cliente ✅)
+  - Costo Estimado: USD 2.000                    │                                       │ (Cobro a término ✅)
+  - Venta Cotizada: USD 2.400                    │ [CAMPOS DE COMPRA IMPUTADOS]:         ▲
+                                                 │ • numeroInterno (N° Carpeta)          │
+                                                 │ • empresa.cuit (CUIT Proveedor)       │
+                                                 │ • gasto.nombre (FMA, THC, DOC)        │
+                                                 │ • moneda (USD / ARS) & monto          │
+                                                 │ • cierreFacturaCosto = TRUE           │
+                                                 │ • adjunto (PDF de Respaldo)           │
+                                                 │                                       │
+                                                 ├──► GET /rentabilidad vs Cotizado      │
+                                                 │ (Alerta Roja si hay desvío)           │
+                                                 ▼                                       │
+                                         🖥️ DASHBOARD 1-CLIC (Operaciones)               │
+                                          - Revisa PDF vs Datos (2 seg)                  │
+                                                 │ (Clic "Aprobar")                      │
+                                                 ▼                                       │
+                                         ⚡ POST Kipintoch (Impacto Inmediato) ──────────┼──► [CAMPOS DE VENTA EMITIDOS]:
+                                                 │                                       │    • clienteLocal.cuit (Cliente)
+                                                 ▼                                       │    • tipoComprobante (Factura A/E)
+                                         🏛️ ADMINISTRACIÓN Y FINANZAS ───────────────────┘    • monedaVenta & montoVenta
+                                          (Conciliación, Pagos y Facturación a Cliente ✅)     • cierreFacturaVenta = TRUE
             </div>
 
             <div class="speech-box" style="background: #ECFDF5; border-left: 4px solid #10B981; color: #065F46;">
