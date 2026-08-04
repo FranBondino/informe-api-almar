@@ -291,44 +291,44 @@
         <!-- 2.2 FACTURAS MULTI-ITEM -->
         <div class="item-card">
             <div class="item-header">
-                <span class="item-title">2.2 Facturas Multi-Concepto y Nomencladores (Split de Ítems)</span>
-                <span class="badge badge-amber">Split de Gastos</span>
+                <span class="item-title">2.2 Facturas Multi-Concepto (Split de Gastos Renglón por Renglón)</span>
+                <span class="badge badge-amber">Algoritmo de Desglose</span>
             </div>
             <div class="grid-2">
                 <div class="box-why">
-                    <strong>Fundamentación Técnica</strong>
-                    Define si el bot debe realizar desglose de ítems imputando códigos de gasto Kipintoch distintos en una sola factura (`FMA`, `THC`, `DOC`).
+                    <strong>Fundamentación Técnica (¿Qué significa?)</strong>
+                    Define si el bot debe desglosar una sola factura en varios códigos de gasto de Kipintoch por separado (ej: separar el Flete Marítimo <code>FMA</code> de los Gastos de Puerto <code>THC</code>).
                 </div>
                 <div class="box-ask">
-                    <strong>Script para la Reunión</strong>
-                    "¿Una misma factura de armador o terminal puede incluir varios gastos distintos que deban separarse en la carpeta, como Flete Marítimo y Gastos de Terminal?"
+                    <strong>Pregunta Concreta a Formular</strong>
+                    "¿Cuando les llega una factura de Maersk o MSC que trae varios renglones (ej: Flete + Grúa de Puerto), en Kipintoch la cargan desglosada en códigos de gasto distintos o cargan el total de una sola vez?"
                 </div>
             </div>
             <div class="box-example">
                 <strong>Ejemplo Práctico de la Vida Real</strong>
-                Factura de MSC por USD 3.250: Renglón 1: <em>Ocean Freight FCL 40HC</em> (USD 2.800 ➔ <code>FMA</code>). Renglón 2: <em>Terminal Handling Charge</em> (USD 450 ➔ <code>THC</code>).
+                Factura de MSC por USD 3.250 en total: Renglón 1: <em>Ocean Freight FCL 40HC</em> (USD 2.800 ➔ <code>FMA</code>). Renglón 2: <em>Terminal Handling Charge</em> (USD 450 ➔ <code>THC</code>).
             </div>
         </div>
 
         <!-- 2.3 UMBRAL DESVÍOS -->
         <div class="item-card">
             <div class="item-header">
-                <span class="item-title">2.3 Umbral de Tolerancia de Desvíos de Costo</span>
+                <span class="item-title">2.3 Umbral de Tolerancia para Alerta de Desvío de Costos</span>
                 <span class="badge badge-amber">Alerta de Margen</span>
             </div>
             <div class="grid-2">
                 <div class="box-why">
-                    <strong>Fundamentación Técnica</strong>
-                    Parametriza la consulta <code>GET /rentabilidad</code> para encender alertas amarillas o rojas si el costo supera lo cotizado.
+                    <strong>Fundamentación Técnica (¿Qué significa?)</strong>
+                    Parametriza la consulta <code>GET /rentabilidad</code> para encender una Banderita Roja en el Dashboard si la factura real del proveedor supera el costo estimado que cotizó el área Comercial.
                 </div>
                 <div class="box-ask">
-                    <strong>Script para la Reunión</strong>
-                    "¿Con qué % de diferencia entre la factura real del proveedor y el costo estimado cotizado quieren que el bot encienda una alerta de desvío?"
+                    <strong>Pregunta Concreta a Formular</strong>
+                    "¿A partir de qué porcentaje de diferencia entre la factura real del proveedor y el costo que cotizó el área Comercial quieren que el bot encienda una Alerta Roja en el Dashboard para revisar el margen?"
                 </div>
             </div>
             <div class="box-example">
                 <strong>Ejemplo Práctico de la Vida Real</strong>
-                Comercial cotizó un flete estimado de USD 3.000. El camionero factura USD 3.450 (desvío del +15%). El bot marca la factura con etiqueta <code>⚠️ Alerta Desvío de Costo (+15%)</code> en el Dashboard.
+                Comercial cotizó un flete estimado de USD 3.000. El camionero factura USD 3.450 (desvío del +15%). El bot marca la factura con etiqueta <code>⚠️ Alerta Desvío de Costo (+15%)</code> para defender la ganancia de ALMAR.
             </div>
         </div>
 
