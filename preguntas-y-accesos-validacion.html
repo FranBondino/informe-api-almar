@@ -332,72 +332,72 @@
             </div>
         </div>
 
-        <!-- SECCIÓN 3: ROLES REALES ALMAR -->
-        <h2 class="section-title">👥 3. Impacto en Roles Reales de ALMAR <span>Fricción Interdepartamental</span></h2>
+        <!-- SECCIÓN 3: PREGUNTAS DE ROLES INTERDEPARTAMENTALES -->
+        <h2 class="section-title">👥 3. Preguntas de Roles y Flujo Interdepartamental <span>Validación de Procesos</span></h2>
 
         <!-- 3.1 OPERACIONES -->
         <div class="item-card">
             <div class="item-header">
-                <span class="item-title">3.1 Área Operativa: Natali Hermoso y Victoria Moyano</span>
-                <span class="badge badge-green">Liberación de Tiempo</span>
+                <span class="item-title">3.1 Asignación y Revisión en el Área Operativa</span>
+                <span class="badge badge-amber">Pregunta Operativa</span>
             </div>
             <div class="grid-2">
                 <div class="box-why">
-                    <strong>Dolor Real Detectado</strong>
-                    Priorizan la logística y urgencias diarias. La carga manual en Kipintoch se posterga al final, sufriendo la discrepancia entre lo cotizado vs facturado.
+                    <strong>Fundamentación Técnica</strong>
+                    Define quiénes dentro del equipo operativo tendrán acceso al Dashboard de 1-Clic para revisar visualmente el PDF vs los datos extraídos y liberar su tiempo de carga manual.
                 </div>
                 <div class="box-ask">
-                    <strong>Script para la Reunión</strong>
-                    "El bot les quita a Natali y Victoria el 100% del trabajo manual de tipeo. Ellas solo abren el Dashboard, ven el PDF de un lado y los datos listos del otro, y dan 1 clic en Aprobar."
+                    <strong>Pregunta Concreta a Formular</strong>
+                    "¿Quiénes dentro del área Operativa serán los usuarios encargados de revisar y dar el clic de aprobación final en el Dashboard para liberar su tiempo de carga manual?"
                 </div>
             </div>
             <div class="box-example">
-                <strong>Ejemplo de Notificación Inteligente</strong>
-                Natali recibe un WhatsApp automático: <em>"📄 Hola Natali, llegó factura de Maersk para carpeta OR/C-1435 por USD 3.200 (Match: 98%). Hacé clic acá para aprobar: dashboard.almar.com"</em>.
+                <strong>Ejemplo de Flujo de Trabajo</strong>
+                Cuando entra una factura de Maersk para una carpeta asignada a Importaciones, el sistema se la auto-asigna al operador responsable para que la apruebe con 1 clic en 2 segundos.
             </div>
         </div>
 
         <!-- 3.2 ADMINISTRACION -->
         <div class="item-card">
             <div class="item-header">
-                <span class="item-title">3.2 Área de Administración y Finanzas: Estefanía Rossi y Vanesa Maggiolaro</span>
-                <span class="badge badge-green">Conciliación y Pagos</span>
+                <span class="item-title">3.2 Notificaciones y Cierre para Administración y Finanzas</span>
+                <span class="badge badge-amber">Pregunta Financiera</span>
             </div>
             <div class="grid-2">
                 <div class="box-why">
-                    <strong>Dolor Real Detectado</strong>
-                    Si Operaciones se demora en cargar las facturas, Administración no puede conciliar bancos ni emitir pagos a proveedores a tiempo.
+                    <strong>Fundamentación Técnica</strong>
+                    Establece las alertas o reportes que recibirá Administración apenas se imputa el costo en Kipintoch, eliminando las demoras en conciliaciones bancarias y pagos a proveedores.
                 </div>
                 <div class="box-ask">
-                    <strong>Script para la Reunión</strong>
-                    "Con el bot, apenas Operaciones aprueba con 1-Clic, la factura queda cargada en Kipintoch en el acto, permitiendo a Estefanía y Vanesa pagar a término sin retrasos."
+                    <strong>Pregunta Concreta a Formular</strong>
+                    "¿El área de Administración requiere alguna notificación automática apenas Operaciones aprueba una factura en el Dashboard para emitir los pagos y conciliar bancos a tiempo?"
                 </div>
             </div>
             <div class="box-example">
                 <strong>Ejemplo de Trazabilidad ISO 9001</strong>
-                Estefanía ve en el Dashboard: <code>Factura FC-04521 aprobada por Natali Hermoso el 04/08/2026 14:32 ➔ Conciliada y Lista para Pago ✅</code>.
+                Administración ve en su panel global: <code>Factura FC-04521 aprobada por Operaciones el 04/08/2026 14:32 ➔ Conciliada e Imputada en Kipintoch ✅</code>.
             </div>
         </div>
 
         <!-- 3.3 COMERCIAL -->
         <div class="item-card">
             <div class="item-header">
-                <span class="item-title">3.3 Área Comercial: Alejandro Noacco y Martín Fusco</span>
-                <span class="badge badge-green">Auditoría de Tarifa</span>
+                <span class="item-title">3.3 Auditoría de Tarifa y Desvíos para el Área Comercial</span>
+                <span class="badge badge-amber">Pregunta Comercial</span>
             </div>
             <div class="grid-2">
                 <div class="box-why">
-                    <strong>Dolor Real Detectado</strong>
-                    Fricción histórica: <em>"Una cosa es lo que cotizan los comerciales y otra lo que termina cobrando el proveedor real."</em>
+                    <strong>Fundamentación Técnica</strong>
+                    Permite configurar el envío de informes automáticos al área Comercial cuando la consulta <code>GET /rentabilidad</code> detecte que el proveedor cobró recargos que afectan el margen de ganancia.
                 </div>
                 <div class="box-ask">
-                    <strong>Script para la Reunión</strong>
-                    "El bot audita automáticamente con <code>GET /rentabilidad</code> si el proveedor respetó la cotización original acordada por Alejandro o Martín."
+                    <strong>Pregunta Concreta a Formular</strong>
+                    "¿Quieren que el sistema emita un reporte automático al área Comercial cuando la factura real del proveedor supere el costo cotizado originalmente?"
                 </div>
             </div>
             <div class="box-example">
-                <strong>Ejemplo de Control de Margen</strong>
-                El sistema emite un reporte automático a Comercial cuando un proveedor cobra recargos no previstos en la propuesta original.
+                <strong>Ejemplo de Control de Rentabilidad</strong>
+                Si Maersk agrega un recargo indebido por combustible que reduce el margen de ganancia, el área Comercial recibe una alerta inmediata para refacturar o reclamarle a la naviera.
             </div>
         </div>
 
