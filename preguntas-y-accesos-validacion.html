@@ -191,6 +191,71 @@
             <p>Guía punto por punto para encarar la reunión con ALMAR. Cada requerimiento contiene la explicación técnica de por qué se pide, un ejemplo de la vida real del negocio y el script exacto de cómo preguntarlo verbalmente.</p>
         </div>
 
+        <!-- TABLA MATRIZ CONSOLIDADA DE 7 PASOS -->
+        <div class="item-card" style="border: 2px solid #3B82F6; background: #FFFFFF;">
+            <div class="item-header" style="margin-bottom: 14px;">
+                <span class="item-title" style="color: #1E40AF; font-size: 1.2rem;">📊 Matriz de Validación de Proceso ALMAR (Desglose en 7 Pasos)</span>
+                <span class="badge badge-green">RESUMEN EJECUTIVO</span>
+            </div>
+            
+            <div style="overflow-x: auto;">
+                <table style="width: 100%; border-collapse: collapse; font-size: 0.88rem; text-align: left;">
+                    <thead>
+                        <tr style="background: #0F172A; color: #FFFFFF;">
+                            <th style="padding: 10px 12px; border: 1px solid #334155; width: 4%;">#</th>
+                            <th style="padding: 10px 12px; border: 1px solid #334155; width: 18%;">Etapa del Proceso</th>
+                            <th style="padding: 10px 12px; border: 1px solid #334155; width: 34%;">Nuestra Hipótesis AS-IS (Hoy)</th>
+                            <th style="padding: 10px 12px; border: 1px solid #334155; width: 44%;">❓ Pregunta Específica a Formular en la Reunión</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="background: #F8FAFC;">
+                            <td style="padding: 10px 12px; border: 1px solid #E2E8F0; font-weight: 700;">1</td>
+                            <td style="padding: 10px 12px; border: 1px solid #E2E8F0; font-weight: 600;">Recepción de Factura</td>
+                            <td style="padding: 10px 12px; border: 1px solid #E2E8F0;">Los proveedores envían comprobantes por correo en formato PDF.</td>
+                            <td style="padding: 10px 12px; border: 1px solid #E2E8F0; color: #1E40AF; font-weight: 600;">"¿A qué casilla(s) ingresan? ¿Existe una casilla centralizada o llegan a correos personales de cada operador?"</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 10px 12px; border: 1px solid #E2E8F0; font-weight: 700;">2</td>
+                            <td style="padding: 10px 12px; border: 1px solid #E2E8F0; font-weight: 600;">Asignación Interna</td>
+                            <td style="padding: 10px 12px; border: 1px solid #E2E8F0;">El correo es reenviado o derivado al responsable de la carpeta.</td>
+                            <td style="padding: 10px 12px; border: 1px solid #E2E8F0; color: #1E40AF; font-weight: 600;">"¿Quién determina quién procesa la factura? ¿Hay reenvíos manuales entre Operaciones y Administración?"</td>
+                        </tr>
+                        <tr style="background: #F8FAFC;">
+                            <td style="padding: 10px 12px; border: 1px solid #E2E8F0; font-weight: 700;">3</td>
+                            <td style="padding: 10px 12px; border: 1px solid #E2E8F0; font-weight: 600;">Matcheo con Carpeta</td>
+                            <td style="padding: 10px 12px; border: 1px solid #E2E8F0;">Se busca en Kipintoch la carpeta asociada según HBL, Booking o Referencia.</td>
+                            <td style="padding: 10px 12px; border: 1px solid #E2E8F0; color: #1E40AF; font-weight: 600;">"¿Qué dato es la clave de búsqueda habitual? ¿El proveedor siempre incluye el N° de Booking/HBL de ALMAR?"</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 10px 12px; border: 1px solid #E2E8F0; font-weight: 700;">4</td>
+                            <td style="padding: 10px 12px; border: 1px solid #E2E8F0; font-weight: 600;">Validación de Proveedor</td>
+                            <td style="padding: 10px 12px; border: 1px solid #E2E8F0;">Se confirma que la Razón Social y CUIT existan en el padrón de Kipintoch.</td>
+                            <td style="padding: 10px 12px; border: 1px solid #E2E8F0; color: #1E40AF; font-weight: 600;">"¿Qué ocurre si la factura proviene de un proveedor nuevo no registrado aún en el padrón de Kipintoch?"</td>
+                        </tr>
+                        <tr style="background: #F8FAFC;">
+                            <td style="padding: 10px 12px; border: 1px solid #E2E8F0; font-weight: 700;">5</td>
+                            <td style="padding: 10px 12px; border: 1px solid #E2E8F0; font-weight: 600;">Clasificación de Gasto</td>
+                            <td style="padding: 10px 12px; border: 1px solid #E2E8F0;">Se mapea el ítem de la factura al código de gasto oficial (FMA, THC, DOC).</td>
+                            <td style="padding: 10px 12px; border: 1px solid #E2E8F0; color: #1E40AF; font-weight: 600;">"¿Es una relación 1 a 1 o un mismo comprobante puede incluir varios códigos de gastos distintos desglosados?"</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 10px 12px; border: 1px solid #E2E8F0; font-weight: 700;">6</td>
+                            <td style="padding: 10px 12px; border: 1px solid #E2E8F0; font-weight: 600;">Control de Montos</td>
+                            <td style="padding: 10px 12px; border: 1px solid #E2E8F0;">Se compara el costo facturado contra el estimado precargado.</td>
+                            <td style="padding: 10px 12px; border: 1px solid #E2E8F0; color: #1E40AF; font-weight: 600;">"¿Existe un rango de tolerancia para diferencias en montos antes de requerir autorización especial?"</td>
+                        </tr>
+                        <tr style="background: #F8FAFC;">
+                            <td style="padding: 10px 12px; border: 1px solid #E2E8F0; font-weight: 700;">7</td>
+                            <td style="padding: 10px 12px; border: 1px solid #E2E8F0; font-weight: 600;">Carga en Kipintoch</td>
+                            <td style="padding: 10px 12px; border: 1px solid #E2E8F0;">El operador digita los valores en la carpeta y adjunta el archivo PDF.</td>
+                            <td style="padding: 10px 12px; border: 1px solid #E2E8F0; color: #1E40AF; font-weight: 600;">"¿Cuánto tiempo promedio les insume hoy registrar manualmente una factura completa con sus adjuntos?"</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
         <!-- SECCIÓN 1: ACCESOS TÉCNICOS -->
         <h2 class="section-title">🔑 1. Accesos Técnicos <span>Requeridos para Iniciar Desarrollo</span></h2>
 
