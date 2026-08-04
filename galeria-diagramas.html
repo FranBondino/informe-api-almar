@@ -111,13 +111,41 @@
 
         .mermaid-wrapper {
             background: #FFFFFF;
-            border: 1px solid #E2E8F0;
-            border-radius: 8px;
-            padding: 20px;
+            border: 1px solid #CBD5E1;
+            border-radius: 10px;
+            padding: 24px;
             display: flex;
             justify-content: center;
             align-items: center;
             overflow-x: auto;
+            min-height: 320px;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
+        }
+
+        .mermaid {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+
+        /* Enforce large, high-contrast SVG rendering */
+        .mermaid svg {
+            background-color: #FFFFFF !important;
+            min-width: 800px !important;
+            width: 100% !important;
+            height: auto !important;
+            font-size: 15px !important;
+        }
+
+        .mermaid .node rect, .mermaid .node circle, .mermaid .node polygon {
+            stroke-width: 2px !important;
+        }
+
+        .mermaid .edgeLabel {
+            background-color: #FFFFFF !important;
+            color: #0F172A !important;
+            font-size: 13px !important;
+            font-weight: 600 !important;
         }
 
         .step-explanation {
@@ -619,7 +647,7 @@ gantt
             securityLevel: 'loose',
             themeVariables: {
                 fontFamily: 'Inter',
-                fontSize: '13px',
+                fontSize: '15px',
                 primaryColor: '#EFF6FF',
                 primaryBorderColor: '#2D65EB',
                 primaryTextColor: '#0F172A',
