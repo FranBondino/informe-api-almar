@@ -164,24 +164,24 @@
             </div>
 
             <div class="board-sketch">
-[ ANTES (AS-IS) ]                                   [ DESPUÉS (TO-BE) ]
+[ ANTES (Flujo Actual) ]                            [ DESPUÉS (Con Automatización) ]
 
 🏢 Proveedores                                      🏢 Proveedores
      │ (Mails dispersos)                                 │ (Mails entrantes)
      ▼                                                   ▼
-👤 Natali / Victoria                                 🤖 Bot Ingesta + OCR / IA
+👤 Área Operativa                                   🤖 Bot Ingesta + OCR / IA
   (Carga manual 15 min + Fricción cotizado)              │ (Busca Carpeta + Valida CUIT)
      ▼                                                   ▼
-💻 Kipintoch ➔ 🏛️ Estefanía / Vanesa               🖥️ Dashboard 1-Clic (Natali / Victoria)
-  (Retraso en cierres, conciliación y pagos)             │ (Aprueban en 2 segundos)
+💻 Kipintoch ➔ 🏛️ Administración                    🖥️ Dashboard 1-Clic (Operaciones)
+  (Demora en cierres, conciliación y pagos)              │ (Aprueban en 2 segundos)
                                                          ▼
-                                                    💻 Kipintoch ➔ 🏛️ Estefanía / Vanesa
-                                                      (Registración e Ingesta Inmediata)
+                                                    💻 Kipintoch ➔ 🏛️ Administración
+                                                      (Imputación e Ingesta Inmediata)
             </div>
 
             <div class="speech-box">
                 <strong>💬 Guión de Voz mientras dibujás:</strong>
-                "Hoy Natali y Victoria reciben los mails dispersos, buscan la carpeta a mano en Kipintoch, tipean los montos y lidian con la brecha de lo cotizado por Comercial. Eso demora los cierres e impide a Estefanía y Vanesa conciliar bancos a tiempo. Lo que hacemos es poner un Bot inteligente en el medio: lee el PDF, busca la carpeta por API, valida el CUIT y les da a Natali y Victoria un Dashboard con botón de 1-Clic."
+                "Hoy el área Operativa recibe los mails dispersos, busca la carpeta a mano en Kipintoch, tipea los montos y lidia con la brecha de lo cotizado por el área Comercial. Eso demora los cierres e impide al área de Administración conciliar bancos y pagar a tiempo. Lo que hacemos es poner un Bot inteligente en el medio: lee el PDF, busca la carpeta por API, valida el CUIT y le da a Operaciones un Dashboard con botón de 1-Clic."
             </div>
         </div>
 
@@ -200,10 +200,10 @@
       │
       ├────► 🔍 GET /forwarding/carpetas (Busca por HBL / Booking)
       ├────► 🔍 GET /empresas (Valida CUIT Proveedor)
-      └────► 🔍 GET /rentabilidad (Compara vs Cotizado Alejandro/Martín)
+      └────► 🔍 GET /rentabilidad (Compara vs Cotización Comercial)
       │
       ▼
-🖥️ Dashboard 1-Clic (Revisión)
+🖥️ Dashboard 1-Clic (Revisión Operativa)
       │ (Aprobación)
       ▼
 ⚡ POST /carpetas/guardar + POST /adjuntos (Imputación Automática en Kipintoch)
@@ -211,7 +211,7 @@
 
             <div class="speech-box">
                 <strong>💬 Guión de Voz mientras dibujás:</strong>
-                "El bot no inventa nada: se conecta directo a la API oficial de Kipintoch. Consulta la carpeta por HBL o Booking, valida el CUIT del proveedor y chequea el margen cotizado comercialmente. Cuando Natali o Victoria aprueban en el Dashboard, inyecta el costo y el PDF adjunto automáticamente."
+                "El bot no inventa nada: se conecta directo a la API oficial de Kipintoch. Consulta la carpeta por HBL o Booking, valida el CUIT del proveedor y chequea el margen cotizado comercialmente. Cuando Operaciones aprueba en el Dashboard, inyecta el costo y el PDF adjunto automáticamente."
             </div>
         </div>
 
@@ -267,22 +267,22 @@
             </div>
 
             <div class="board-sketch">
-🏢 Proveedor       📧 Email           🤖 Bot IA        🌐 API Kipintoch     👤 Operador (Natali/Victoria)
-    │                  │                  │                  │                         │
-    ├─ 1. Manda PDF ──►│                  │                  │                         │
-    │                  ├─ 2. Detecta ────►│                  │                         │
-    │                  │                  ├─ 3. Lee PDF ────►│                         │
-    │                  │                  │                  ├─ 4. Valida Carpeta ────►│
-    │                  │                  │                  │ (HBL / CUIT / Margen)   │
-    │                  │                  │                  ├─ 5. Muestra en Dashboard│
-    │                  │                  │                  │                         ├─ 6. Revisa y Clic "Aprobar"
-    │                  │                  │                  │◄────────────────────────┤
+🏢 Proveedor       📧 Email           🤖 Bot IA        🌐 API Kipintoch     👤 Área Operativa
+    │                  │                  │                  │                     │
+    ├─ 1. Manda PDF ──►│                  │                  │                     │
+    │                  ├─ 2. Detecta ────►│                  │                     │
+    │                  │                  ├─ 3. Lee PDF ────►│                     │
+    │                  │                  │                  ├─ 4. Valida Carpeta ─►│
+    │                  │                  │                  │ (HBL / CUIT / Margen)│
+    │                  │                  │                  ├─ 5. Muestra en Panel│
+    │                  │                  │                  │                     ├─ 6. Revisa y Clic "Aprobar"
+    │                  │                  │                  │◄────────────────────┤
     │                  │                  │                  ├─ 7. POST Costo + PDF ✅
             </div>
 
             <div class="speech-box">
                 <strong>💬 Guión de Voz mientras explicás el flujo temporal:</strong>
-                "Acá ven la secuencia paso a paso: el proveedor manda el mail, el bot capta el PDF, extrae los datos y valida con la API de Kipintoch. Les avisa a Natali o Victoria en el Dashboard, ellas revisan los datos lado a lado con el PDF y cuando hacen clic en Aprobar, Kipintoch registra la factura y el PDF de respaldo automáticamente."
+                "Acá ven la secuencia paso a paso: el proveedor manda el mail, el bot capta el PDF, extrae los datos y valida con la API de Kipintoch. Les avisa al Área Operativa en el Dashboard, revisan los datos lado a lado con el PDF y cuando hacen clic en Aprobar, Kipintoch registra la factura y el PDF de respaldo automáticamente."
             </div>
         </div>
 
