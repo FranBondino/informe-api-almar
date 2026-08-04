@@ -129,6 +129,28 @@
         table { width: 100%; border-collapse: collapse; font-size: 0.88rem; margin-top: 10px; }
         th { background: #F1F5F9; color: #0F172A; text-align: left; padding: 8px 12px; border-bottom: 2px solid #CBD5E1; }
         td { padding: 8px 12px; border-bottom: 1px solid #E2E8F0; }
+
+        /* OPTIMIZACIONES EXCLUSIVAS PARA CELULARES (MOBILE-FRIENDLY) */
+        @media (max-width: 768px) {
+            .container { padding: 0 12px; margin: 15px auto; }
+            .header-card { padding: 18px; }
+            .board-card { padding: 16px; margin-bottom: 20px; }
+            .grid-2, [style*="grid-template-columns: 1fr 1fr"] {
+                grid-template-columns: 1fr !important;
+            }
+            .board-sketch {
+                font-size: 0.74rem;
+                padding: 12px;
+                line-height: 1.45;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+            .board-title { font-size: 1.05rem; }
+            .board-header { flex-direction: column; align-items: flex-start; gap: 8px; }
+            .nav-container { flex-direction: column; gap: 10px; text-align: center; }
+            .nav-links { justify-content: center; gap: 6px; }
+            .nav-tab { padding: 5px 10px; font-size: 0.78rem; }
+        }
     </style>
 </head>
 <body>
@@ -171,11 +193,11 @@
                 <span style="background: #DBEAFE; color: #1E40AF; padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 700;">RECOMENDADO PARA DIBUJAR</span>
             </div>
 
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 10px;">
+            <div class="grid-2" style="margin-top: 10px;">
                 <!-- DIBUJO A EXPRESS -->
                 <div style="background: #1E293B; border-radius: 8px; padding: 14px; color: #F8FAFC;">
                     <strong style="color: #EF4444; font-size: 0.95rem; display: block; margin-bottom: 8px;">🔴 HOY (Proceso Manual):</strong>
-                    <div style="font-family: monospace; font-size: 0.82rem; line-height: 1.6; color: #FECACA;">
+                    <div class="board-sketch" style="margin-bottom: 0; border-color: #FCA5A5;">
 [1. Comercial] ──► [2. Proveedor] ──► [3. Operaciones] ──► [4. Kipintoch / Admin]
  (Cotiza costo)     (Manda PDF)        (Carga manual 15m)    (Pagos demorados ❌)
                     </div>
@@ -184,7 +206,7 @@
                 <!-- DIBUJO B EXPRESS -->
                 <div style="background: #1E293B; border-radius: 8px; padding: 14px; color: #F8FAFC;">
                     <strong style="color: #10B981; font-size: 0.95rem; display: block; margin-bottom: 8px;">🟢 LUEGO (Con Automatización Bot):</strong>
-                    <div style="font-family: monospace; font-size: 0.82rem; line-height: 1.6; color: #A7F3D0;">
+                    <div class="board-sketch" style="margin-bottom: 0; border-color: #6EE7B7; color: #A7F3D0;">
 [1. Comercial] ──► [2. Proveedor] ──► [🤖 BOT + IA] ──► [3. Operaciones] ──► [4. Kipintoch / Admin]
  (Cotiza costo)     (Manda PDF)        (Lee PDF + Cruza) (Dashboard 1-Clic)   (Pagos a tiempo ✅)
                     </div>
