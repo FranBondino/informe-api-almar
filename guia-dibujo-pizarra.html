@@ -192,8 +192,27 @@
             </div>
 
             <div class="speech-box" style="background: #EFF6FF; border-left: 4px solid #3B82F6; color: #1E3A8A; margin-top: 14px;">
-                <strong>💬 Speech Ultra-Rápido de 30 segundos mientras dibujás estas 4 cajas:</strong>
-                <em>"Hoy Comercial cotiza (1), el proveedor manda el PDF (2), Operaciones pierde 15 minutos tipeando a mano (3) y eso demora a Administración (4). Lo que hacemos es poner un Bot Inteligente entre el proveedor y Operaciones (🤖) que lee el PDF, le deja a Operaciones una pantalla para Aprobar en 1 Clic (o editar si quieren) e imputa la factura en Kipintoch en el acto."</em>
+                <strong>💬 Guión de Voz & Funcionamiento Técnico por Detrás (para señalar las cajas mientras explicás):</strong>
+                <ol style="margin-left: 18px; margin-top: 8px; font-size: 0.88rem; line-height: 1.5;">
+                    <li style="margin-bottom: 6px;">
+                        <strong>Caja 1 (Comercial):</strong> Comercial cotiza la carpeta y registra en Kipintoch el <em>Costo Estimado</em> (ej: USD 2.000).
+                    </li>
+                    <li style="margin-bottom: 6px;">
+                        <strong>Caja 2 (Proveedor):</strong> Maersk o el camionero envía la Factura en PDF por email (ej: USD 2.000).
+                    </li>
+                    <li style="margin-bottom: 6px;">
+                        <strong>Caja 🤖 (BOT + IA por Detrás):</strong> 
+                        • <strong>Extrae:</strong> CUIT Proveedor, N° Booking/HBL, Concepto (<code>FMA</code>) e Importe Real.<br/>
+                        • <strong>Busca Carpeta:</strong> Ejecuta <code>GET /forwarding/carpetas?numeroGuia=...</code><br/>
+                        • <strong>Audita Margen:</strong> Ejecuta <code>GET /rentabilidad</code> para comparar el Costo Real vs el Cotizado en Caja 1.
+                    </li>
+                    <li style="margin-bottom: 6px;">
+                        <strong>Caja 3 (Operaciones / Dashboard):</strong> El operador ve la pantalla Split View (PDF a la izquierda vs Datos a la derecha). En 2 segundos revisa y hace 1-Clic en <code>[ Aprobar ]</code> (o hace clic en <code>[ Editar ]</code> si prefiere modificar algo a mano).
+                    </li>
+                    <li style="margin-bottom: 6px;">
+                        <strong>Caja 4 (Kipintoch / Admin):</strong> Al aprobar, la API inyecta el costo (<code>POST /carpetas/guardar</code>) y sube el PDF adjunto de respaldo (<code>POST /adjuntos/obtener</code>). Administración concilia y paga a tiempo.
+                    </li>
+                </ol>
             </div>
         </div>
 
