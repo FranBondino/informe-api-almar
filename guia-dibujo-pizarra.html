@@ -247,9 +247,24 @@
                 <strong>💬 Guión de Voz para explicar el Flujo Automatizado (Diagrama B):</strong>
                 "Y así funciona con la automatización:
                 1) <strong>Cotización Previa:</strong> Comercial registra el Costo Estimado en Kipintoch como siempre.
-                2) <strong>Lado 1 (Compras/Costos - NUESTRO BOT):</strong> El Bot lee el PDF de Maersk con IA, contrasta el costo vs lo cotizado (`GET /rentabilidad`) y enciende alertas si el proveedor cobró de más.
-                3) <strong>Aprobación Operativa:</strong> Operaciones aprueba en 2 segundos en el Dashboard. El bot imputa el costo y el PDF adjunto en Kipintoch por la API.
-                4) <strong>Lado 2 (Ventas/Ingresos):</strong> Como los costos ya están cargados a tiempo, Administración concilia bancos, paga a proveedores y le emite la factura de venta al Cliente Final sin demoras."
+                2) <strong>Lado 1 (Compras/Costos - NUESTRO BOT):</strong> El Bot lee el PDF de Maersk con IA, contrasta el costo vs lo cotizado (<code>GET /rentabilidad</code>) y enciende alertas si el proveedor cobró de más.
+                3) <strong>Aprobación y Edición Operativa:</strong> El operador revisa en el Dashboard. Puede aprobar en 1 clic en 2 segundos, o hacer clic en 'Editar' para corregir cualquier dato manualmente si lo desea.
+                4) <strong>Lado 2 (Ventas/Ingresos):</strong> Como los costos se imputan automáticamente por la API, Administración concilia bancos, paga a proveedores y le emite la factura de venta al Cliente Final sin demoras."
+            </div>
+
+            <!-- ACLARACION CLAVE DE EDICION Y RENTABILIDAD -->
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 14px;">
+                <div style="background: #EFF6FF; border: 1px solid #BFDBFE; border-radius: 8px; padding: 14px; font-size: 0.88rem;">
+                    <strong style="color: #1E3A8A; display: block; margin-bottom: 4px;">📊 ¿Cómo funciona GET /rentabilidad?</strong>
+                    El bot consulta a Kipintoch cuál era el <em>Costo Estimado</em> cotizado por Comercial (ej: USD 2.000). Si la factura real del proveedor llega por USD 2.300 (+15%), el bot le enciende una <strong>Banderita Roja de Alerta</strong> en el Dashboard para avisarle a Operaciones que el costo supera lo cotizado antes de aprobar.
+                </div>
+                <div style="background: #FFFBEB; border: 1px solid #FDE68A; border-radius: 8px; padding: 14px; font-size: 0.88rem;">
+                    <strong style="color: #92400E; display: block; margin-bottom: 4px;">✏️ ¿El Operador PUEDE MODIFICAR datos en el Dashboard?</strong>
+                    <strong>¡SÍ, TOTALMENTE!</strong> El Dashboard tiene 3 botones para cada factura:<br/>
+                    1) <code>[ ✅ Aprobar 1-Clic ]</code> (si todo está perfecto).<br/>
+                    2) <code>[ ✏️ Editar Datos ]</code> (permite corregir cualquier campo a mano en el acto).<br/>
+                    3) <code>[ ❌ Rechazar ]</code> (si la factura no corresponde o vino equivocada).
+                </div>
             </div>
         </div>
 
