@@ -263,6 +263,31 @@
             </div>
         </div>
 
+        <!-- 1.4 LISTENER EXPLICACION -->
+        <div class="item-card">
+            <div class="item-header">
+                <span class="item-title">1.4 ¿Cómo determina el Listener que un Email contiene una Factura?</span>
+                <span class="badge badge-green">Mecanismo en 3 Capas</span>
+            </div>
+            <p style="font-size: 0.95rem; color: #475569;">Explicación técnica del filtrado inteligente para garantizar privacidad y cero falsos positivos.</p>
+            <div class="grid-2">
+                <div class="box-why">
+                    <strong>Filtrado Inteligente en 3 Capas</strong>
+                    1) <strong>Filtro de Adjuntos:</strong> Descarta emails sin PDF/XML y filtra imágenes pequeñas de firmas.<br/>
+                    2) <strong>Filtro de Asunto/Remitente:</strong> Busca palabras clave (<em>Factura, Invoice, Booking</em>) o dominios del padrón de proveedores Kipintoch.<br/>
+                    3) <strong>Validación Estructural por IA:</strong> Abre el PDF y verifica si posee CUIT, Importe Total y N° de Comprobante. Si no es factura, la ignora.
+                </div>
+                <div class="box-ask">
+                    <strong>Script para la Reunión</strong>
+                    "El Listener no lee mails personales. Filtra en 3 capas: ignora mails sin PDF, busca palabras clave o remitentes conocidos, y la IA abre el PDF para confirmar si tiene CUIT y monto. Si no es factura, la descarta en el acto."
+                </div>
+            </div>
+            <div class="box-example">
+                <strong>Ejemplo Práctico</strong>
+                Un email de spam o una conversación casual entre empleados es descartado en 0.1 segundos. Únicamente cuando entra un PDF con estructura contable de Maersk o un camionero, el bot lo toma y lo lleva al Dashboard.
+            </div>
+        </div>
+
         <!-- SECCIÓN 2: PREGUNTAS CLAVE Y CASOS DE BORDE -->
         <h2 class="section-title">🔴 2. Preguntas Bloqueantes y Casos de Borde <span>Lógica del Bot</span></h2>
 
