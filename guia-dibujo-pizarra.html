@@ -164,67 +164,75 @@
             </ul>
         </div>
 
-        <!-- DIAGRAMA MAESTRO E2E COMPLETO -->
-        <div class="board-card" style="border: 3px solid #2D65EB;">
+        <!-- DIAGRAMA A: FLUJO ACTUAL AS-IS -->
+        <div class="board-card" style="border: 2px solid #EF4444;">
             <div class="board-header">
-                <span class="board-title" style="color: #2D65EB;">🌟 DIAGRAMA MAESTRO EN PIZARRA: Ciclo de Vida Completo E2E (Cotización ➔ Recepción ➔ Carga)</span>
-                <span style="background: #2D65EB; color: #FFF; padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 700;">RECOMENDADO / COMPLETO</span>
+                <span class="board-title" style="color: #DC2626;">🔴 DIAGRAMA A EN PIZARRA: Flujo Actual Completo (AS-IS — Sin Automatización)</span>
+                <span style="background: #FEF2F2; color: #DC2626; padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 700;">PROCESO ACTUAL</span>
             </div>
 
-            <div class="board-sketch" style="border-color: #2D65EB; color: #E0E7FF;">
-[ 1. ETAPA PREVIA: COTIZACIÓN ]         [ 2. RECEPCIÓN & LECTURA ]            [ 3. COMPARACIÓN & CARGA ]
+            <div class="board-sketch" style="border-color: #FCA5A5; color: #FECACA;">
+[ 1. ETAPA PREVIA ]                [ 2. RECEPCIÓN MANUAL ]               [ 3. CUELLO DE BOTELLA Y PAGO ]
 
-🏢 ÁREA COMERCIAL                      🏢 PROVEEDOR                          🤖 BOT IA + API KIPINTOCH
-(Negociación con Cliente)              (Maersk / Camión / Despachante)             │
-         │                                     │ (Envía Factura PDF por mail)      ├──► 🔍 GET /rentabilidad (Estimado vs Real)
-         ▼                                     ▼                                   │
-💼 Cotización a Cliente                🤖 BOT INGESTA (OCR + LLM)                 ├──► ⚠️ Si el costo supera lo cotizado:
- (Precio Venta = Estimado + Margen)            │ (Lee CUIT, Monto, Booking)        │    Banderita Roja de Alerta de Margen
-         │                                     │                                   │
-         ▼                                     ▼                                   ▼
-💻 KIPINTOCH                           🖥️ DASHBOARD (1-Clic) ─────────────► ⚡ POST /carpetas/guardar
- (Guarda "Costo Estimado" en Carpeta)   (Revisión Lado a Lado PDF vs Datos)        (Imputación Costo + PDF Adjunto)
-                                               │                                   │
-                                               ▼                                   ▼
-                                        👤 ÁREA OPERATIVA                   🏛️ ADMINISTRACIÓN
-                                         (Aprueba en 2 segundos)             (Conciliación y Pago a Término ✅)
+🏢 ÁREA COMERCIAL                   🏢 PROVEEDOR                         👤 ÁREA OPERATIVA
+ (Cotiza al Cliente)                 (Maersk / Camión / Despachante)            │ (Carga Manual 15 min por factura)
+        │                                   │ (Mails desordenados)              ├──► 🔍 Busca carpeta a mano en Kipintoch
+        ▼                                   ▼                                   ├──► ⌨️ Tipea CUIT, montos y divisas
+💼 Cotización en Kipintoch          📧 Casillas Individuales de Mails           └──► 💥 Sufre brecha lo Cotizado vs Facturado
+ (Guarda "Costo Estimado")                  │ (PDFs dispersos sin trazabilidad)         │
+                                            └───────────────────────────────────┤ (Demoras en la carga)
+                                                                                ▼
+                                                                        💻 KIPINTOCH (Ingreso Tardío)
+                                                                                │
+                                                                                ▼
+                                                                        🏛️ ADMINISTRACIÓN Y FINANZAS
+                                                                         (Demoras en conciliación y pagos ❌)
             </div>
 
-            <div class="speech-box" style="background: #EFF6FF; border-left: 4px solid #2D65EB;">
-                <strong>💬 Guión de Voz mientras explicás todo el proceso en la pizarra:</strong>
-                "Para entender cómo encaja todo de punta a punta: 
-                1) <strong>Etapa 1 (Cotización):</strong> Todo arranca cuando el Área Comercial cotiza al cliente, calcula un costo estimado del proveedor y guarda la carpeta en Kipintoch con el Costo Estimado.
-                2) <strong>Etapa 2 (Lectura Real):</strong> Un mes después, el proveedor manda por mail la Factura Real. El Bot la capta, la lee con OCR + Inteligencia Artificial y extrae los datos.
-                3) <strong>Etapa 3 (Comparación y Carga):</strong> El Bot consulta la API de Kipintoch (<code>GET /rentabilidad</code>) y contrasta la Factura Real vs el Costo Cotizado. Si respeta el margen, Operaciones aprueba con 1-Clic. Si el proveedor cobró un recargo indebido, salta una Alerta Roja para defender la ganancia de ALMAR. Al aprobarse, se imputa el costo y el PDF de respaldo en Kipintoch para que Administración pueda conciliar y pagar a término."
+            <div class="speech-box" style="background: #FEF2F2; border-left: 4px solid #EF4444; color: #991B1B;">
+                <strong>💬 Guión de Voz para explicar el Flujo Actual (Diagrama A):</strong>
+                "Acá vemos cómo funciona el proceso hoy: 
+                1) <strong>Comercial</strong> cotiza al cliente y guarda la carpeta en Kipintoch con un Costo Estimado.
+                2) Un mes después, los <strong>proveedores</strong> envían las facturas en PDF a mails individuales.
+                3) El <strong>área Operativa</strong> tiene que buscar la carpeta a mano, tipear CUITs y montos (15 minutos por factura) y lidiar sola con las diferencias entre lo cotizado y lo facturado.
+                4) Como Operaciones prioriza la logística diaria, la carga se demorara y el <strong>área de Administración</strong> sufre retrasos para conciliar bancos y pagar a tiempo."
             </div>
         </div>
 
-        <!-- DIAGRAMA 1 DE PIZARRA -->
-        <div class="board-card">
+        <!-- DIAGRAMA B: FLUJO PROPUESTO TO-BE -->
+        <div class="board-card" style="border: 3px solid #10B981;">
             <div class="board-header">
-                <span class="board-title">✏️ DIAGRAMA 1 EN PIZARRA: El "Antes y Después" (AS-IS vs TO-BE)</span>
-                <span style="background: #EFF6FF; color: #2D65EB; padding: 4px 10px; border-radius: 20px; font-size: 0.8rem; font-weight: 700;">TIEMPO: 2 MINUTOS</span>
+                <span class="board-title" style="color: #059669;">🟢 DIAGRAMA B EN PIZARRA: Flujo Propuesto Completo (TO-BE — Con Bot IA + API)</span>
+                <span style="background: #ECFDF5; color: #059669; padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 700;">PROCESO AUTOMATIZADO</span>
             </div>
 
-            <div class="board-sketch">
-[ ANTES (Flujo Actual) ]                            [ DESPUÉS (Con Automatización) ]
+            <div class="board-sketch" style="border-color: #6EE7B7; color: #D1FAE5;">
+[ 1. ETAPA PREVIA ]                [ 2. LECTURA IA & MATCHING API ]      [ 3. REVISIÓN Y PAGO INMEDIATO ]
 
-🏢 Proveedores                                      🏢 Proveedores
-     │ (Mails dispersos)                                 │ (Mails entrantes)
-     ▼                                                   ▼
-👤 Área Operativa                                   🤖 Bot Ingesta + OCR / IA
-  (Carga manual 15 min + Fricción cotizado)              │ (Busca Carpeta + Valida CUIT)
-     ▼                                                   ▼
-💻 Kipintoch ➔ 🏛️ Administración                    🖥️ Dashboard 1-Clic (Operaciones)
-  (Demora en cierres, conciliación y pagos)              │ (Aprueban en 2 segundos)
-                                                         ▼
-                                                    💻 Kipintoch ➔ 🏛️ Administración
-                                                      (Imputación e Ingesta Inmediata)
+🏢 ÁREA COMERCIAL                   🏢 PROVEEDOR                          🤖 BOT IA + API KIPINTOCH
+ (Cotiza al Cliente)                 (Maersk / Camión / Despachante)             │
+        │                                   │ (Envía Factura PDF por mail)      ├──► 🔍 GET /rentabilidad (Estimado vs Real)
+        ▼                                   ▼                                   │
+💼 Cotización en Kipintoch          🤖 BOT INGESTA (OCR + LLM)                 ├──► ⚠️ Si el costo supera lo cotizado:
+ (Guarda "Costo Estimado")                  │ (Lee CUIT, Monto, Booking)        │    Banderita Roja de Alerta de Margen
+                                            │                                   │
+                                            ▼                                   ▼
+                                     🖥️ DASHBOARD (1-Clic) ─────────────► ⚡ POST /carpetas/guardar
+                                     (Revisión Lado a Lado PDF vs Datos)        (Imputación Costo + PDF Adjunto)
+                                            │                                   │
+                                            ▼                                   ▼
+                                     👤 ÁREA OPERATIVA                   🏛️ ADMINISTRACIÓN
+                                      (Aprueba en 2 segundos)             (Conciliación y Pago a Término ✅)
             </div>
 
-            <div class="speech-box">
-                <strong>💬 Guión de Voz mientras dibujás:</strong>
-                "Hoy el área Operativa recibe los mails dispersos, busca la carpeta a mano en Kipintoch, tipea los montos y lidia con la brecha de lo cotizado por el área Comercial. Eso demora los cierres e impide al área de Administración conciliar bancos y pagar a tiempo. Lo que hacemos es poner un Bot inteligente en el medio: lee el PDF, busca la carpeta por API, valida el CUIT y le da a Operaciones un Dashboard con botón de 1-Clic."
+            <div class="speech-box" style="background: #ECFDF5; border-left: 4px solid #10B981; color: #065F46;">
+                <strong>💬 Guión de Voz para explicar el Flujo Automatizado (Diagrama B):</strong>
+                "Y así funcionará con la automatización:
+                1) <strong>Comercial</strong> cotiza y registra el Costo Estimado en Kipintoch como siempre.
+                2) El <strong>Bot de Ingesta (OCR + IA)</strong> capta la factura PDF del proveedor y extrae automáticamente CUIT, Booking y montos.
+                3) El Bot consulta la API de Kipintoch (<code>GET /rentabilidad</code>) y <strong>contrasta la Factura Real vs el Costo Cotizado</strong>. Si el proveedor cobró recargos indebidos, le enciende una Alerta Roja a Operaciones para defender el margen de ALMAR.
+                4) El <strong>área Operativa</strong> revisa en el Dashboard y aprueba con 1-Clic en 2 segundos.
+                5) El sistema imputa el costo y el PDF adjunto automáticamente en Kipintoch, permitiendo a <strong>Administración</strong> conciliar y pagar a término."
             </div>
         </div>
 
