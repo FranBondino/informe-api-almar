@@ -164,6 +164,41 @@
             </ul>
         </div>
 
+        <!-- DIAGRAMA MAESTRO E2E COMPLETO -->
+        <div class="board-card" style="border: 3px solid #2D65EB;">
+            <div class="board-header">
+                <span class="board-title" style="color: #2D65EB;">🌟 DIAGRAMA MAESTRO EN PIZARRA: Ciclo de Vida Completo E2E (Cotización ➔ Recepción ➔ Carga)</span>
+                <span style="background: #2D65EB; color: #FFF; padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 700;">RECOMENDADO / COMPLETO</span>
+            </div>
+
+            <div class="board-sketch" style="border-color: #2D65EB; color: #E0E7FF;">
+[ 1. ETAPA PREVIA: COTIZACIÓN ]         [ 2. RECEPCIÓN & LECTURA ]            [ 3. COMPARACIÓN & CARGA ]
+
+🏢 ÁREA COMERCIAL                      🏢 PROVEEDOR                          🤖 BOT IA + API KIPINTOCH
+(Negociación con Cliente)              (Maersk / Camión / Despachante)             │
+         │                                     │ (Envía Factura PDF por mail)      ├──► 🔍 GET /rentabilidad (Estimado vs Real)
+         ▼                                     ▼                                   │
+💼 Cotización a Cliente                🤖 BOT INGESTA (OCR + LLM)                 ├──► ⚠️ Si el costo supera lo cotizado:
+ (Precio Venta = Estimado + Margen)            │ (Lee CUIT, Monto, Booking)        │    Banderita Roja de Alerta de Margen
+         │                                     │                                   │
+         ▼                                     ▼                                   ▼
+💻 KIPINTOCH                           🖥️ DASHBOARD (1-Clic) ─────────────► ⚡ POST /carpetas/guardar
+ (Guarda "Costo Estimado" en Carpeta)   (Revisión Lado a Lado PDF vs Datos)        (Imputación Costo + PDF Adjunto)
+                                               │                                   │
+                                               ▼                                   ▼
+                                        👤 ÁREA OPERATIVA                   🏛️ ADMINISTRACIÓN
+                                         (Aprueba en 2 segundos)             (Conciliación y Pago a Término ✅)
+            </div>
+
+            <div class="speech-box" style="background: #EFF6FF; border-left: 4px solid #2D65EB;">
+                <strong>💬 Guión de Voz mientras explicás todo el proceso en la pizarra:</strong>
+                "Para entender cómo encaja todo de punta a punta: 
+                1) <strong>Etapa 1 (Cotización):</strong> Todo arranca cuando el Área Comercial cotiza al cliente, calcula un costo estimado del proveedor y guarda la carpeta en Kipintoch con el Costo Estimado.
+                2) <strong>Etapa 2 (Lectura Real):</strong> Un mes después, el proveedor manda por mail la Factura Real. El Bot la capta, la lee con OCR + Inteligencia Artificial y extrae los datos.
+                3) <strong>Etapa 3 (Comparación y Carga):</strong> El Bot consulta la API de Kipintoch (<code>GET /rentabilidad</code>) y contrasta la Factura Real vs el Costo Cotizado. Si respeta el margen, Operaciones aprueba con 1-Clic. Si el proveedor cobró un recargo indebido, salta una Alerta Roja para defender la ganancia de ALMAR. Al aprobarse, se imputa el costo y el PDF de respaldo en Kipintoch para que Administración pueda conciliar y pagar a término."
+            </div>
+        </div>
+
         <!-- DIAGRAMA 1 DE PIZARRA -->
         <div class="board-card">
             <div class="board-header">
